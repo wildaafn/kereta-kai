@@ -69,30 +69,39 @@ README.md       → Panduan lengkap ini
 
 ---
 
-## 🚀 Cara Upload ke Tencent Cloud EdgeOne
+## 🚀 Cara Upload ke GitHub & Auto-Redeploy di Tencent Cloud EdgeOne
 
-### Opsi 1 — Upload File ZIP via Console (Paling Mudah)
-1. Buat file zip dari semua file di folder ini:
-   ```bash
-   zip -r kereta-kai.zip index.html style.css game.js edgeone.json _headers README.md
-   ```
-2. Buka console [Tencent Cloud EdgeOne Makers](https://console.tencentcloud.com/edgeone/makers).
-3. Klik **Create Project** $\rightarrow$ **Direct Upload** (atau Drag & Drop ZIP).
-4. Selesai! Game langsung aktif di domain publik Tencent Cloud EdgeOne bersertifikat SSL (HTTPS).
+Proyek ini telah dikonfigurasi penuh dengan **Git**, **GitHub Actions (`.github/workflows/deploy.yml`)**, serta **EdgeOne Pages configuration (`edgeone.json` & `_headers`)**.
 
-### Opsi 2 — Deploy via EdgeOne CLI
+### Langkah 1: Push ke Akun GitHub Anda
+Jalankan perintah berikut di terminal (ganti `<username-anda>` dan `<nama-repo>` sesuai repositori GitHub Anda):
 ```bash
-# Login (sekali saja)
-edgeone login
-
-# Deploy permanen ke production
-edgeone makers deploy . --name kereta-kai --env production
+git remote add origin https://github.com/<username-anda>/<nama-repo>.git
+git branch -M main
+git push -u origin main
 ```
+
+---
+
+### Langkah 2: Hubungkan Repositori GitHub ke Tencent Cloud EdgeOne (Auto-Redeploy)
+Dengan mengintegrasikan GitHub ke Tencent EdgeOne Pages, setiap kali Anda melakukan `git push`, EdgeOne akan **otomatis mendeteksi perubahan dan melakukan redeploy seketika (Zero Downtime)**:
+
+1. Buka console [Tencent Cloud EdgeOne Pages / Static Hosting](https://console.tencentcloud.com/edgeone/pages).
+2. Klik tombol **"Create Project"** / **"Import Existing Git Repository"**.
+3. Pilih penyedia Git: **GitHub**, lalu izinkan akses ke repositori game Anda.
+4. Pada bagian pengaturan build:
+   - **Framework Preset**: Pilih `None` / `Static HTML`
+   - **Build Command**: *Kosongkan* (karena game berjalan murni tanpa dependensi compiler yang berat)
+   - **Output Directory**: `.` (atau root directory `/`)
+5. Klik **Deploy**!
+6. Game akan langsung aktif di URL EdgeOne (contoh: `https://kereta-kai-xxx.edgeone.pages.dev`).
+7. **Selesai!** Mulai saat ini, setiap kali ada file diupdate dan dipush ke branch `main`, EdgeOne akan secara otomatis memicu proses build & deployment global di ratusan PoP Edge Tencent Cloud.
 
 ---
 
 ## 🧪 Menjalankan Secara Lokal di Komputer
 ```bash
-python3 -m http.server 8000
-# Buka di browser: http://localhost:8000
+python3 -m http.server 8089
+# Buka di browser: http://localhost:8089
 ```
+
