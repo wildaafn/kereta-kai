@@ -14,7 +14,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Baloo+2:wght@600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=3.3" />
+  <link rel="stylesheet" href="style.css?v=3.4" />
 </head>
 <body>
   <div id="app">
@@ -30,6 +30,14 @@
         <div class="free-badge">✨ 100% GRATIS • SEMUA KERETA TERBUKA • KHUSUS ADIK ✨</div>
         <h1 class="title">🚂 KAI Game by Wilda</h1>
         <p class="subtitle">Petualangan Masinis & Belajar Ceria Adik!</p>
+
+        <!-- MASINIS CILIK MASCOT GREETING -->
+        <div class="mascot-greeting-wrap">
+          <img src="assets/mascot_masinis.svg" alt="Masinis Cilik KAI" class="home-mascot-img" />
+          <div class="mascot-speech-bubble">
+            <span>"Halo Teman Masinis! Ayo pilih petualangan seru kesukaanmu!" 🚂💨</span>
+          </div>
+        </div>
 
         <!-- 3 KARTU PETUALANGAN UTAMA -->
         <div class="main-modes">
@@ -260,7 +268,7 @@
         <!-- POPUP INTERAKTIF STASIUN (NAIKKAN PENUMPANG) -->
         <div id="station-arrival-banner" class="station-banner hidden">
           <div class="station-banner-card">
-            <div class="st-icon">🚉</div>
+            <img src="assets/mascot_masinis.svg" class="st-mascot-icon" alt="Masinis Cilik" />
             <div class="st-text">
               <h3 id="station-name-text">Tiba di Stasiun Gambir!</h3>
               <p>Hewan-hewan lucu sedang antre di peron stasiun!</p>
@@ -527,6 +535,6 @@
       </div>
     </section>
   </div>
-  <script src="game.js?v=3.3"></script>
+  <script src="game.js?v=3.4"></script>
 </body>
 </html>

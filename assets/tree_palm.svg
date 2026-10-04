@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 130" width="100%" height="100%">
+  <defs>
+    <linearGradient id="trunkGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#78350f"/>
+      <stop offset="50%" stop-color="#92400e"/>
+      <stop offset="100%" stop-color="#b45309"/>
+    </linearGradient>
+    <linearGradient id="leafGrad1" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#4ade80"/>
+      <stop offset="100%" stop-color="#15803d"/>
+    </linearGradient>
+    <linearGradient id="leafGrad2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#22c55e"/>
+      <stop offset="100%" stop-color="#166534"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Curved Palm Trunk with rings -->
+  <path d="M 46 128 Q 58 75 52 42 L 48 42 Q 52 75 42 128 Z" fill="url(#trunkGrad)"/>
+  <!-- Trunk Ring ridges -->
+  <ellipse cx="44" cy="115" rx="3.5" ry="1.2" fill="#451a03"/>
+  <ellipse cx="46" cy="98" rx="3.2" ry="1.2" fill="#451a03"/>
+  <ellipse cx="49" cy="80" rx="3" ry="1" fill="#451a03"/>
+  <ellipse cx="51" cy="62" rx="2.5" ry="0.9" fill="#451a03"/>
+
+  <!-- Coconuts -->
+  <circle cx="48" cy="42" r="5" fill="#713f12"/>
+  <circle cx="53" cy="43" r="5.5" fill="#854d0e"/>
+  <circle cx="50" cy="46" r="4.5" fill="#a16207"/>
+
+  <!-- Palm Fronds (Daun Kelapa Tropis Melengkung Indah) -->
+  <!-- Left arching down -->
+  <path d="M 50 42 Q 22 28 4 58 Q 20 40 50 42 Z" fill="url(#leafGrad1)"/>
+  <path d="M 50 42 Q 28 12 12 30 Q 30 22 50 42 Z" fill="url(#leafGrad2)"/>
+  <!-- Center top arching -->
+  <path d="M 50 42 Q 42 6 48 2 Q 52 16 50 42 Z" fill="url(#leafGrad1)"/>
+  <!-- Right arching down -->
+  <path d="M 50 42 Q 72 12 88 30 Q 70 22 50 42 Z" fill="url(#leafGrad2)"/>
+  <path d="M 50 42 Q 78 28 96 58 Q 80 40 50 42 Z" fill="url(#leafGrad1)"/>
+</svg>

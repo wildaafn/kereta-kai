@@ -714,15 +714,27 @@
       }
     }
 
-    // 3. Pohon-pohon Tropis Indonesia (Kelapa, Beringin, Cemara, Pisang) setiap 340px
-    const treeIcons = ["🌴", "🌳", "🌲", "🍌", "🌴", "🌳"];
-    for (let p = 200; p < TOTAL_TRACK_LOOP; p += 340) {
-      if (!isNearLandmark(p, 160)) {
+    // 3. Pohon-pohon Tropis Indonesia & Semak Bunga Ceria setiap 300px
+    const treeVariations = [
+      { type: "svg", src: "assets/tree_palm.svg", w: 72, h: 96 },
+      { type: "svg", src: "assets/tree_banyan.svg", w: 84, h: 98 },
+      { type: "emoji", icon: "🌴" },
+      { type: "emoji", icon: "🌳" },
+      { type: "emoji", icon: "🌺" },
+      { type: "emoji", icon: "🎋" }
+    ];
+    let treeCount = 0;
+    for (let p = 200; p < TOTAL_TRACK_LOOP; p += 300) {
+      if (!isNearLandmark(p, 200)) {
         const tree = document.createElement("div");
         tree.className = "scenery-item";
         tree.dataset.pos = p;
-        const icon = treeIcons[(p / 340) % treeIcons.length];
-        tree.innerHTML = `<div class="st-tree-item">${icon}</div>`;
+        const v = treeVariations[treeCount++ % treeVariations.length];
+        if (v.type === "svg") {
+          tree.innerHTML = `<img src="${v.src}" style="width:${v.w}px; height:${v.h}px; vertical-align:bottom; filter:drop-shadow(0 4px 6px rgba(0,0,0,.2));" alt="Pohon" />`;
+        } else {
+          tree.innerHTML = `<div class="st-tree-item">${v.icon}</div>`;
+        }
         layer.appendChild(tree);
       }
     }
@@ -737,7 +749,7 @@
     ];
     let anIdx = 0;
     for (let p = 380; p < TOTAL_TRACK_LOOP; p += 680) {
-      if (!isNearLandmark(p, 200)) {
+      if (!isNearLandmark(p, 280)) {
         const an = farmAnimals[anIdx % farmAnimals.length];
         anIdx++;
         const pasture = document.createElement("div");

@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 110 130" width="100%" height="100%">
+  <defs>
+    <linearGradient id="banyanTrunk" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#451a03"/>
+      <stop offset="50%" stop-color="#78350f"/>
+      <stop offset="100%" stop-color="#3b1d07"/>
+    </linearGradient>
+    <linearGradient id="canopy1" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#4ade80"/>
+      <stop offset="100%" stop-color="#15803d"/>
+    </linearGradient>
+    <linearGradient id="canopy2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#22c55e"/>
+      <stop offset="100%" stop-color="#166534"/>
+    </linearGradient>
+    <linearGradient id="canopyLight" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#86efac"/>
+      <stop offset="100%" stop-color="#22c55e"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Thick Sturdy Trunk & Roots -->
+  <path d="M 38 128 Q 45 90 48 72 L 62 72 Q 65 90 72 128 Z" fill="url(#banyanTrunk)"/>
+  <!-- Root flare -->
+  <path d="M 38 128 Q 28 122 22 128 L 38 128 Z" fill="#3b1d07"/>
+  <path d="M 72 128 Q 82 122 88 128 L 72 128 Z" fill="#3b1d07"/>
+  <!-- Aerial roots hanging from canopy -->
+  <line x1="32" y1="65" x2="32" y2="105" stroke="#78350f" stroke-width="2" stroke-dasharray="4 2"/>
+  <line x1="78" y1="65" x2="78" y2="100" stroke="#78350f" stroke-width="2" stroke-dasharray="4 2"/>
+
+  <!-- Lush Puffy Canopy Clouds -->
+  <!-- Back / Darker Layer -->
+  <circle cx="32" cy="55" r="26" fill="url(#canopy2)"/>
+  <circle cx="78" cy="55" r="26" fill="url(#canopy2)"/>
+  <circle cx="55" cy="40" r="32" fill="url(#canopy2)"/>
+
+  <!-- Front / Mid Layer -->
+  <circle cx="28" cy="62" r="20" fill="url(#canopy1)"/>
+  <circle cx="82" cy="62" r="20" fill="url(#canopy1)"/>
+  <circle cx="45" cy="50" r="24" fill="url(#canopy1)"/>
+  <circle cx="65" cy="48" r="25" fill="url(#canopy1)"/>
+
+  <!-- Top Highlights -->
+  <ellipse cx="45" cy="34" rx="14" ry="9" fill="url(#canopyLight)" opacity="0.8"/>
+  <ellipse cx="68" cy="36" rx="12" ry="8" fill="url(#canopyLight)" opacity="0.8"/>
+</svg>

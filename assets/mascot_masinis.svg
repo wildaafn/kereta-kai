@@ -1,0 +1,130 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 240" width="100%" height="100%">
+  <defs>
+    <linearGradient id="skin" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fed7aa"/>
+      <stop offset="100%" stop-color="#fdba74"/>
+    </linearGradient>
+    <linearGradient id="capGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1e3a8a"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#fef08a"/>
+      <stop offset="50%" stop-color="#eab308"/>
+      <stop offset="100%" stop-color="#ca8a04"/>
+    </linearGradient>
+    <linearGradient id="shirtGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#f1f5f9"/>
+    </linearGradient>
+    <filter id="softShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-opacity="0.2"/>
+    </filter>
+  </defs>
+
+  <!-- BODY / SHIRT -->
+  <g id="body" filter="url(#softShadow)">
+    <!-- Neck -->
+    <rect x="88" y="142" width="24" height="24" rx="6" fill="url(#skin)"/>
+    <!-- Shoulders & Torso -->
+    <path d="M 45 195 Q 48 155 88 150 L 112 150 Q 152 155 155 195 L 160 235 L 40 235 Z" fill="url(#shirtGrad)" stroke="#cbd5e1" stroke-width="2"/>
+    
+    <!-- Epaulets (Pangkat Masinis KAI Emas di Pundak) -->
+    <rect x="42" y="165" width="22" height="10" rx="3" fill="#0f172a" stroke="#ca8a04" stroke-width="1.5" transform="rotate(-15 42 165)"/>
+    <line x1="45" y1="170" x2="60" y2="166" stroke="#facc15" stroke-width="2"/>
+    
+    <rect x="136" y="160" width="22" height="10" rx="3" fill="#0f172a" stroke="#ca8a04" stroke-width="1.5" transform="rotate(15 136 160)"/>
+    <line x1="139" y1="165" x2="154" y2="169" stroke="#facc15" stroke-width="2"/>
+
+    <!-- Tie & Collar -->
+    <!-- Collar Left & Right -->
+    <polygon points="88,150 100,165 78,162" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5"/>
+    <polygon points="112,150 100,165 122,162" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5"/>
+    <!-- Blue Tie -->
+    <polygon points="96,165 104,165 108,215 100,225 92,215" fill="#0284c7" stroke="#0369a1" stroke-width="1.5"/>
+    <!-- KAI Gold Tie Clip -->
+    <rect x="94" y="182" width="12" height="3" fill="url(#gold)" rx="1"/>
+
+    <!-- KAI Badge Pocket -->
+    <rect x="60" y="180" width="22" height="26" rx="4" fill="#ffffff" stroke="#94a3b8" stroke-width="1"/>
+    <!-- Mini KAI Logo Bar -->
+    <rect x="63" y="184" width="16" height="5" rx="1.5" fill="#ea580c"/>
+    <rect x="63" y="191" width="16" height="3" rx="1" fill="#0284c7"/>
+  </g>
+
+  <!-- WAVING HAND -->
+  <g id="waving-hand" transform="translate(148, 145)">
+    <circle cx="14" cy="6" r="13" fill="url(#skin)" filter="url(#softShadow)"/>
+    <!-- Fingers -->
+    <rect x="2" y="-12" width="6" height="14" rx="3" fill="url(#skin)" transform="rotate(-15 5 -5)"/>
+    <rect x="9" y="-16" width="6" height="16" rx="3" fill="url(#skin)"/>
+    <rect x="17" y="-14" width="6" height="15" rx="3" fill="url(#skin)" transform="rotate(10 20 -6)"/>
+    <rect x="23" y="-9" width="5.5" height="13" rx="2.7" fill="url(#skin)" transform="rotate(22 25 -3)"/>
+    <!-- Thumb -->
+    <rect x="-3" y="0" width="6" height="11" rx="3" fill="url(#skin)" transform="rotate(-40 0 5)"/>
+  </g>
+
+  <!-- HEAD & EARS -->
+  <g id="head" filter="url(#softShadow)">
+    <!-- Ears -->
+    <circle cx="56" cy="115" r="12" fill="url(#skin)"/>
+    <circle cx="56" cy="115" r="7" fill="#fbcfe8"/>
+    <circle cx="144" cy="115" r="12" fill="url(#skin)"/>
+    <circle cx="144" cy="115" r="7" fill="#fbcfe8"/>
+
+    <!-- Face Base -->
+    <path d="M 60 90 Q 56 145 100 152 Q 144 145 140 90 Z" fill="url(#skin)"/>
+
+    <!-- Rosy Cheeks -->
+    <ellipse cx="72" cy="126" rx="9" ry="5.5" fill="#f43f5e" opacity="0.35"/>
+    <ellipse cx="128" cy="126" rx="9" ry="5.5" fill="#f43f5e" opacity="0.35"/>
+
+    <!-- Big Anime / Chibi Eyes -->
+    <!-- Left Eye -->
+    <ellipse cx="78" cy="112" rx="7.5" ry="10" fill="#0f172a"/>
+    <circle cx="76" cy="108" r="3.5" fill="#ffffff"/>
+    <circle cx="81" cy="116" r="1.8" fill="#ffffff"/>
+    <!-- Eyebrow Left -->
+    <path d="M 70 98 Q 78 93 86 97" stroke="#78350f" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+
+    <!-- Right Eye -->
+    <ellipse cx="122" cy="112" rx="7.5" ry="10" fill="#0f172a"/>
+    <circle cx="120" cy="108" r="3.5" fill="#ffffff"/>
+    <circle cx="125" cy="116" r="1.8" fill="#ffffff"/>
+    <!-- Eyebrow Right -->
+    <path d="M 114 97 Q 122 93 130 98" stroke="#78350f" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+
+    <!-- Cute Button Nose -->
+    <ellipse cx="100" cy="119" rx="2.5" ry="1.8" fill="#ea580c" opacity="0.6"/>
+
+    <!-- Happy Open Smile -->
+    <path d="M 91 126 Q 100 140 109 126 Z" fill="#e11d48"/>
+    <!-- Little Tongue -->
+    <path d="M 95 132 Q 100 137 105 132 Z" fill="#fda4af"/>
+  </g>
+
+  <!-- KAI MASINIS CAP (TOPI DINAS MASINIS RESMI) -->
+  <g id="masinis-cap" filter="url(#softShadow)">
+    <!-- Hair Bangs under cap -->
+    <path d="M 64 88 Q 76 102 85 92 Q 100 104 115 92 Q 126 102 136 88 Z" fill="#78350f"/>
+
+    <!-- Cap Crown -->
+    <path d="M 52 82 Q 50 42 100 38 Q 150 42 148 82 Z" fill="url(#capGrad)"/>
+    <!-- Gold Ribbon Band around Cap -->
+    <path d="M 50 82 Q 100 86 150 82 L 152 72 Q 100 75 48 72 Z" fill="url(#gold)" stroke="#b45309" stroke-width="1"/>
+
+    <!-- Official KAI Wings & Rail Emblem in Center -->
+    <g transform="translate(100, 60)">
+      <!-- Golden Wings -->
+      <path d="M -22 0 Q -10 -8 0 2 Q 10 -8 22 0 Q 12 5 0 2 Q -12 5 -22 0 Z" fill="url(#gold)" stroke="#78350f" stroke-width="0.8"/>
+      <!-- Wheel Center -->
+      <circle cx="0" cy="0" r="6" fill="#0284c7" stroke="#ffffff" stroke-width="1.2"/>
+      <circle cx="0" cy="0" r="2.5" fill="#facc15"/>
+    </g>
+
+    <!-- Glossy Black Cap Visor (Pet Topi Berkilau) -->
+    <path d="M 44 82 Q 100 100 156 82 Q 138 98 100 98 Q 62 98 44 82 Z" fill="#090d16" stroke="#334155" stroke-width="1.5"/>
+    <!-- Visor Highlight reflection -->
+    <path d="M 60 86 Q 100 96 140 86 Q 120 92 100 92 Q 80 92 60 86 Z" fill="#ffffff" opacity="0.3"/>
+  </g>
+</svg>
