@@ -32,7 +32,7 @@ Semua koleksi kereta **100% UNLOCKED & GRATIS**:
 - 🚆 **CC 201 / CC 203** (Lokomotif Hidung Miring Ikonik)
 - 🚃 **KRL Commuter Line** (Kereta Listrik Merah-Kuning)
 - 🚂💨 **Lokomotif Uap Mak Itam / B25 Ambarawa**
-- 🧱 **Rakit Balok Bebas** (Model Lego Toy Brick)
+- 🏛️ **Lokomotif Vintage BB 301 / D301 PJKA** (Livery Krem - Hijau Legendaris Era PJKA/DKA dengan Klakson Tyfon Otentik)
 - **Pilihan 6 Tipe Gerbong Lengkap**:
   - 🛋️ **Gerbong Eksekutif KAI** (Stainless steel dengan tirai & bogie realistis)
   - 🪟 **Gerbong Panoramic KAI** (Atap kaca lengkung mewah warna biru-emas)

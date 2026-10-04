@@ -1,0 +1,149 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 160" width="280" height="160">
+  <defs>
+    <!-- Vintage Cream Body Gradient -->
+    <linearGradient id="vintageCream" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#fffbeb"/>
+      <stop offset="60%" stop-color="#fef3c7"/>
+      <stop offset="100%" stop-color="#fde68a"/>
+    </linearGradient>
+    <!-- Vintage PJKA Green Gradient -->
+    <linearGradient id="pjkaGreen" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#166534"/>
+      <stop offset="60%" stop-color="#14532d"/>
+      <stop offset="100%" stop-color="#052e16"/>
+    </linearGradient>
+    <!-- Roof Arc Gradient -->
+    <linearGradient id="vintageRoof" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#cbd5e1"/>
+      <stop offset="60%" stop-color="#94a3b8"/>
+      <stop offset="100%" stop-color="#64748b"/>
+    </linearGradient>
+    <!-- Window Glass -->
+    <linearGradient id="vintageGlass" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#7dd3fc"/>
+      <stop offset="100%" stop-color="#0284c7"/>
+    </linearGradient>
+    <!-- Steel Wheel Gradient -->
+    <linearGradient id="wheelGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#475569"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Rear Coupler (Left) -->
+  <rect x="2" y="98" width="10" height="20" rx="2" fill="#1e293b" stroke="#0f172a" stroke-width="2"/>
+  <rect x="0" y="103" width="6" height="8" rx="2" fill="#334155"/>
+
+  <!-- Front Cowcatcher Pilot (Right) -->
+  <polygon points="266,108 278,124 278,138 266,134" fill="#14532d" stroke="#052e16" stroke-width="2"/>
+  <line x1="268" y1="114" x2="276" y2="128" stroke="#facc15" stroke-width="3"/>
+
+  <!-- Walkway Safety Handrails (Vintage White) -->
+  <line x1="12" y1="84" x2="268" y2="84" stroke="#ffffff" stroke-width="2.5"/>
+  <line x1="18" y1="84" x2="18" y2="114" stroke="#ffffff" stroke-width="2"/>
+  <line x1="75" y1="84" x2="75" y2="114" stroke="#ffffff" stroke-width="2"/>
+  <line x1="140" y1="84" x2="140" y2="114" stroke="#ffffff" stroke-width="2"/>
+  <line x1="205" y1="84" x2="205" y2="114" stroke="#ffffff" stroke-width="2"/>
+  <line x1="262" y1="84" x2="262" y2="114" stroke="#ffffff" stroke-width="2"/>
+
+  <!-- Chassis Underframe (Black / Dark Slate) -->
+  <rect x="12" y="112" width="256" height="6" rx="2" fill="#0f172a"/>
+
+  <!-- Main Locomotive Body (Krupp BB 301 / BB 304 Vintage Styling) -->
+  <!-- Lower Waist (Dark Green PJKA) -->
+  <rect x="14" y="86" width="252" height="26" fill="url(#pjkaGreen)" stroke="#0f172a" stroke-width="2.5"/>
+
+  <!-- Upper Body (Classic Warm Cream PJKA) -->
+  <rect x="14" y="44" width="252" height="42" fill="url(#vintageCream)" stroke="#0f172a" stroke-width="2.5"/>
+
+  <!-- Rounded Vintage Roof -->
+  <path d="M 14 44 Q 14 28 30 28 L 250 28 Q 266 28 266 44 Z" fill="url(#vintageRoof)" stroke="#0f172a" stroke-width="2.5"/>
+
+  <!-- Front Curved Nose (Facing Right) -->
+  <path d="M 248 30 Q 268 34 268 64 L 268 112 L 248 112 Z" fill="url(#vintageCream)" stroke="#0f172a" stroke-width="2.5"/>
+  <!-- Front Nose Green Skirt -->
+  <path d="M 248 86 L 268 86 L 268 112 L 248 112 Z" fill="url(#pjkaGreen)" stroke="#0f172a" stroke-width="2.5"/>
+
+  <!-- Yellow / Gold Trim Stripe Separator -->
+  <line x1="14" y1="86" x2="268" y2="86" stroke="#facc15" stroke-width="3"/>
+  <line x1="14" y1="108" x2="268" y2="108" stroke="#facc15" stroke-width="1.5"/>
+
+  <!-- Front Windshield Cab (Forward View - Right) -->
+  <rect x="238" y="46" width="22" height="22" rx="3" fill="url(#vintageGlass)" stroke="#0f172a" stroke-width="2"/>
+  <line x1="236" y1="44" x2="262" y2="44" stroke="#166534" stroke-width="2"/> <!-- Sun Visor -->
+
+  <!-- Side Driver Cab Windows -->
+  <rect x="194" y="48" width="24" height="20" rx="3" fill="url(#vintageGlass)" stroke="#0f172a" stroke-width="1.5"/>
+  <rect x="162" y="48" width="24" height="20" rx="3" fill="url(#vintageGlass)" stroke="#0f172a" stroke-width="1.5"/>
+
+  <!-- Center Engine Room Round Porch Window -->
+  <circle cx="125" cy="58" r="8" fill="url(#vintageGlass)" stroke="#0f172a" stroke-width="2"/>
+  <circle cx="85" cy="58" r="8" fill="url(#vintageGlass)" stroke="#0f172a" stroke-width="2"/>
+
+  <!-- Classic Ventilation Grilles (Krupp Louvers) -->
+  <g fill="#334155" stroke="#0f172a" stroke-width="1">
+    <rect x="32" y="50" width="34" height="24" rx="2"/>
+    <line x1="32" y1="56" x2="66" y2="56" stroke="#94a3b8" stroke-width="1"/>
+    <line x1="32" y1="62" x2="66" y2="62" stroke="#94a3b8" stroke-width="1"/>
+    <line x1="32" y1="68" x2="66" y2="68" stroke="#94a3b8" stroke-width="1"/>
+  </g>
+
+  <!-- Front Round Vintage Headlight with Chrome Ring (Facing Right) -->
+  <circle cx="266" cy="62" r="7" fill="#fef08a" stroke="#0f172a" stroke-width="2"/>
+  <circle cx="266" cy="62" r="4.5" fill="#ffffff" stroke="#eab308" stroke-width="1.5"/>
+  <!-- Lower Twin Marker Lights -->
+  <circle cx="266" cy="94" r="3.5" fill="#ef4444" stroke="#0f172a" stroke-width="1.5"/>
+  <circle cx="266" cy="102" r="3.5" fill="#fef08a" stroke="#0f172a" stroke-width="1.5"/>
+
+  <!-- Iconic Vintage PJKA Winged Round Crest Emblem -->
+  <g transform="translate(140, 93)">
+    <!-- Wings -->
+    <path d="M -18 3 Q -9 -3 0 0 Q 9 -3 18 3 Q 9 2 0 1 Q -9 2 -18 3 Z" fill="#facc15" stroke="#78350f" stroke-width="0.8"/>
+    <!-- Round Crest -->
+    <circle cx="0" cy="0" r="7" fill="#dc2626" stroke="#facc15" stroke-width="1.5"/>
+    <circle cx="0" cy="0" r="4.5" fill="#fef3c7"/>
+    <text x="0" y="2.5" font-family="'Times New Roman', serif" font-weight="900" font-size="5" fill="#991b1b" text-anchor="middle">DKA</text>
+  </g>
+
+  <!-- Number Plate (BB 301 27) -->
+  <rect x="180" y="93" width="34" height="10" rx="2" fill="#0f172a" stroke="#facc15" stroke-width="1"/>
+  <text x="197" y="100.5" font-family="'Courier New', monospace" font-weight="900" font-size="5.5" fill="#facc15" text-anchor="middle">BB 301 27</text>
+
+  <!-- Vintage Brass Roof Horn -->
+  <path d="M 215 22 L 230 18 L 230 26 Z" fill="#eab308" stroke="#78350f" stroke-width="1"/>
+  <rect x="212" y="22" width="4" height="6" fill="#78350f"/>
+
+  <!-- Exhaust Flue / Cerobong Diesel Khas BB301 -->
+  <rect x="52" y="18" width="10" height="10" rx="1.5" fill="#475569" stroke="#0f172a" stroke-width="1.5"/>
+
+  <!-- Underbody Fuel Tank & Air Reservoirs -->
+  <rect x="96" y="114" width="88" height="16" rx="4" fill="#1e293b" stroke="#0f172a" stroke-width="2"/>
+  <circle cx="110" cy="122" r="5" fill="#334155"/>
+  <circle cx="170" cy="122" r="5" fill="#334155"/>
+
+  <!-- BOGIE 1 (Left 2 Wheels - BB Type) -->
+  <g id="vintageBogieLeft">
+    <rect x="24" y="116" width="64" height="10" rx="3" fill="#1e293b" stroke="#0f172a" stroke-width="2"/>
+    <circle cx="36" cy="136" r="16" fill="url(#wheelGrad)" stroke="#0f172a" stroke-width="3"/>
+    <circle cx="36" cy="136" r="8" fill="#94a3b8" stroke="#334155" stroke-width="2"/>
+    <circle cx="36" cy="136" r="3.5" fill="#0f172a"/>
+    <!-- Suspension spring -->
+    <rect x="51" y="120" width="10" height="8" rx="2" fill="#facc15"/>
+    <circle cx="76" cy="136" r="16" fill="url(#wheelGrad)" stroke="#0f172a" stroke-width="3"/>
+    <circle cx="76" cy="136" r="8" fill="#94a3b8" stroke="#334155" stroke-width="2"/>
+    <circle cx="76" cy="136" r="3.5" fill="#0f172a"/>
+  </g>
+
+  <!-- BOGIE 2 (Right 2 Wheels - BB Type) -->
+  <g id="vintageBogieRight">
+    <rect x="192" y="116" width="64" height="10" rx="3" fill="#1e293b" stroke="#0f172a" stroke-width="2"/>
+    <circle cx="204" cy="136" r="16" fill="url(#wheelGrad)" stroke="#0f172a" stroke-width="3"/>
+    <circle cx="204" cy="136" r="8" fill="#94a3b8" stroke="#334155" stroke-width="2"/>
+    <circle cx="204" cy="136" r="3.5" fill="#0f172a"/>
+    <!-- Suspension spring -->
+    <rect x="219" y="120" width="10" height="8" rx="2" fill="#facc15"/>
+    <circle cx="244" cy="136" r="16" fill="url(#wheelGrad)" stroke="#0f172a" stroke-width="3"/>
+    <circle cx="244" cy="136" r="8" fill="#94a3b8" stroke="#334155" stroke-width="2"/>
+    <circle cx="244" cy="136" r="3.5" fill="#0f172a"/>
+  </g>
+</svg>

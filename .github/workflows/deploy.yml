@@ -27,6 +27,7 @@ jobs:
           test -f assets/cc201.svg || exit 1
           test -f assets/krl.svg || exit 1
           test -f assets/uap_b25.svg || exit 1
+          test -f assets/vintage_bb301.svg || exit 1
           test -f assets/gerbong_eksekutif.svg || exit 1
           test -f assets/gerbong_panoramic.svg || exit 1
           test -f assets/gerbong_kontainer.svg || exit 1

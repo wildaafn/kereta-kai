@@ -120,6 +120,34 @@
     });
   }
 
+  // Suara Klakson Lokomotif Vintage PJKA BB 301 (Krupp Tyfon Dual-Tone Resonant Horn)
+  function playVintageHorn() {
+    if (!soundOn) return;
+    initAudio();
+    if (!audioCtx) return;
+    const now = audioCtx.currentTime;
+    [261.63, 329.63, 392.00].forEach(f => {
+      const o = audioCtx.createOscillator();
+      const g = audioCtx.createGain();
+      o.type = "sawtooth";
+      o.frequency.value = f;
+      const filter = audioCtx.createBiquadFilter();
+      filter.type = "lowpass";
+      filter.frequency.value = 1100;
+
+      g.gain.setValueAtTime(0.001, now);
+      g.gain.linearRampToValueAtTime(0.09, now + 0.06);
+      g.gain.setValueAtTime(0.09, now + 0.65);
+      g.gain.exponentialRampToValueAtTime(0.0001, now + 0.95);
+
+      o.connect(filter);
+      filter.connect(g);
+      g.connect(audioCtx.destination);
+      o.start(now);
+      o.stop(now + 1.0);
+    });
+  }
+
   // Bel Perlintasan Sebidang Kereta Api (JPL Bell: "tong... tong... tong...")
   let lastJplBell = 0;
   function playJPLBell() {
@@ -278,7 +306,8 @@
     whoosh: "assets/whoosh.svg",
     cc201: "assets/cc201.svg",
     krl: "assets/krl.svg",
-    uap: "assets/uap_b25.svg"
+    uap: "assets/uap_b25.svg",
+    vintage: "assets/vintage_bb301.svg"
   };
 
   const carriageImageMap = {
@@ -376,9 +405,17 @@
     btn.addEventListener("click", () => {
       document.querySelectorAll("#loco-picker .chip").forEach(c => c.classList.remove("active"));
       btn.classList.add("active");
-      trainConfig.loco = btn.dataset.loco;
+      const loco = btn.dataset.loco;
+      trainConfig.loco = loco;
       sndTap();
       updateBengkelPreview();
+
+      if (loco === "vintage") speak("Lokomotif Vintage BB 301 PJKA krem hijau dipilih!");
+      else if (loco === "cc206") speak("Lokomotif CC 206 KAI dipilih!");
+      else if (loco === "whoosh") speak("Kereta Cepat Whoosh dipilih!");
+      else if (loco === "cc201") speak("Lokomotif CC 201 Hidung Miring dipilih!");
+      else if (loco === "krl") speak("KRL Commuter Line dipilih!");
+      else if (loco === "uap") speak("Lokomotif Uap Mak Itam dipilih!");
     });
   });
 
@@ -446,6 +483,8 @@
       playWhooshHorn();
     } else if (trainConfig.loco === "uap") {
       playSteamWhistle();
+    } else if (trainConfig.loco === "vintage") {
+      playVintageHorn();
     } else {
       playKaiHorn();
     }
@@ -1027,6 +1066,7 @@
   const TANGKAP_TRAINS = [
     { type: "whoosh", img: "assets/whoosh.svg", name: "Whoosh Cepat! ⚡", speedMultiplier: 1.45, horn: playWhooshHorn },
     { type: "cc206", img: "assets/cc206.svg", name: "CC 206 KAI! 🚂", speedMultiplier: 1.0, horn: playKaiHorn },
+    { type: "vintage", img: "assets/vintage_bb301.svg", name: "Vintage BB 301! 🏛️", speedMultiplier: 0.95, horn: playVintageHorn },
     { type: "krl", img: "assets/krl.svg", name: "KRL Commuter! 🚃", speedMultiplier: 1.1, horn: playKaiHorn },
     { type: "uap", img: "assets/uap_b25.svg", name: "Kereta Uap B25! 💨", speedMultiplier: 0.8, horn: playSteamWhistle },
     { type: "cc201", img: "assets/cc201.svg", name: "CC 201 Klasik! 🚆", speedMultiplier: 1.05, horn: playKaiHorn }
