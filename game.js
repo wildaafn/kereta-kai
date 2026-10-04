@@ -622,7 +622,7 @@
         sndPop();
         driveStars += 2;
         updateStarsDisplay();
-        floatScore(e.clientX, e.clientY, "☁️ Wusss! +2 ⭐");
+        floatScore(e.clientX, e.clientY, "Wusss! +2");
         c.style.transform = "scale(1.2)";
         setTimeout(() => { c.style.transform = ""; }, 300);
       };
@@ -644,18 +644,18 @@
       el.dataset.idx = idx;
 
       if (it.type === "station") {
+        const waiting = ["pig", "rabbit", "panda", "monkey", "bear"]
+          .map(n => `<span><img src="assets/kenney/animals/${n}.png" alt="${n}" draggable="false"></span>`).join("");
         el.innerHTML = `
           <div class="st-station">
             <div class="st-roof-canopy">
-              <div class="st-station-clock">🕒</div>
+              <div class="st-station-clock"><i></i></div>
             </div>
             <div class="st-building-facade">
-              <div class="st-signboard">${it.icon || '🚉'} ${it.name}</div>
+              <div class="st-signboard">${it.name}</div>
               <div class="st-platform-deck">
-                <div class="st-master-ppka" title="PPKA Masinis Semboyan 40">🧑‍✈️</div>
-                <div class="st-waiting-animals" id="station-passengers-${idx}">
-                  <span>🐱</span><span>🐼</span><span>🐻</span><span>🐰</span><span>🦊</span>
-                </div>
+                <img class="st-master-ppka" src="assets/mascot_masinis.svg" alt="PPKA" draggable="false">
+                <div class="st-waiting-animals" id="station-passengers-${idx}">${waiting}</div>
               </div>
             </div>
           </div>
@@ -664,21 +664,17 @@
         el.innerHTML = `
           <div class="st-jpl" id="jpl-el-${idx}">
             <div class="jpl-post"></div>
-            <div class="jpl-cross">❌</div>
+            <div class="jpl-cross"></div>
             <div class="jpl-lights-box">
               <div class="jpl-bulb b1"></div>
               <div class="jpl-bulb b2"></div>
             </div>
             <div class="jpl-bar"></div>
-            <div class="jpl-cars">🚗🚙🛵</div>
           </div>
         `;
       } else if (it.type === "bridge") {
         el.innerHTML = `
           <div class="st-bridge">
-            <div class="bridge-girder"></div>
-            <div class="bridge-girder"></div>
-            <div class="bridge-girder"></div>
             <div class="bridge-river"></div>
           </div>
         `;
@@ -714,90 +710,86 @@
       }
     }
 
-    // 3. Pohon-pohon Tropis Indonesia & Semak Bunga Ceria setiap 300px
-    const treeVariations = [
-      { type: "svg", src: "assets/tree_palm.svg", w: 72, h: 96 },
-      { type: "svg", src: "assets/tree_banyan.svg", w: 84, h: 98 },
-      { type: "emoji", icon: "🌴" },
-      { type: "emoji", icon: "🌳" },
-      { type: "emoji", icon: "🌺" },
-      { type: "emoji", icon: "🎋" }
+    // Aset: Kenney "Background Elements Redux" & "Animal Pack Redux" (CC0)
+    const K = "assets/kenney/";
+    const sprite = (path, h, extra = "") =>
+      `<img src="${K}${path}.png" style="height:${h}px;width:auto;${extra}" alt="" draggable="false">`;
+    const addDeco = (pos, html) => {
+      const d = document.createElement("div");
+      d.className = "scenery-item";
+      d.dataset.pos = pos;
+      d.innerHTML = html;
+      layer.appendChild(d);
+      return d;
+    };
+
+    // 3. Pohon tropis (kelapa, rindang, pinus) + semak setiap 300px
+    const treeSet = [
+      ["deco/treePalm", 150], ["deco/tree", 128], ["deco/treeLong", 140],
+      ["deco/treePalm", 122], ["deco/treePine", 136], ["deco/tree", 112]
     ];
+    const bushSet = [["deco/bush1", 34], ["deco/bushAlt1", 30], ["deco/bush3", 38], ["deco/bushAlt2", 44]];
     let treeCount = 0;
     for (let p = 200; p < TOTAL_TRACK_LOOP; p += 300) {
-      if (!isNearLandmark(p, 200)) {
-        const tree = document.createElement("div");
-        tree.className = "scenery-item";
-        tree.dataset.pos = p;
-        const v = treeVariations[treeCount++ % treeVariations.length];
-        if (v.type === "svg") {
-          tree.innerHTML = `<img src="${v.src}" style="width:${v.w}px; height:${v.h}px; vertical-align:bottom; filter:drop-shadow(0 4px 6px rgba(0,0,0,.2));" alt="Pohon" />`;
-        } else {
-          tree.innerHTML = `<div class="st-tree-item">${v.icon}</div>`;
-        }
-        layer.appendChild(tree);
-      }
+      if (isNearLandmark(p, 200)) continue;
+      const t = treeSet[treeCount % treeSet.length];
+      addDeco(p, sprite(t[0], t[1]));
+      const b = bushSet[treeCount % bushSet.length];
+      addDeco(p + 120 + (treeCount % 3) * 20, sprite(b[0], b[1]));
+      treeCount++;
     }
 
-    // 4. Padang Rumput & Hewan Ternak Lucu yang Bisa Diklik setiap 680px
+    // 3b. Rumah desa & pagar di belakang jalur setiap ~900px
+    const houseSet = [["deco/house1", 150], ["deco/houseSmall1", 70], ["deco/houseAlt1", 140], ["deco/house2", 130]];
+    let hCount = 0;
+    for (let p = 520; p < TOTAL_TRACK_LOOP; p += 900) {
+      if (isNearLandmark(p, 320)) continue;
+      const h = houseSet[hCount++ % houseSet.length];
+      addDeco(p, sprite(h[0], h[1]));
+      addDeco(p + 190, sprite("deco/fence", 44));
+    }
+
+    // 4. Hewan ternak & kebun yang bisa diklik setiap 680px
     const farmAnimals = [
-      { emoji: "🐄", name: "Sapi", sound: "Moo! 🐄", type: "cow" },
-      { emoji: "🐐", name: "Kambing", sound: "Mbee! 🐐", type: "goat" },
-      { emoji: "🦆", name: "Bebek", sound: "Kwek! 🦆", type: "duck" },
-      { emoji: "🐑", name: "Domba", sound: "Mbaaa! 🐑", type: "sheep" },
-      { emoji: "🐔", name: "Ayam", sound: "Petok! 🐔", type: "chicken" }
+      { img: "animals/cow", name: "Sapi", sound: "Moo!", type: "cow" },
+      { img: "animals/goat", name: "Kambing", sound: "Mbee!", type: "goat" },
+      { img: "animals/duck", name: "Bebek", sound: "Kwek!", type: "duck" },
+      { img: "animals/pig", name: "Babi", sound: "Oink!", type: "goat" },
+      { img: "animals/chicken", name: "Ayam", sound: "Petok!", type: "chicken" },
+      { img: "animals/horse", name: "Kuda", sound: "Hihihi!", type: "goat" },
+      { img: "animals/buffalo", name: "Kerbau", sound: "Mooo!", type: "cow" }
     ];
     let anIdx = 0;
     for (let p = 380; p < TOTAL_TRACK_LOOP; p += 680) {
-      if (!isNearLandmark(p, 280)) {
-        const an = farmAnimals[anIdx % farmAnimals.length];
-        anIdx++;
-        const pasture = document.createElement("div");
-        pasture.className = "scenery-item";
-        pasture.dataset.pos = p;
-        pasture.innerHTML = `<div class="st-animal-pasture" title="Klik untuk menyapa ${an.name}!">${an.emoji}</div>`;
-        
-        const pastureEl = pasture.querySelector(".st-animal-pasture");
-        pastureEl.addEventListener("pointerdown", (e) => {
-          e.stopPropagation();
-          initAudio();
-          playAnimalAudio(an.type);
-          pastureEl.classList.remove("jump");
-          void pastureEl.offsetWidth; // reflow
-          pastureEl.classList.add("jump");
-          setTimeout(() => pastureEl.classList.remove("jump"), 380);
-          driveStars += 5;
-          updateStarsDisplay();
-          floatScore(e.clientX, e.clientY, `${an.sound} +5 ⭐`);
-        });
-
-        layer.appendChild(pasture);
-      }
+      if (isNearLandmark(p, 280)) continue;
+      const an = farmAnimals[anIdx++ % farmAnimals.length];
+      const pasture = addDeco(p, `
+        <div class="st-animal-pasture" title="Sapa ${an.name}!">
+          <img class="pasture-bush" src="${K}deco/bush1.png" alt="" draggable="false">
+          <img class="pasture-animal" src="${K}${an.img}.png" alt="${an.name}" draggable="false">
+        </div>`);
+      const pastureEl = pasture.querySelector(".st-animal-pasture");
+      pastureEl.addEventListener("pointerdown", (e) => {
+        e.stopPropagation();
+        initAudio();
+        playAnimalAudio(an.type);
+        pastureEl.classList.remove("jump");
+        void pastureEl.offsetWidth; // reflow
+        pastureEl.classList.add("jump");
+        setTimeout(() => pastureEl.classList.remove("jump"), 380);
+        driveStars += 5;
+        updateStarsDisplay();
+        floatScore(e.clientX, e.clientY, `${an.sound} +5`);
+      });
     }
 
-    // 5. Kincir Angin Pembangkit Listrik (Windmills) di Area Terbuka
-    [3200, 8400, 14000].forEach(p => {
-      if (!isNearLandmark(p, 180)) {
-        const wm = document.createElement("div");
-        wm.className = "scenery-item";
-        wm.dataset.pos = p;
-        wm.innerHTML = `
-          <div class="st-windmill" title="Kincir Angin Energi Ramah Lingkungan">
-            <div class="windmill-tower"></div>
-            <div class="windmill-blades">☸️</div>
-          </div>
-        `;
-        layer.appendChild(wm);
-      }
-    });
-
-    // 6. Bintang & Balon Bonus yang Melayang
+    // 5. Bintang & balon bonus melayang
     for (let p = 450; p < TOTAL_TRACK_LOOP; p += 520) {
+      const isBalloon = (p % 1040 === 0);
       const s = document.createElement("div");
       s.className = "scenery-item collectible-star";
       s.dataset.pos = p;
-      const isBalloon = (p % 1040 === 0);
-      s.textContent = isBalloon ? "🎈" : "⭐";
+      s.innerHTML = `<img src="assets/${isBalloon ? "balloon" : "star"}.svg" alt="" draggable="false">`;
       s.style.bottom = (65 + (p % 60)) + "px";
       s.addEventListener("pointerdown", (e) => {
         e.stopPropagation();
@@ -805,7 +797,7 @@
         sndPop();
         driveStars += isBalloon ? 15 : 10;
         updateStarsDisplay();
-        floatScore(e.clientX, e.clientY, isBalloon ? "+15 🎈" : "+10 ⭐");
+        floatScore(e.clientX, e.clientY, isBalloon ? "+15" : "+10");
         s.style.display = "none";
       });
       layer.appendChild(s);
@@ -854,11 +846,11 @@
     // Multiplane Parallax Pegunungan Jauh & Perbukitan Sawah Hijau
     const mFar = document.getElementById("parallax-mountains");
     if (mFar) {
-      mFar.style.backgroundPosition = `${(-driveWorldOffset * 0.08) % 1000}px 0`;
+      mFar.style.setProperty("--mx", `${(-driveWorldOffset * 0.08).toFixed(1)}px`);
     }
     const hNear = document.getElementById("parallax-hills");
     if (hNear) {
-      hNear.style.backgroundPosition = `${(-driveWorldOffset * 0.28) % 1000}px 0`;
+      hNear.style.setProperty("--mx", `${(-driveWorldOffset * 0.28).toFixed(1)}px`);
     }
 
     const items = layer.children;
@@ -1124,7 +1116,7 @@
 
     document.getElementById("station-arrival-banner").classList.add("hidden");
     speak("Hore! Tiga penumpang lucu naik ke dalam kereta!");
-    floatScore(window.innerWidth / 2, 120, "🐾 +3 Penumpang! +15 ⭐");
+    floatScore(window.innerWidth / 2, 120, "+3 Penumpang! +15");
   });
 
   // ====================================================

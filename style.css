@@ -1394,3 +1394,139 @@ body {
 
 .float-score { position: absolute; font-size: 26px; font-weight: 900; color: #ffeb3b; text-shadow: 2px 2px 0 #000; pointer-events: none; animation: floatUp .8s ease-out forwards; z-index: 25; }
 @keyframes floatUp { from{transform:translateY(0);opacity:1;} to{transform:translateY(-50px);opacity:0;} }
+
+/* =====================================================================
+   v3.5 — ASET OPEN SOURCE: Kenney "Background Elements Redux" &
+   "Animal Pack Redux" (CC0). Lihat assets/kenney/LICENSE-*.txt
+   ===================================================================== */
+
+/* ---------- MENU UTAMA ---------- */
+#home::before, #home::after {
+  content: ""; position: absolute; left: 0; right: 0; pointer-events: none; z-index: 0;
+  -webkit-mask-repeat: repeat-x; mask-repeat: repeat-x;
+  -webkit-mask-size: auto 100%; mask-size: auto 100%;
+  -webkit-mask-position: 0 100%; mask-position: 0 100%;
+}
+#home::before {
+  bottom: 48%; height: 250px; background: linear-gradient(180deg, #8db8ea, #a6cdf2);
+  -webkit-mask-image: url("assets/kenney/bg/mountains.png"); mask-image: url("assets/kenney/bg/mountains.png");
+}
+#home::after {
+  bottom: 47%; height: 150px; background: linear-gradient(180deg, #7ccf86, #5bb86a);
+  -webkit-mask-image: url("assets/kenney/bg/hillsLarge.png"); mask-image: url("assets/kenney/bg/hillsLarge.png");
+}
+.sky .cloud { background: center / contain no-repeat; border-radius: 0; opacity: 1; filter: drop-shadow(0 6px 8px rgba(40,90,150,.15)); }
+.sky .cloud::before, .sky .cloud::after { display: none; }
+.sky .c1 { width: 170px; height: 100px; background-image: url("assets/kenney/deco/cloud1.png"); }
+.sky .c2 { width: 230px; height: 140px; background-image: url("assets/kenney/deco/cloud2.png"); }
+.sky .c3 { width: 130px; height: 78px;  background-image: url("assets/kenney/deco/cloud3.png"); }
+.sky .sun {
+  width: 96px; height: 96px; background: url("assets/kenney/deco/sun.png") center / contain no-repeat;
+  border-radius: 0; box-shadow: none; filter: drop-shadow(0 0 26px rgba(255, 214, 80, .9));
+  animation: sun-pulse 5s ease-in-out infinite;
+}
+@keyframes sun-pulse { 50% { transform: scale(1.06); } }
+.card-animals { display: flex; justify-content: center; align-items: flex-end; gap: 4px; height: 76px; }
+.card-animals img { height: 62px; width: auto; filter: drop-shadow(0 4px 4px rgba(0,0,0,.18)); transition: transform .2s; }
+.card-animals img:nth-child(2) { height: 76px; }
+.mode-card:hover .card-animals img { transform: translateY(-6px) rotate(-4deg); }
+.mode-card:hover .card-animals img:nth-child(2) { transform: translateY(-8px) rotate(4deg); }
+
+/* ---------- LANGIT & LATAR (SIMULATOR) ---------- */
+.drive-sun-moon {
+  width: 88px; height: 88px; border-radius: 0;
+  background: url("assets/kenney/deco/sun.png") center / contain no-repeat !important;
+  box-shadow: none !important; filter: drop-shadow(0 0 24px rgba(255, 214, 80, .85));
+}
+.time-sunset .drive-sun-moon { filter: sepia(1) saturate(5) hue-rotate(-25deg) drop-shadow(0 0 26px #ea580c); }
+.time-night .drive-sun-moon  { background-image: url("assets/kenney/deco/moonFull.png") !important; filter: drop-shadow(0 0 22px #fef08a); }
+
+.drive-clouds .dcloud { background: center / contain no-repeat; border-radius: 0; }
+.dcloud::before, .dcloud::after { display: none; }
+.drive-clouds .dc1 { width: 160px; height: 96px;  background-image: url("assets/kenney/deco/cloud1.png"); }
+.drive-clouds .dc2 { width: 210px; height: 130px; background-image: url("assets/kenney/deco/cloud2.png"); }
+.drive-clouds .dc3 { width: 120px; height: 74px;  background-image: url("assets/kenney/deco/cloud3.png"); }
+.time-sunset .dcloud { filter: sepia(.7) saturate(2.4) hue-rotate(-18deg); }
+.time-night .dcloud  { filter: brightness(.4) saturate(.5); }
+
+.drive-birds-flock { align-items: center; }
+.drive-birds-flock .bird { width: 30px; height: auto; animation: bird-bob .7s ease-in-out infinite alternate; }
+.drive-birds-flock .b2 { width: 24px; animation-delay: .2s; margin-top: 12px; }
+.drive-birds-flock .b3 { animation-delay: .4s; }
+@keyframes bird-bob { to { transform: translateY(-7px) rotate(-6deg); } }
+
+/* Pegunungan & bukit = siluet Kenney yang diwarnai (bisa ganti siang/sore/malam) */
+.drive-mountains-far, .drive-hills-near {
+  background-image: none; background-color: transparent;
+  -webkit-mask-repeat: repeat-x; mask-repeat: repeat-x;
+  -webkit-mask-size: auto 100%; mask-size: auto 100%;
+  -webkit-mask-position: var(--mx, 0px) 100%; mask-position: var(--mx, 0px) 100%;
+}
+.drive-mountains-far {
+  bottom: 40%; height: 210px; opacity: 1;
+  background: linear-gradient(180deg, #7ea8e6 0%, #9cc2f0 100%);
+  -webkit-mask-image: url("assets/kenney/bg/mountains.png"); mask-image: url("assets/kenney/bg/mountains.png");
+}
+.drive-hills-near {
+  bottom: 38.5%; height: 120px; opacity: 1;
+  background: linear-gradient(180deg, #6cc17a 0%, #4fae63 100%);
+  -webkit-mask-image: url("assets/kenney/bg/hillsLarge.png"); mask-image: url("assets/kenney/bg/hillsLarge.png");
+}
+.time-sunset .drive-mountains-far { background-image: linear-gradient(180deg, #a2559a, #d27a6a); opacity: 1; }
+.time-sunset .drive-hills-near   { background-image: linear-gradient(180deg, #8aa84a, #5c8a36); filter: none; }
+.time-night  .drive-mountains-far { background-image: linear-gradient(180deg, #1f3a6b, #2a4a80); opacity: 1; }
+.time-night  .drive-hills-near   { background-image: linear-gradient(180deg, #14532d, #0f3d22); filter: none; }
+
+/* ---------- OBJEK PINGGIR REL ---------- */
+.scenery-item img { display: block; pointer-events: none; user-select: none; -webkit-user-drag: none; }
+.time-sunset .scenery-item img { filter: sepia(.35) saturate(1.3) brightness(.95); }
+.time-night  .scenery-item img { filter: brightness(.5) saturate(.8); }
+.collectible-star img { width: 40px; height: auto; display: block; filter: drop-shadow(0 4px 6px rgba(0,0,0,.3)); pointer-events: none; }
+.collectible-star { font-size: 0; }
+
+.st-animal-pasture { display: flex; align-items: flex-end; justify-content: center; width: 104px; height: 90px; font-size: 0; }
+.pasture-bush { position: absolute; bottom: -2px; left: 4px; width: 96px; height: auto; z-index: 0; }
+.pasture-animal { position: relative; z-index: 1; height: 62px; width: auto; margin-bottom: 16px; filter: drop-shadow(0 3px 3px rgba(0,0,0,.25)); animation: animal-idle 2.4s ease-in-out infinite; }
+@keyframes animal-idle { 50% { transform: translateY(-3px) rotate(2deg); } }
+
+/* Stasiun */
+.st-station-clock { font-size: 0; }
+.st-station-clock i { position: relative; display: block; width: 100%; height: 100%; }
+.st-station-clock i::before, .st-station-clock i::after { content: ""; position: absolute; left: 50%; bottom: 50%; background: #0f172a; transform-origin: bottom center; border-radius: 2px; }
+.st-station-clock i::before { width: 2px; height: 8px; transform: translateX(-50%) rotate(40deg); }
+.st-station-clock i::after  { width: 2px; height: 6px; transform: translateX(-50%) rotate(-60deg); }
+.st-master-ppka { width: 46px; height: auto; align-self: flex-end; cursor: pointer; filter: drop-shadow(0 3px 4px rgba(0,0,0,.25)); }
+.st-waiting-animals { font-size: 0; align-items: flex-end; }
+.st-waiting-animals span img { height: 34px; width: auto; filter: drop-shadow(0 2px 2px rgba(0,0,0,.25)); }
+
+/* Perlintasan sebidang (JPL) */
+.st-jpl { position: relative; width: 170px; height: 118px; }
+.st-jpl::after { content: ""; position: absolute; left: -10px; right: -10px; bottom: -4px; height: 12px; background: repeating-linear-gradient(90deg, #475569 0 26px, #64748b 26px 30px); border-radius: 4px; }
+.jpl-post { position: absolute; left: 24px; bottom: 6px; width: 9px; height: 96px; border-radius: 4px; background: repeating-linear-gradient(180deg, #fff 0 12px, #e53935 12px 24px); box-shadow: 0 2px 4px rgba(0,0,0,.25); }
+.jpl-cross { position: absolute; left: 3px; top: 0; width: 52px; height: 52px; }
+.jpl-cross::before, .jpl-cross::after { content: ""; position: absolute; left: 0; top: 22px; width: 52px; height: 9px; background: #fff; border: 2px solid #c62828; border-radius: 3px; }
+.jpl-cross::before { transform: rotate(35deg); } .jpl-cross::after { transform: rotate(-35deg); }
+.jpl-lights-box { position: absolute; left: 14px; top: 54px; display: flex; gap: 6px; background: #111827; padding: 5px 7px; border-radius: 9px; border: 2px solid #fbbf24; }
+.jpl-bulb { width: 11px; height: 11px; border-radius: 50%; background: #5b2121; }
+.jpl-bar { position: absolute; left: 30px; bottom: 56px; width: 128px; height: 8px; border-radius: 4px; background: repeating-linear-gradient(90deg, #fff 0 14px, #e53935 14px 28px); transform-origin: left center; transform: rotate(-72deg); transition: transform .8s cubic-bezier(.3,1.4,.5,1); }
+.jpl-active .jpl-bar { transform: rotate(0deg); }
+.jpl-active .jpl-bulb.b1 { animation: flash-red .45s infinite alternate; }
+.jpl-active .jpl-bulb.b2 { animation: flash-red .45s infinite alternate-reverse; }
+
+/* Jembatan rangka baja */
+.st-bridge { position: relative; width: 540px; height: 104px; }
+.st-bridge::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 74px; border-top: 9px solid #64748b; border-bottom: 7px solid #475569;
+  background: repeating-linear-gradient(58deg, transparent 0 24px, #7b8aa0 24px 28px), repeating-linear-gradient(-58deg, transparent 0 24px, #7b8aa0 24px 28px); }
+.st-bridge::after { content: ""; position: absolute; left: 40px; right: 40px; bottom: 0; height: 32px; background: linear-gradient(90deg, #8d6e63 0 14px, transparent 14px calc(100% - 14px), #8d6e63 calc(100% - 14px)); }
+.bridge-girder { display: none; }
+.bridge-river { position: absolute; left: 14px; right: 14px; bottom: -8px; height: 30px; z-index: 2; border-radius: 12px 12px 0 0;
+  background: repeating-linear-gradient(90deg, rgba(255,255,255,.28) 0 18px, transparent 18px 46px), linear-gradient(180deg, #4fc3f7, #0288d1); animation: river-flow 3s linear infinite; background-size: 92px 100%, 100% 100%; }
+@keyframes river-flow { to { background-position: 92px 0, 0 0; } }
+
+/* Terowongan batu */
+.st-tunnel { position: relative; width: 380px; height: 200px; }
+.tunnel-rock { position: absolute; inset: 0; background: linear-gradient(180deg, #a1887f, #6d4c41);
+  -webkit-mask: url("assets/kenney/bg/mountainB.png") center bottom / 100% 100% no-repeat; mask: url("assets/kenney/bg/mountainB.png") center bottom / 100% 100% no-repeat; }
+.tunnel-hole { position: absolute; left: 50%; bottom: 0; width: 150px; height: 100px; margin-left: -75px; border-radius: 75px 75px 0 0; background: #0b1220; box-shadow: inset 0 0 26px #000, 0 0 0 7px #8b8b93; }
+
+.drive-world { --grass-edge: #5bb86a; }
