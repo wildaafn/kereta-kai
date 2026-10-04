@@ -461,10 +461,7 @@ body {
   display: flex; flex-direction: column; justify-content: flex-end;
   z-index: 8;
 }
-.drive-catenary-wire {
-  position: absolute; top: 12px; left: 0; right: 0; height: 2px;
-  background: rgba(148, 163, 184, 0.4);
-}
+.drive-catenary-wire { display: none; }
 .drive-rails {
   height: 24px; width: 100%;
   background: repeating-linear-gradient(90deg, #1e293b 0 14px, #475569 14px 28px, #334155 28px 40px),

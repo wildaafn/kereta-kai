@@ -644,7 +644,7 @@
       el.dataset.idx = idx;
 
       if (it.type === "station") {
-        const waiting = ["pig", "rabbit", "panda", "monkey", "bear"]
+        const waiting = ["chick", "rabbit", "panda", "monkey", "bear"]
           .map(n => `<span><img src="assets/kenney/animals/${n}.png" alt="${n}" draggable="false"></span>`).join("");
         el.innerHTML = `
           <div class="st-station">
@@ -754,7 +754,7 @@
       { img: "animals/cow", name: "Sapi", sound: "Moo!", type: "cow" },
       { img: "animals/goat", name: "Kambing", sound: "Mbee!", type: "goat" },
       { img: "animals/duck", name: "Bebek", sound: "Kwek!", type: "duck" },
-      { img: "animals/pig", name: "Babi", sound: "Oink!", type: "goat" },
+      { img: "animals/chick", name: "Anak Ayam", sound: "Ciap!", type: "chicken" },
       { img: "animals/chicken", name: "Ayam", sound: "Petok!", type: "chicken" },
       { img: "animals/horse", name: "Kuda", sound: "Hihihi!", type: "goat" },
       { img: "animals/buffalo", name: "Kerbau", sound: "Mooo!", type: "cow" }
