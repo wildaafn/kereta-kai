@@ -268,6 +268,7 @@
       if (g === "susun") startSusun();
       else if (g === "tangkap") startTangkap();
       else if (g === "warna") startWarna();
+      else if (g === "tebaksuara") startTebakSuara();
       else if (g === "angka" || g === "abc" || g === "hijaiyah") startCari(g);
     });
   });
@@ -280,6 +281,7 @@
       if (g === "susun") startSusun();
       else if (g === "tangkap") startTangkap();
       else if (g === "warna") startWarna();
+      else if (g === "tebaksuara") startTebakSuara();
       else if (g === "cari") startCari(currentCariKey);
     });
   });
@@ -288,11 +290,22 @@
   // 3. BENGKEL BALOK KERETA KAI (WORKSHOP & BUILDER)
   // ====================================================
   const trainConfig = {
-    loco: "cc206",       // 'cc206' | 'whoosh' | 'cc201' | 'krl' | 'uap' | 'balok'
+    loco: "cc206",       // 'cc206' | 'whoosh' | 'cc201' | 'krl' | 'uap' | 'vintage'
     color: "#e23b2e",
-    carriage: "eksekutif",// 'eksekutif' | 'panoramic' | 'kontainer' | 'tangki'
-    count: 2
+    carriage: "eksekutif",// 'eksekutif' | 'panoramic' | 'kontainer' | 'tangki' | 'makan' | 'pembangkit'
+    count: 2,
+    sticker: "none"       // 'none' | 'flag' | 'star' | 'kai' | 'flower' | 'sparkle'
   };
+
+  const stickerEmojiMap = {
+    flag: "🇮🇩",
+    star: "⭐",
+    kai: "🚆",
+    flower: "🌺",
+    sparkle: "✨"
+  };
+
+  const PEEP_ANIMALS = ["panda.png", "rabbit.png", "duck.png", "bear.png", "chick.png"];
 
   function startBengkel() {
     show("screen-bengkel");
@@ -350,6 +363,14 @@
       wrapper.appendChild(wheels);
     }
 
+    // Stiker Lokomotif
+    if (trainConfig.sticker && trainConfig.sticker !== "none") {
+      const stickerEl = document.createElement("div");
+      stickerEl.className = "train-sticker";
+      stickerEl.textContent = stickerEmojiMap[trainConfig.sticker] || "";
+      wrapper.appendChild(stickerEl);
+    }
+
     if (isDriveMode) {
       const cone = document.createElement("div");
       cone.className = "headlight-cone";
@@ -359,7 +380,7 @@
   }
 
   // Pembuat elemen HTML Gerbong
-  function createCarriageElement(carriageType, color) {
+  function createCarriageElement(carriageType, color, isDriveMode) {
     const wrapper = document.createElement("div");
     wrapper.className = "train-unit";
 
@@ -379,6 +400,21 @@
       wrapper.appendChild(wheels);
     }
 
+    // Tempat Penumpang Lucu di Jendela Gerbong
+    if (isDriveMode && ["eksekutif", "panoramic", "makan"].includes(carriageType)) {
+      const peepBox = document.createElement("div");
+      peepBox.className = "carriage-passengers-peep";
+      wrapper.appendChild(peepBox);
+    }
+
+    // Stiker Gerbong
+    if (trainConfig.sticker && trainConfig.sticker !== "none") {
+      const stickerEl = document.createElement("div");
+      stickerEl.className = "train-sticker";
+      stickerEl.textContent = stickerEmojiMap[trainConfig.sticker] || "";
+      wrapper.appendChild(stickerEl);
+    }
+
     return wrapper;
   }
 
@@ -387,11 +423,47 @@
     container.innerHTML = "";
     // Urutan: Gerbong di belakang, Lokomotif di paling depan (kanan)
     for (let i = 0; i < config.count; i++) {
-      const carriageEl = createCarriageElement(config.carriage, config.color);
+      const carriageEl = createCarriageElement(config.carriage, config.color, isDriveMode);
       container.appendChild(carriageEl);
     }
     const locoEl = createLocomotiveElement(config.loco, config.color, isDriveMode);
     container.appendChild(locoEl);
+
+    if (isDriveMode) {
+      updateCarriagePassengers();
+    }
+  }
+
+  // Update Penumpang Mengintip di Jendela Gerbong
+  function updateCarriagePassengers() {
+    const peepBoxes = document.querySelectorAll("#drive-train-container .carriage-passengers-peep");
+    if (!peepBoxes.length) return;
+
+    let remaining = drivePassengers;
+    let animIdx = 0;
+
+    peepBoxes.forEach(box => {
+      box.innerHTML = "";
+      const count = Math.min(remaining, 3);
+      remaining -= count;
+      for (let i = 0; i < count; i++) {
+        const animal = PEEP_ANIMALS[animIdx % PEEP_ANIMALS.length];
+        animIdx++;
+        const img = document.createElement("img");
+        img.src = `assets/kenney/animals/${animal}`;
+        img.className = "peep-animal";
+        img.title = "Penumpang Cilik KAI!";
+        img.onclick = (e) => {
+          e.stopPropagation();
+          initAudio();
+          sndPop();
+          img.style.transform = "scale(1.4) translateY(-6px)";
+          setTimeout(() => { img.style.transform = ""; }, 250);
+          floatScore(e.clientX, e.clientY, "Halo Masinis! 🐾");
+        };
+        box.appendChild(img);
+      }
+    });
   }
 
   function updateBengkelPreview() {
@@ -441,6 +513,23 @@
     });
   });
 
+  // Handler Pilihan Stiker Gerbong (Gratis)
+  document.querySelectorAll("#sticker-picker .chip").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll("#sticker-picker .chip").forEach(c => c.classList.remove("active"));
+      btn.classList.add("active");
+      trainConfig.sticker = btn.dataset.sticker;
+      sndTap();
+      updateBengkelPreview();
+
+      if (trainConfig.sticker === "flag") speak("Stiker Bendera Merah Putih dipilih!");
+      else if (trainConfig.sticker === "star") speak("Stiker Bintang Emas dipilih!");
+      else if (trainConfig.sticker === "kai") speak("Stiker Logo Resmi KAI dipilih!");
+      else if (trainConfig.sticker === "flower") speak("Stiker Bunga Melati dipilih!");
+      else if (trainConfig.sticker === "sparkle") speak("Stiker Kilau Ajaib dipilih!");
+    });
+  });
+
   // Stepper Panjang Gerbong
   document.getElementById("btn-gerbong-plus").addEventListener("click", () => {
     if (trainConfig.count < 5) {
@@ -478,6 +567,12 @@
     startBengkel();
   });
 
+  // Rintangan Hewan di Rel (Edukasi Klakson Semboyan 35)
+  const TRACK_OBSTACLES = [
+    { id: "obs-sapi", name: "Sapi Pasundan", pos: 5400, img: "assets/kenney/animals/cow.png", sound: "cow", cleared: false },
+    { id: "obs-kambing", name: "Kambing Jawa", pos: 12500, img: "assets/kenney/animals/goat.png", sound: "sheep", cleared: false }
+  ];
+
   function soundLocoHorn() {
     if (trainConfig.loco === "whoosh") {
       playWhooshHorn();
@@ -488,6 +583,31 @@
     } else {
       playKaiHorn();
     }
+
+    // Cek jika ada rintangan hewan di dekat kereta (Semboyan 35)
+    TRACK_OBSTACLES.forEach(obs => {
+      if (obs.cleared) return;
+      let relX = (obs.pos - driveWorldOffset);
+      if (relX < -500) relX += TOTAL_TRACK_LOOP;
+      const trainBox = document.getElementById("drive-train-container");
+      const trainFrontX = trainBox ? trainBox.getBoundingClientRect().right : 300;
+      const dist = relX - trainFrontX;
+      if (dist > -120 && dist < 520) {
+        obs.cleared = true;
+        const el = document.getElementById(obs.id);
+        if (el) {
+          el.classList.add("obstacle-cleared");
+          setTimeout(() => el.remove(), 1100);
+        }
+        playAnimalAudio(obs.sound);
+        driveStars += 15;
+        updateStarsDisplay();
+        floatScore(window.innerWidth / 2, 140, `+15 ⭐ Semboyan 35 Berhasil!`);
+        speak(`Hore! ${obs.name} melompat ke padang rumput! Rel sudah aman!`);
+        const obsBanner = document.getElementById("obstacle-warning-banner");
+        if (obsBanner) obsBanner.classList.add("hidden");
+      }
+    });
   }
 
   function createSmokePuff(parent) {
@@ -687,6 +807,22 @@
         `;
       }
       layer.appendChild(el);
+    });
+
+    // 1b. Rintangan Hewan Melintas di Rel (Semboyan 35)
+    TRACK_OBSTACLES.forEach(obs => {
+      obs.cleared = false;
+      const obsEl = document.createElement("div");
+      obsEl.className = "scenery-item";
+      obsEl.dataset.pos = obs.pos;
+      obsEl.dataset.type = "obstacle";
+      obsEl.dataset.obsId = obs.id;
+      obsEl.innerHTML = `
+        <div class="track-obstacle-wrap" id="${obs.id}">
+          <img src="${obs.img}" class="obstacle-animal-sprite" alt="${obs.name}" draggable="false" />
+        </div>
+      `;
+      layer.appendChild(obsEl);
     });
 
     // Helper: cek apakah posisi p berdekatan dengan landmark utama
@@ -917,6 +1053,34 @@
       }
     });
 
+    // Cek Rintangan Hewan di Depan Kereta (Semboyan 35)
+    let nearObstacle = null;
+    TRACK_OBSTACLES.forEach(obs => {
+      if (obs.cleared) return;
+      let relX = (obs.pos - driveWorldOffset);
+      if (relX < -500) relX += TOTAL_TRACK_LOOP;
+      const dist = relX - trainFrontX;
+      if (dist > -80 && dist < 380) {
+        nearObstacle = obs;
+      }
+    });
+
+    const obsBanner = document.getElementById("obstacle-warning-banner");
+    if (obsBanner) {
+      if (nearObstacle) {
+        obsBanner.classList.remove("hidden");
+        const titleEl = document.getElementById("obs-title");
+        if (titleEl) titleEl.textContent = `ADA ${nearObstacle.name.toUpperCase()} DI REL!`;
+        if (driveSpeed > 1.2) {
+          driveSpeed = 1.0;
+          driveCurrentKm = Math.min(driveCurrentKm, 25);
+          updateSpeedometer();
+        }
+      } else {
+        obsBanner.classList.add("hidden");
+      }
+    }
+
     // Update JPL Indikator
     const jplBanner = document.getElementById("jpl-sign-indicator");
     if (jplBanner) {
@@ -1067,7 +1231,7 @@
     beep(240, 0.15, "triangle", 0.1);
   });
 
-  // Tombol Bel Stasiun (Pengumuman Masinis)
+  // Tombol Bel Stasiun
   document.getElementById("btn-station-chime").addEventListener("click", () => {
     initAudio();
     playStationJingle();
@@ -1076,25 +1240,170 @@
     }, 1100);
   });
 
-  // Tombol Ganti Waktu (Siang / Sore / Malam)
+  // Tombol Radio Masinis (Authentic Indonesian Railway Conductor Announcements)
+  const radioAnnouncements = [
+    "Perhatian bapak, ibu, dan adik-adik masinis. Kereta Api kita sedang melaju nyaman dan tepat waktu. Terima kasih telah menggunakan jasa Kereta Api Indonesia.",
+    "Perhatian para penumpang, sesaat lagi kereta api kita akan melintasi jembatan megah nan indah. Selamat menikmati pemandangan alam Indonesia!",
+    "Panggilan masinis cilik! Siap-siap kita akan segera singgah di stasiun berikutnya. Periksa kembali tiket dan barang bawaan adik.",
+    "Perhatian para penumpang, kereta api sedang melintas langsung dengan kecepatan aman. Duduk dengan santai dan nikmati perjalanan seru ini!"
+  ];
+  let radioAnnouncementIndex = 0;
+
+  const btnRadio = document.getElementById("btn-conductor-radio");
+  if (btnRadio) {
+    btnRadio.addEventListener("click", () => {
+      initAudio();
+      playStationJingle();
+      btnRadio.classList.add("broadcasting");
+      setTimeout(() => {
+        const msg = radioAnnouncements[radioAnnouncementIndex % radioAnnouncements.length];
+        radioAnnouncementIndex++;
+        speak(msg);
+        setTimeout(() => {
+          btnRadio.classList.remove("broadcasting");
+        }, 4000);
+      }, 1100);
+    });
+  }
+
+  // Audio Efek Hujan (Synthesized Rain Pitter-Patter)
+  let rainInterval = null;
+  function startRainAudio() {
+    if (!soundOn || !audioCtx) return;
+    stopRainAudio();
+    try {
+      rainInterval = setInterval(() => {
+        if (!soundOn || driveTimeMode !== "rain") {
+          stopRainAudio();
+          return;
+        }
+        beep(1200 + Math.random() * 900, 0.025, "sine", 0.02);
+      }, 85);
+    } catch(e) {}
+  }
+  function stopRainAudio() {
+    if (rainInterval) {
+      clearInterval(rainInterval);
+      rainInterval = null;
+    }
+  }
+
+  // Tombol Ganti Waktu Dinamis (Siang / Sore / Malam / Hujan / Pelangi)
   document.getElementById("btn-env-time").addEventListener("click", function () {
     initAudio();
     sndTap();
     const world = document.getElementById("drive-world");
+    const rainDrops = document.getElementById("drive-rain-drops");
+
     if (driveTimeMode === "day") {
       driveTimeMode = "sunset";
       this.textContent = "🌅";
       world.className = "drive-world time-sunset";
+      if (rainDrops) rainDrops.classList.add("hidden");
+      stopRainAudio();
     } else if (driveTimeMode === "sunset") {
       driveTimeMode = "night";
       this.textContent = "🌙";
       world.className = "drive-world time-night";
+      if (rainDrops) rainDrops.classList.add("hidden");
+      stopRainAudio();
+    } else if (driveTimeMode === "night") {
+      driveTimeMode = "rain";
+      this.textContent = "🌧️";
+      world.className = "drive-world time-rain";
+      if (rainDrops) rainDrops.classList.remove("hidden");
+      startRainAudio();
+      speak("Hujan rintik-rintik turun! Masinis tetap melaju aman!");
+    } else if (driveTimeMode === "rain") {
+      driveTimeMode = "rainbow";
+      this.textContent = "🌈";
+      world.className = "drive-world time-rainbow";
+      if (rainDrops) rainDrops.classList.add("hidden");
+      stopRainAudio();
+      sndWin();
+      driveStars += 20;
+      updateStarsDisplay();
+      floatScore(window.innerWidth / 2, 100, "🌈 Pelangi Cantik! +20 ⭐");
+      speak("Wah, lihat ada Pelangi Indah setelah hujan!");
     } else {
       driveTimeMode = "day";
       this.textContent = "☀️";
       world.className = "drive-world time-day";
+      if (rainDrops) rainDrops.classList.add("hidden");
+      stopRainAudio();
     }
   });
+
+  // Sistem Paspor Masinis KAI (Koleksi Cap 4 Stasiun Utama Jawa)
+  const stampedStations = {
+    gambir: false,
+    bandung: false,
+    tugu: false,
+    gubeng: false
+  };
+
+  function stampStation(key, name) {
+    if (stampedStations[key]) return;
+    stampedStations[key] = true;
+
+    const seal = document.getElementById(`seal-${key}`);
+    if (seal) {
+      const today = new Date();
+      const dateStr = `${today.getDate()}/${today.getMonth() + 1}/${today.getFullYear()}`;
+      seal.innerHTML = `
+        <div class="stamp-seal-stamped">
+          <span class="seal-official">PT KAI RESMI</span>
+          <span class="seal-name">${name}</span>
+          <span class="seal-date">${dateStr}</span>
+        </div>
+      `;
+    }
+
+    beep(190, 0.14, "triangle", 0.25);
+    setTimeout(() => beep(240, 0.1, "sine", 0.2), 50);
+
+    const total = Object.values(stampedStations).filter(Boolean).length;
+    const countLabel = document.getElementById("passport-count-label");
+    if (countLabel) countLabel.textContent = `Cap Terkumpul: ${total} / 4 Stasiun`;
+    const barFill = document.getElementById("passport-bar-fill");
+    if (barFill) barFill.style.width = `${(total / 4) * 100}%`;
+
+    floatScore(window.innerWidth / 2, 160, `📖 Cap ${name} Masuk Paspor!`);
+
+    if (total === 4) {
+      setTimeout(() => {
+        sndWin();
+        const trophyModal = document.getElementById("modal-passport-trophy");
+        if (trophyModal) trophyModal.classList.remove("hidden");
+        speak("Luar biasa Masinis Cilik! Seluruh cap stasiun di Pulau Jawa sudah terkumpul lengkap!");
+      }, 1200);
+    }
+  }
+
+  // Listener Modal Paspor & Trophy
+  const btnOpenPassport = document.getElementById("btn-open-passport");
+  if (btnOpenPassport) {
+    btnOpenPassport.addEventListener("click", () => {
+      initAudio();
+      sndTap();
+      document.getElementById("modal-passport").classList.remove("hidden");
+    });
+  }
+  const btnClosePassport = document.getElementById("btn-close-passport");
+  if (btnClosePassport) {
+    btnClosePassport.addEventListener("click", () => {
+      document.getElementById("modal-passport").classList.add("hidden");
+    });
+  }
+  const btnCloseTrophy = document.getElementById("btn-close-trophy");
+  if (btnCloseTrophy) {
+    btnCloseTrophy.addEventListener("click", () => {
+      document.getElementById("modal-passport-trophy").classList.add("hidden");
+      driveStars += 50;
+      updateStarsDisplay();
+      floatScore(window.innerWidth / 2, 140, "🎖️ +50 Bintang Masinis Utama!");
+    });
+  }
 
   // Tombol Naikkan Penumpang di Stasiun
   document.getElementById("btn-board-passengers").addEventListener("click", () => {
@@ -1104,6 +1413,16 @@
     driveStars += 15;
     document.getElementById("drive-passengers-count").textContent = drivePassengers;
     updateStarsDisplay();
+    updateCarriagePassengers();
+
+    // Cap Stasiun di Paspor Masinis
+    if (currentStationAtPlatform) {
+      const n = currentStationAtPlatform.name.toLowerCase();
+      if (n.includes("gambir")) stampStation("gambir", "GAMBIR");
+      else if (n.includes("bandung")) stampStation("bandung", "BANDUNG");
+      else if (n.includes("yogyakarta") || n.includes("tugu")) stampStation("tugu", "TUGU YOGYA");
+      else if (n.includes("gubeng") || n.includes("surabaya")) stampStation("gubeng", "S. GUBENG");
+    }
 
     // Animasi hewan melompat naik ke dalam kereta
     if (currentStationAtPlatform) {
@@ -1839,6 +2158,105 @@
       [a[i], a[j]] = [a[j], a[i]];
     }
     return a;
+  }
+
+  // ====================================================
+  // 6. GAME: TEBAK SUARA SULING & KLAKSON KERETA
+  // ====================================================
+  const TEBAK_SUARA_POOL = [
+    { id: "whoosh", name: "Kereta Cepat Whoosh", img: "assets/whoosh.svg", play: playWhooshHorn },
+    { id: "uap", name: "Uap B25 Mak Itam", img: "assets/uap_b25.svg", play: playSteamWhistle },
+    { id: "cc206", name: "Lokomotif CC 206 KAI", img: "assets/cc206.svg", play: playKaiHorn },
+    { id: "vintage", name: "Vintage BB 301 PJKA", img: "assets/vintage_bb301.svg", play: playVintageHorn }
+  ];
+
+  let tebakScore = 0;
+  let tebakRound = 0;
+  const TEBAK_TOTAL_ROUNDS = 5;
+  let currentMysteryLoco = null;
+
+  function startTebakSuara() {
+    show("game-tebaksuara");
+    tebakScore = 0;
+    tebakRound = 0;
+    const scoreEl = document.getElementById("tebaksuara-score");
+    if (scoreEl) scoreEl.textContent = "0";
+    const winOverlay = document.getElementById("tebaksuara-win");
+    if (winOverlay) winOverlay.classList.add("hidden");
+    nextTebakRound();
+    speak("Ayo tebak suara klakson dan suling lokomotif!");
+  }
+
+  function nextTebakRound() {
+    if (tebakRound >= TEBAK_TOTAL_ROUNDS) {
+      sndWin();
+      const winEl = document.getElementById("tebaksuara-win");
+      if (winEl) winEl.classList.remove("hidden");
+      speak("Luar biasa adik masinis! Telingamu sangat hebat!");
+      return;
+    }
+    tebakRound++;
+    const roundLbl = document.getElementById("mystery-round-label");
+    if (roundLbl) roundLbl.textContent = `Tebakan ${tebakRound} / ${TEBAK_TOTAL_ROUNDS}`;
+
+    currentMysteryLoco = TEBAK_SUARA_POOL[Math.floor(Math.random() * TEBAK_SUARA_POOL.length)];
+
+    const choicesContainer = document.getElementById("tebaksuara-choices");
+    if (!choicesContainer) return;
+    choicesContainer.innerHTML = "";
+
+    const shuffled = [...TEBAK_SUARA_POOL].sort(() => Math.random() - 0.5);
+    shuffled.forEach(item => {
+      const btn = document.createElement("button");
+      btn.className = "tebak-choice-btn";
+      btn.innerHTML = `
+        <img src="${item.img}" class="tebak-choice-img" alt="${item.name}" />
+        <strong>${item.name}</strong>
+      `;
+      btn.onclick = () => {
+        initAudio();
+        if (item.id === currentMysteryLoco.id) {
+          btn.classList.add("correct");
+          sndGood();
+          tebakScore += 20;
+          const scoreEl = document.getElementById("tebaksuara-score");
+          if (scoreEl) scoreEl.textContent = tebakScore;
+          floatScore(window.innerWidth / 2, 140, "Hebat! Benar! +20 ⭐");
+          speak("Benar! Itu suara " + item.name);
+          setTimeout(() => {
+            nextTebakRound();
+          }, 1400);
+        } else {
+          btn.classList.add("wrong");
+          sndWrong();
+          speak("Bukan, ayo dengarkan lagi suaranya!");
+          setTimeout(() => btn.classList.remove("wrong"), 600);
+        }
+      };
+      choicesContainer.appendChild(btn);
+    });
+
+    setTimeout(() => {
+      playCurrentMysterySound();
+    }, 400);
+  }
+
+  function playCurrentMysterySound() {
+    if (!currentMysteryLoco) return;
+    initAudio();
+    const waves = document.getElementById("mystery-waves");
+    if (waves) waves.classList.add("waves-playing");
+    currentMysteryLoco.play();
+    setTimeout(() => {
+      if (waves) waves.classList.remove("waves-playing");
+    }, 1200);
+  }
+
+  const btnMysteryPlay = document.getElementById("btn-play-mystery-sound");
+  if (btnMysteryPlay) {
+    btnMysteryPlay.addEventListener("click", () => {
+      playCurrentMysterySound();
+    });
   }
 
   // Mulai di layar depan

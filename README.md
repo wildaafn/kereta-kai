@@ -23,7 +23,11 @@ Dapat dimainkan dengan lancar di HP, tablet, maupun laptop/komputer.
   - Saat kereta mendekat, palang pintu perlintasan otomatis turun, lampu merah berkedip bergantian, bel peringatan berbunyi *"tong... tong... tong..."*, dan mobil-mobil lucu berhenti antre menunggu kereta lewat!
 - **Jembatan Kereta Tinggi & Terowongan Gunung**: Melewati jembatan sungai dan terowongan batu yang gelap (lampu kereta menyala otomatis).
 - **Balon & Bintang Mengambang**: Bisa ditabrak atau diklik untuk meletupkan efek kembang api confetti!
-- **Ganti Waktu ☀️/🌅/🌙**: Ganti suasana Siang Cerah, Sore Sunset, dan Malam Berbintang.
+- **Sistem Cuaca Dinamis ☀️/🌅/🌙/🌧️/🌈**: Ganti suasana Siang Cerah, Sore Sunset, Malam Berbintang, Hujan Rintik-Rintik (dengan tetesan hujan & suara rintik sintetis), hingga Pelangi Indah setelah hujan dengan bonus bintang berkilau!
+- **Paspor Masinis Cilik (📖 Paspor KAI)**: Kumpulkan cap stasiun resmi di Pulau Jawa (Gambir, Bandung, Tugu Yogyakarta, Surabaya Gubeng) setiap kali keretamu singgah, dan dapatkan Piala Emas Masinis Utama Nusantara!
+- **Radio Masinis & Pengumuman KAI (📻 Radio)**: Tombol pengumuman kabin masinis dengan jingle nada KAI otentik dan suara pengumuman kondektur resmi.
+- **Rintangan Hewan di Rel (Edukasi Semboyan 35)**: Sapi Pasundan dan Kambing Jawa melintas di atas rel — bunyikan klakson Semboyan 35 agar hewan melompat riang ke padang rumput dan dapatkan bonus bintang!
+- **Penumpang Lucu di Jendela Gerbong**: Hewan-hewan lucu (kelinci, panda, bebek, beruang, anak ayam) mengintip dan melompat ceria di jendela gerbong saat dinaikkan di stasiun!
 
 ### 2. 🧱 Bengkel Balok KAI (Rakit & Kustomisasi Kereta)
 Semua koleksi kereta **100% UNLOCKED & GRATIS**:
@@ -40,19 +44,26 @@ Semua koleksi kereta **100% UNLOCKED & GRATIS**:
   - ⛽ **Gerbong Tangki BBM Pertamina** (Tangki silinder bahan bakar putih-merah)
   - ☕ **Gerbong Restorasi / Makan (M1)** (Kereta kafe dengan meja makan & bar KAI)
   - ⚡ **Gerbong Pembangkit Listrik (P)** (Kereta generator dengan ventilasi radiator diesel)
+- **Stiker Hiasan Gerbong (100% Gratis)**:
+  - 🇮🇩 Bendera Merah Putih
+  - ⭐ Bintang Emas Masinis
+  - 🚆 Logo Resmi KAI
+  - 🌺 Bunga Melati
+  - ✨ Kilau Magis
 - **Panjang Gerbong**: Bisa diatur dari 1 hingga 5 gerbong panjang!
 - **Pilihan Warna Bodi**: 7 warna cerah khas kereta api.
 - Tombol **"🚦 AYO BERANGKAT NYETIR KERETA INI!"** untuk langsung membawa hasil rakitan ke lintasan rel.
 
-### 3. 🎓 Taman Belajar KAI (6 Mini-Game Edukasi)
+### 3. 🎓 Taman Belajar KAI (7 Mini-Game Edukasi)
 | Game | Cara Main |
 |---|---|
 | 🚃 **Susun Gerbong** | Tarik gerbong ke tempat kosong di belakang lokomotif |
 | ⚡ **Tangkap Kereta** | Ketuk kereta yang melaju sebelum pergi |
 | 🌈 **Cocok Warna** | Tarik kereta ke stasiun dengan warna yang cocok |
+| 🔔 **Tebak Suara Suling** | Dengarkan suara klakson misteri lalu tebak lokomotif yang benar |
 | 🔢 **Belajar Angka** | Ketuk kereta nomor yang diminta suara |
 | 🔤 **Huruf ABC** | Ketuk kereta huruf latin yang diminta |
-| 🕌 **Huruf Hijaiyah** | Ketuk kereta huruf hijaiyah (Alif, Ba, Ta, Tsa, Jim) |
+| 🕌 **Huruf Hijaiyah** | Ketuk kereta huruf hijaiyah lengkap 28 huruf dengan harakat |
 
 ---
 

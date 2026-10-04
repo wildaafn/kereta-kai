@@ -14,7 +14,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Baloo+2:wght@600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=3.6" />
+  <link rel="stylesheet" href="style.css?v=3.7" />
 </head>
 <body>
   <div id="app">
@@ -195,6 +195,19 @@
           </div>
         </div>
 
+        <!-- 4. PILIH STIKER HIASAN KERETA -->
+        <div class="opt-group">
+          <label>4. Stiker Hiasan Gerbong (Semua Gratis!):</label>
+          <div class="opt-chips" id="sticker-picker">
+            <button class="chip active" data-sticker="none"><span>Tanpa Stiker</span></button>
+            <button class="chip" data-sticker="flag"><span>🇮🇩 Merah Putih</span></button>
+            <button class="chip" data-sticker="star"><span>⭐ Bintang Emas</span></button>
+            <button class="chip" data-sticker="kai"><span>🚆 Logo KAI</span></button>
+            <button class="chip" data-sticker="flower"><span>🌺 Melati</span></button>
+            <button class="chip" data-sticker="sparkle"><span>✨ Kilau Ajaib</span></button>
+          </div>
+        </div>
+
         <!-- TOMBOL LANGSUNG NYETIR -->
         <button id="btn-start-drive-from-bengkel" class="btn-giant-drive">
           🚦 AYO BERANGKAT NYETIR KERETA INI! 💨
@@ -209,6 +222,7 @@
         <div class="header-left-actions">
           <button class="back-btn" data-back>⬅️ Rumah</button>
           <button class="mini-tool-btn" id="btn-open-bengkel-from-drive">🛠️ Ganti Kereta</button>
+          <button class="mini-tool-btn" id="btn-open-passport">📖 Paspor</button>
         </div>
         
         <div class="drive-stats">
@@ -219,7 +233,7 @@
         </div>
 
         <div class="drive-env-toggles">
-          <button id="btn-env-time" class="time-btn" title="Ganti Waktu Siang / Sore / Malam">☀️</button>
+          <button id="btn-env-time" class="time-btn" title="Ganti Waktu Siang / Sore / Malam / Hujan / Pelangi">☀️</button>
         </div>
       </div>
 
@@ -228,6 +242,8 @@
         <!-- LANGIT & MATAHARI/BULAN -->
         <div class="drive-sky">
           <div class="drive-sun-moon" id="world-sun-moon"></div>
+          <!-- PELANGI SETELAH HUJAN -->
+          <div class="rainbow-arch" id="drive-rainbow-arch"></div>
           <div class="drive-clouds">
             <div class="dcloud dc1" data-interactive="cloud"></div>
             <div class="dcloud dc2" data-interactive="cloud"></div>
@@ -261,10 +277,24 @@
           </div>
         </div>
 
+        <!-- EFEK CUACA HUJAN DINAMIS -->
+        <div id="drive-rain-drops" class="rain-drops-container hidden"></div>
+
         <!-- OVERLAY TEROWONGAN GELAP DENGAN LAMPU DINDING -->
         <div id="drive-tunnel-overlay" class="tunnel-darkness hidden">
           <div class="tunnel-interior-lights">
             <span class="t-lamp">💡</span><span class="t-lamp">💡</span><span class="t-lamp">💡</span>
+          </div>
+        </div>
+
+        <!-- PERINGATAN RINTANGAN HEWAN MENYEBERANG (SEMBOYAN 35) -->
+        <div id="obstacle-warning-banner" class="obstacle-banner hidden">
+          <div class="obstacle-banner-card">
+            <span class="obs-icon">⚠️ 📢</span>
+            <div class="obs-text">
+              <h3 id="obs-title">ADA HEWAN DI DEPAN REL!</h3>
+              <p>Pencet Klakson Semboyan 35 untuk membunyikan sirine!</p>
+            </div>
           </div>
         </div>
 
@@ -333,24 +363,27 @@
         <!-- AKSESORIS KOKPIT LAINNYA -->
         <div class="cockpit-actions">
           <button id="btn-toggle-light" class="cockpit-btn light-btn">
-            💡 Lampu Depan
+            💡 Lampu
           </button>
           <button id="btn-puff-smoke" class="cockpit-btn smoke-btn">
-            💨 Asap Uap
+            💨 Asap
           </button>
           <button id="btn-station-chime" class="cockpit-btn chime-btn">
             🔔 Bel Stasiun
+          </button>
+          <button id="btn-conductor-radio" class="cockpit-btn radio-btn">
+            📻 Radio Masinis
           </button>
         </div>
       </div>
     </section>
 
-    <!-- ===== LAYAR: TAMAN BELAJAR (SUB-MENU 6 MINI-GAME) ===== -->
+    <!-- ===== LAYAR: TAMAN BELAJAR (SUB-MENU 7 MINI-GAME) ===== -->
     <section id="screen-edu" class="screen">
       <div class="game-header">
         <button class="back-btn" data-back>⬅️ Rumah</button>
         <h2>🎓 Taman Belajar KAI</h2>
-        <div class="score">⭐ 6 Mini-Game</div>
+        <div class="score">⭐ 7 Mini-Game</div>
       </div>
       <p class="hint">Pilih permainan seru kesukaan adik!</p>
       <div class="edu-grid">
@@ -362,6 +395,9 @@
         </button>
         <button class="menu-btn" data-game="warna">
           <span class="emoji">🌈</span><span class="label">Cocok Warna</span><span class="desc">Masuk ke stasiun</span>
+        </button>
+        <button class="menu-btn" data-game="tebaksuara">
+          <span class="emoji">🔔</span><span class="label">Tebak Suara</span><span class="desc">Klakson & suling</span>
         </button>
         <button class="menu-btn" data-game="angka">
           <span class="emoji">🔢</span><span class="label">Belajar Angka</span><span class="desc">1 2 3 Pintar</span>
@@ -537,7 +573,138 @@
         </div>
       </div>
     </section>
+
+    <!-- ===== GAME: TEBAK SUARA SULING KERETA ===== -->
+    <section id="game-tebaksuara" class="screen">
+      <div class="game-header">
+        <div class="header-nav-group">
+          <button class="back-btn" data-back-edu>⬅️ Menu Belajar</button>
+          <button class="home-icon-btn" data-back title="Ke Menu Utama">🏠</button>
+        </div>
+        <h2>🔔 Tebak Suara Suling & Klakson</h2>
+        <div class="score">⭐ Skor: <span id="tebaksuara-score">0</span></div>
+      </div>
+      <p class="hint">Dengarkan suaranya, lalu tebak lokomotif mana yang membunyikannya!</p>
+      
+      <div class="tebaksuara-container">
+        <div class="mystery-speaker-box">
+          <div class="mystery-sound-waves" id="mystery-waves">
+            <span></span><span></span><span></span><span></span><span></span>
+          </div>
+          <button id="btn-play-mystery-sound" class="giant-speaker-btn">
+            <span class="speaker-icon">🔊</span>
+            <span class="speaker-text">PENCET DENGAR SUARA</span>
+          </button>
+          <span class="mystery-badge" id="mystery-round-label">Tebakan 1 / 5</span>
+        </div>
+
+        <div class="tebaksuara-choices-grid" id="tebaksuara-choices">
+          <!-- Render dinamis 4 lokomotif pilihan -->
+        </div>
+      </div>
+
+      <div id="tebaksuara-win" class="win-overlay hidden">
+        <div class="win-card">
+          <div class="win-emoji">🏆</div>
+          <h2>Telinga Emas Masinis!</h2>
+          <p>Luar biasa! Adik berhasil menebak semua klakson & suling kereta KAI!</p>
+          <button class="play-again" data-replay="tebaksuara">Main Lagi 🔄</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== MODAL: PASPOR MASINIS KAI (CAP STASIUN JAWA) ===== -->
+    <div id="modal-passport" class="win-overlay hidden">
+      <div class="passport-card">
+        <div class="passport-header">
+          <div class="passport-header-content">
+            <div class="passport-badge-flag">🇮🇩 PT KERETA API INDONESIA</div>
+            <h2>📖 Paspor Masinis Cilik</h2>
+            <p>Kumpulkan cap resmi stasiun di Pulau Jawa saat keretamu singgah!</p>
+          </div>
+          <button id="btn-close-passport" class="passport-close-btn" title="Tutup Paspor">✖</button>
+        </div>
+
+        <div class="passport-grid">
+          <!-- STASIUN GAMBIR (JAKARTA) -->
+          <div class="passport-stamp-card" id="stamp-card-gambir">
+            <div class="stamp-card-top">
+              <span class="stamp-city-icon">🏛️</span>
+              <div class="stamp-meta">
+                <span class="city-tag">DKI JAKARTA</span>
+                <strong>Stasiun Gambir</strong>
+              </div>
+            </div>
+            <div class="stamp-seal-spot" id="seal-gambir">
+              <span class="stamp-seal-empty">Belum Singgah</span>
+            </div>
+          </div>
+
+          <!-- STASIUN BANDUNG (JAWA BARAT) -->
+          <div class="passport-stamp-card" id="stamp-card-bandung">
+            <div class="stamp-card-top">
+              <span class="stamp-city-icon">🌸</span>
+              <div class="stamp-meta">
+                <span class="city-tag">JAWA BARAT</span>
+                <strong>Stasiun Bandung</strong>
+              </div>
+            </div>
+            <div class="stamp-seal-spot" id="seal-bandung">
+              <span class="stamp-seal-empty">Belum Singgah</span>
+            </div>
+          </div>
+
+          <!-- STASIUN TUGU (YOGYAKARTA) -->
+          <div class="passport-stamp-card" id="stamp-card-tugu">
+            <div class="stamp-card-top">
+              <span class="stamp-city-icon">🕌</span>
+              <div class="stamp-meta">
+                <span class="city-tag">D.I. YOGYAKARTA</span>
+                <strong>Stasiun Tugu</strong>
+              </div>
+            </div>
+            <div class="stamp-seal-spot" id="seal-tugu">
+              <span class="stamp-seal-empty">Belum Singgah</span>
+            </div>
+          </div>
+
+          <!-- STASIUN SURABAYA GUBENG (JAWA TIMUR) -->
+          <div class="passport-stamp-card" id="stamp-card-gubeng">
+            <div class="stamp-card-top">
+              <span class="stamp-city-icon">🦈</span>
+              <div class="stamp-meta">
+                <span class="city-tag">JAWA TIMUR</span>
+                <strong>Surabaya Gubeng</strong>
+              </div>
+            </div>
+            <div class="stamp-seal-spot" id="seal-gubeng">
+              <span class="stamp-seal-empty">Belum Singgah</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="passport-footer">
+          <div class="passport-progress-info">
+            <span id="passport-count-label">Cap Terkumpul: 0 / 4 Stasiun</span>
+            <div class="passport-bar-track">
+              <div id="passport-bar-fill" class="passport-bar-fill" style="width: 0%;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL TROPHY LENGKAP PASPOR -->
+    <div id="modal-passport-trophy" class="win-overlay hidden">
+      <div class="win-card trophy-card">
+        <div class="win-emoji">🌟🏆🌟</div>
+        <h2>MASINIS UTAMA NUSANTARA!</h2>
+        <p>Luar biasa! Adik telah mengumpulkan seluruh cap stasiun lintas Pulau Jawa!</p>
+        <div class="trophy-stars">⭐⭐⭐⭐⭐</div>
+        <button id="btn-close-trophy" class="play-again">Terima Piala Emas! 🎖️</button>
+      </div>
+    </div>
   </div>
-  <script src="game.js?v=3.6"></script>
+  <script src="game.js?v=3.7"></script>
 </body>
 </html>
