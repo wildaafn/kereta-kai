@@ -14,7 +14,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Baloo+2:wght@600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=3.2" />
+  <link rel="stylesheet" href="style.css?v=3.3" />
 </head>
 <body>
   <div id="app">
@@ -194,98 +194,132 @@
     <section id="screen-drive" class="screen">
       <!-- HEADER DRIVE STATUS -->
       <div class="drive-header">
-        <button class="back-btn" data-back>⬅️ Rumah</button>
-        <button class="mini-tool-btn" id="btn-open-bengkel-from-drive">🛠️ Ganti Kereta</button>
+        <div class="header-left-actions">
+          <button class="back-btn" data-back>⬅️ Rumah</button>
+          <button class="mini-tool-btn" id="btn-open-bengkel-from-drive">🛠️ Ganti Kereta</button>
+        </div>
         
         <div class="drive-stats">
-          <div class="stat-pill"><span id="drive-speed-display">0</span> <small>km/h</small></div>
-          <div class="stat-pill" id="drive-station-pill">📍 <span id="drive-next-station">Stasiun Gambir</span></div>
-          <div class="stat-pill" id="drive-passenger-pill">🐾 <span id="drive-passengers-count">0</span> Penumpang</div>
+          <div class="stat-pill speed-pill"><span id="drive-speed-display">0</span> <small>km/h</small></div>
+          <div class="stat-pill station-pill" id="drive-station-pill">📍 <span id="drive-next-station">Stasiun Gambir</span></div>
+          <div class="stat-pill passenger-pill" id="drive-passenger-pill">🐾 <span id="drive-passengers-count">0</span> Penumpang</div>
+          <div class="stat-pill star-pill">⭐ <span id="drive-stars-count">0</span> Bintang</div>
         </div>
 
         <div class="drive-env-toggles">
-          <button id="btn-env-time" class="time-btn" title="Ganti Waktu">☀️</button>
+          <button id="btn-env-time" class="time-btn" title="Ganti Waktu Siang / Sore / Malam">☀️</button>
         </div>
       </div>
 
-      <!-- DUNIA REL DINAMIS (PARALLAX & INTERACTIVE CANVAS) -->
+      <!-- DUNIA REL DINAMIS (PARALLAX & LIVING INDONESIAN WORLD) -->
       <div id="drive-world" class="drive-world time-day">
         <!-- LANGIT & MATAHARI/BULAN -->
         <div class="drive-sky">
-          <div class="drive-sun-moon"></div>
+          <div class="drive-sun-moon" id="world-sun-moon"></div>
           <div class="drive-clouds">
-            <div class="dcloud dc1"></div>
-            <div class="dcloud dc2"></div>
-            <div class="dcloud dc3"></div>
+            <div class="dcloud dc1" data-interactive="cloud"></div>
+            <div class="dcloud dc2" data-interactive="cloud"></div>
+            <div class="dcloud dc3" data-interactive="cloud"></div>
+          </div>
+          <!-- Burung-burung terbang di langit -->
+          <div class="drive-birds-flock" id="drive-birds">
+            <span class="bird b1">🕊️</span>
+            <span class="bird b2">🕊️</span>
+            <span class="bird b3">🕊️</span>
           </div>
           <div class="drive-stars"></div>
         </div>
 
-        <!-- GUNUNG & ALAM INDONESIA -->
-        <div class="drive-mountains"></div>
-        <div class="drive-hills"></div>
+        <!-- LAPISAN PARALLAX ALAM INDONESIA -->
+        <!-- 1. Pegunungan Jauh (Gunung Merapi & Sindoro) -->
+        <div class="drive-mountains-far" id="parallax-mountains"></div>
+        <!-- 2. Perbukitan Sawah Terasering Hijau -->
+        <div class="drive-hills-near" id="parallax-hills"></div>
+        
+        <!-- 3. LAYER OBJEK PINGGIR REL (POHON, STASIUN, HEWAN, JEMBATAN, TEROWONGAN) -->
         <div class="drive-scenery-layer" id="drive-scenery"></div>
 
-        <!-- REL KERETA -->
+        <!-- REL KERETA API & BANTALAN BETON -->
         <div class="drive-track-wrapper">
+          <div class="drive-catenary-wire"></div>
           <div class="drive-rails"></div>
+          
           <!-- KERETA PEMAIN -->
           <div id="drive-train-container" class="drive-train-container">
             <!-- Lokomotif + Gerbong dinamis -->
           </div>
         </div>
 
-        <!-- OVERLAY TEROWONGAN GELAP -->
-        <div id="drive-tunnel-overlay" class="tunnel-darkness hidden"></div>
+        <!-- OVERLAY TEROWONGAN GELAP DENGAN LAMPU DINDING -->
+        <div id="drive-tunnel-overlay" class="tunnel-darkness hidden">
+          <div class="tunnel-interior-lights">
+            <span class="t-lamp">💡</span><span class="t-lamp">💡</span><span class="t-lamp">💡</span>
+          </div>
+        </div>
 
-        <!-- POPUP STASIUN (ANGKUT PENUMPANG) -->
+        <!-- POPUP INTERAKTIF STASIUN (NAIKKAN PENUMPANG) -->
         <div id="station-arrival-banner" class="station-banner hidden">
           <div class="station-banner-card">
             <div class="st-icon">🚉</div>
             <div class="st-text">
               <h3 id="station-name-text">Tiba di Stasiun Gambir!</h3>
-              <p>Tekan tombol untuk menaikkan penumpang lucu!</p>
+              <p>Hewan-hewan lucu sedang antre di peron stasiun!</p>
             </div>
             <button id="btn-board-passengers" class="board-btn">🐾 Naikkan Penumpang!</button>
           </div>
         </div>
 
-        <!-- POPUP PERLINTASAN (JPL) -->
+        <!-- INDIKATOR PERLINTASAN SEBIDANG (JPL) -->
         <div id="jpl-sign-indicator" class="jpl-indicator hidden">
           <div class="jpl-lights">
             <span class="jpl-light red l1"></span>
             <span class="jpl-light red l2"></span>
           </div>
-          <div class="jpl-text">PALANG PINTU TURUN! 🚨</div>
+          <div class="jpl-text">PALANG PINTU JPL TURUN! 🚨</div>
         </div>
       </div>
 
-      <!-- KOKPIT KONTROL MASINIS -->
+      <!-- KOKPIT KONTROL MASINIS PREMIUM -->
       <div class="driver-cockpit">
-        <!-- TUAS GAS / SPEED LEVER -->
+        <!-- SPEEDOMETER DIAL -->
+        <div class="cockpit-gauge-box">
+          <div class="gauge-arc">
+            <div class="gauge-needle" id="gauge-needle"></div>
+            <div class="gauge-hub"></div>
+          </div>
+          <div class="gauge-readout">
+            <span class="gauge-number" id="cockpit-kmh-val">0</span>
+            <span class="gauge-unit">KM/H</span>
+          </div>
+        </div>
+
+        <!-- TUAS GAS MASINIS (THROTTLE) -->
         <div class="cockpit-lever-box">
-          <label>TUAS GAS MASINIS</label>
+          <div class="lever-title-bar">
+            <label>TUAS GAS MASINIS</label>
+            <span class="notch-badge" id="throttle-status-badge">🛑 BERHENTI</span>
+          </div>
           <div class="lever-track">
             <input type="range" id="throttle-slider" min="0" max="3" step="1" value="0" />
             <div class="lever-marks">
-              <span>🛑 Rem</span>
-              <span>🐢 Pelan</span>
-              <span>🚗 Sedang</span>
-              <span>🚀 Cepat</span>
+              <span class="mark-stop">🛑 Rem</span>
+              <span class="mark-slow">🐢 Pelan</span>
+              <span class="mark-mid">🚗 Sedang</span>
+              <span class="mark-fast">🚀 Cepat</span>
             </div>
           </div>
         </div>
 
         <!-- TOMBOL KLAKSON BESAR SEMBOYAN 35 KAI -->
         <div class="cockpit-horn-box">
-          <button id="btn-horn-kai" class="giant-horn-btn">
+          <button id="btn-horn-kai" class="giant-horn-btn" title="Pencet Klakson Semboyan 35!">
             <div class="horn-icon">📢</div>
             <div class="horn-label">KLAKSON KAI</div>
             <small>Semboyan 35</small>
           </button>
         </div>
 
-        <!-- AKSESORIS LAINNYA -->
+        <!-- AKSESORIS KOKPIT LAINNYA -->
         <div class="cockpit-actions">
           <button id="btn-toggle-light" class="cockpit-btn light-btn">
             💡 Lampu Depan
@@ -493,6 +527,6 @@
       </div>
     </section>
   </div>
-  <script src="game.js?v=3.2"></script>
+  <script src="game.js?v=3.3"></script>
 </body>
 </html>

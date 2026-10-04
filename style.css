@@ -297,277 +297,429 @@ body {
 }
 .drive-world.time-day {
   background: linear-gradient(180deg, #60a5fa 0%, #bae6fd 60%, #86efac 60%, #4ade80 100%);
+/* ===== PETUALANGAN NYETIR KERETA (DRIVE SIMULATOR STUDIO GRADE) ===== */
+#screen-drive {
+  position: absolute; inset: 0; display: none; flex-direction: column;
+  background: #0f172a; overflow: hidden;
 }
-.drive-world.time-sunset {
-  background: linear-gradient(180deg, #f97316 0%, #fde047 60%, #a3e635 60%, #65a30d 100%);
+#screen-drive.active { display: flex; }
+
+.drive-header {
+  position: relative; z-index: 15; background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.15);
+  padding: 8px 16px; display: flex; align-items: center; justify-content: space-between;
+  gap: 10px;
 }
-.drive-world.time-night {
-  background: linear-gradient(180deg, #090d16 0%, #1e293b 60%, #064e3b 60%, #022c22 100%);
+.header-left-actions { display: flex; align-items: center; gap: 8px; }
+
+.drive-stats {
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: center;
 }
-.drive-world.time-night .drive-sun-moon {
-  background: #fef08a; box-shadow: 0 0 35px #fef08a; border-radius: 50%;
+.stat-pill {
+  background: #ffffff; color: #0d47a1; font-weight: 800; font-size: 13px;
+  padding: 5px 12px; border-radius: 14px; box-shadow: 0 3px 6px rgba(0,0,0,.15);
+  display: flex; align-items: center; gap: 4px;
 }
-.drive-world.time-night .drive-stars { display: block; }
-.drive-stars {
-  display: none; position: absolute; inset: 0; height: 60%;
-  background-image: radial-gradient(2px 2px at 20px 30px, #fff, rgba(0,0,0,0)),
-                    radial-gradient(2px 2px at 90px 40px, #fff, rgba(0,0,0,0)),
-                    radial-gradient(1.5px 1.5px at 160px 20px, #fff, rgba(0,0,0,0)),
-                    radial-gradient(2px 2px at 240px 70px, #fff, rgba(0,0,0,0)),
-                    radial-gradient(1px 1px at 320px 40px, #fff, rgba(0,0,0,0));
-  background-repeat: repeat; background-size: 350px 150px;
+.speed-pill { background: #0284c7; color: #fff; font-size: 14px; font-weight: 900; }
+.speed-pill small { font-size: 10px; opacity: .85; }
+.station-pill { background: #f8fafc; color: #0f172a; border: 2px solid #38bdf8; }
+.passenger-pill { background: #dcfce7; color: #15803d; border: 2px solid #86efac; }
+.star-pill { background: #fef08a; color: #a16207; border: 2px solid #facc15; font-weight: 900; }
+
+.time-btn {
+  background: #ffffff; border: 2px solid #f59e0b; border-radius: 50%;
+  width: 40px; height: 40px; font-size: 20px; display: flex;
+  align-items: center; justify-content: center; cursor: pointer;
+  box-shadow: 0 3px 0 #d97706; transition: transform .1s;
+}
+.time-btn:active { transform: scale(0.92); }
+
+/* DUNIA REL DINAMIS */
+.drive-world {
+  flex: 1; position: relative; overflow: hidden;
+  transition: background 1.2s ease;
+}
+.drive-world.rumble {
+  animation: screen-rumble .4s ease-out;
+}
+@keyframes screen-rumble {
+  0%, 100% { transform: translateY(0); }
+  20% { transform: translateY(-4px) rotate(-0.3deg); }
+  40% { transform: translateY(3px) rotate(0.3deg); }
+  60% { transform: translateY(-2px); }
+  80% { transform: translateY(1px); }
 }
 
+/* WAKTU: SIANG (DAY) */
+.drive-world.time-day {
+  background: linear-gradient(180deg, #38bdf8 0%, #7dd3fc 45%, #bae6fd 60%, #bbf7d0 60%, #4ade80 80%, #22c55e 100%);
+}
+/* WAKTU: SUNSET */
+.drive-world.time-sunset {
+  background: linear-gradient(180deg, #7c3aed 0%, #ea580c 40%, #fb923c 60%, #fed7aa 60%, #84cc16 80%, #4d7c0f 100%);
+}
+/* WAKTU: MALAM (NIGHT) */
+.drive-world.time-night {
+  background: linear-gradient(180deg, #090d16 0%, #0f172a 45%, #1e293b 60%, #064e3b 60%, #022c22 100%);
+}
+
+/* LANGIT & SURYA / REMBULAN */
 .drive-sky { position: absolute; inset: 0; height: 60%; overflow: hidden; pointer-events: none; }
 .drive-sun-moon {
-  position: absolute; top: 16px; right: 40px; width: 60px; height: 60px;
-  background: radial-gradient(circle, #fde047, #f59e0b); border-radius: 50%;
-  box-shadow: 0 0 30px #fde047; transition: all 1s ease;
+  position: absolute; top: 16px; right: 45px; width: 68px; height: 68px;
+  border-radius: 50%; transition: all 1s ease;
 }
-.drive-clouds .dcloud { position: absolute; background: rgba(255,255,255,.9); border-radius: 40px; }
-.dc1 { width: 100px; height: 30px; top: 40px; left: 15%; animation: drift 35s linear infinite; }
-.dc2 { width: 130px; height: 38px; top: 90px; left: 60%; animation: drift 45s linear infinite; }
-.dc3 { width: 80px; height: 26px; top: 20px; left: 40%; animation: drift 28s linear infinite; }
+.time-day .drive-sun-moon {
+  background: radial-gradient(circle, #fef08a 25%, #f59e0b 80%);
+  box-shadow: 0 0 45px #fde047, 0 0 90px rgba(250, 204, 21, 0.4);
+}
+.time-sunset .drive-sun-moon {
+  background: radial-gradient(circle, #fde047 15%, #ea580c 85%);
+  box-shadow: 0 0 50px #ea580c; top: 38px; right: 90px;
+}
+.time-night .drive-sun-moon {
+  background: radial-gradient(circle, #ffffff 40%, #fef08a 85%);
+  box-shadow: 0 0 35px #fef08a; top: 18px; right: 50px;
+}
 
-/* Parallax Scenery */
-.drive-mountains {
-  position: absolute; bottom: 40%; left: 0; right: 0; height: 110px;
-  background-image: radial-gradient(circle at 50% 120%, #3b82f6 0%, transparent 70%),
-                    radial-gradient(circle at 20% 130%, #2563eb 0%, transparent 65%),
-                    radial-gradient(circle at 80% 130%, #1d4ed8 0%, transparent 65%);
-  opacity: .35; pointer-events: none;
+/* Bintang Malam Hari */
+.drive-stars {
+  display: none; position: absolute; inset: 0; height: 60%;
+  background-image: radial-gradient(2px 2px at 20px 30px, #fff, transparent),
+                    radial-gradient(2px 2px at 90px 40px, #fde047, transparent),
+                    radial-gradient(1.5px 1.5px at 160px 20px, #fff, transparent),
+                    radial-gradient(2.5px 2.5px at 240px 70px, #fef08a, transparent),
+                    radial-gradient(1px 1px at 320px 40px, #fff, transparent);
+  background-repeat: repeat; background-size: 300px 140px;
 }
-.drive-hills {
-  position: absolute; bottom: 38%; left: 0; right: 0; height: 60px;
-  background: radial-gradient(ellipse at 50% 100%, #22c55e 0%, transparent 70%);
-  opacity: .5; pointer-events: none;
+.time-night .drive-stars { display: block; animation: twinkle-stars 3s infinite ease-in-out alternate; }
+@keyframes twinkle-stars { 0% { opacity: 0.6; } 100% { opacity: 1; } }
+
+/* Awan Interaktif */
+.drive-clouds .dcloud {
+  position: absolute; background: rgba(255,255,255,.92); border-radius: 40px;
+  cursor: pointer; pointer-events: auto; transition: transform .2s ease;
 }
+.dcloud:active { transform: scale(1.15); }
+.dcloud::before, .dcloud::after { content: ""; position: absolute; background: rgba(255,255,255,.92); border-radius: 50%; }
+.dc1 { width: 110px; height: 34px; top: 36px; left: 12%; animation: drift 35s linear infinite; }
+.dc2 { width: 145px; height: 42px; top: 85px; left: 55%; animation: drift 45s linear infinite; }
+.dc3 { width: 85px; height: 28px; top: 22px; left: 38%; animation: drift 28s linear infinite; }
+.dc1::before { width: 44px; height: 44px; top: -18px; left: 16px; }
+.dc2::before { width: 55px; height: 55px; top: -22px; left: 22px; }
+.dc3::before { width: 34px; height: 34px; top: -14px; left: 12px; }
+
+/* Burung Terbang */
+.drive-birds-flock {
+  position: absolute; top: 60px; left: -100px; display: flex; gap: 14px;
+  font-size: 20px; animation: birds-fly 26s linear infinite; pointer-events: none;
+}
+@keyframes birds-fly {
+  0% { transform: translate(-50px, 0); }
+  50% { transform: translate(55vw, -25px); }
+  100% { transform: translate(110vw, -10px); }
+}
+
+/* 1. GUNUNG MAJESTIK INDONESIA (MERAPI & SINDORO SILHOUETTES) */
+.drive-mountains-far {
+  position: absolute; bottom: 40%; left: 0; right: 0; height: 140px;
+  background-image: 
+    radial-gradient(ellipse at 25% 100%, #1e40af 0%, #1e3a8a 45%, transparent 70%),
+    radial-gradient(ellipse at 75% 100%, #1d4ed8 0%, #172554 48%, transparent 72%),
+    radial-gradient(ellipse at 50% 115%, #2563eb 0%, transparent 65%);
+  opacity: .55; pointer-events: none; transition: opacity .8s;
+}
+.time-sunset .drive-mountains-far {
+  background-image: 
+    radial-gradient(ellipse at 25% 100%, #6b21a8 0%, #4c1d95 45%, transparent 70%),
+    radial-gradient(ellipse at 75% 100%, #581c87 0%, #3b0764 48%, transparent 72%);
+  opacity: .75;
+}
+.time-night .drive-mountains-far {
+  background-image: 
+    radial-gradient(ellipse at 25% 100%, #0f172a 0%, #020617 50%, transparent 70%),
+    radial-gradient(ellipse at 75% 100%, #0f172a 0%, #020617 50%, transparent 70%);
+  opacity: .9;
+}
+
+/* 2. PERBUKITAN SAWAH TERASERING HIJAU */
+.drive-hills-near {
+  position: absolute; bottom: 38%; left: 0; right: 0; height: 80px;
+  background: 
+    radial-gradient(ellipse at 15% 100%, #4ade80 0%, #16a34a 60%, transparent 75%),
+    radial-gradient(ellipse at 55% 100%, #22c55e 0%, #15803d 60%, transparent 75%),
+    radial-gradient(ellipse at 88% 100%, #4ade80 0%, #16a34a 60%, transparent 75%);
+  opacity: .85; pointer-events: none;
+}
+.time-sunset .drive-hills-near { filter: hue-rotate(-20deg) brightness(0.9); }
+.time-night .drive-hills-near { filter: brightness(0.35); }
+
+/* 3. LAYER OBJEK PINGGIR REL */
 .drive-scenery-layer {
-  position: absolute; bottom: 35px; left: 0; right: 0; height: 200px;
-  pointer-events: auto; overflow: hidden;
+  position: absolute; bottom: 35px; left: 0; right: 0; height: 220px;
+  pointer-events: auto; overflow: hidden; z-index: 6;
 }
 
-/* TRACK AND TRAIN */
+/* REL KERETA & BANTALAN BETON KAI */
 .drive-track-wrapper {
   position: absolute; bottom: 0; left: 0; right: 0; height: 115px;
   display: flex; flex-direction: column; justify-content: flex-end;
+  z-index: 8;
+}
+.drive-catenary-wire {
+  position: absolute; top: 12px; left: 0; right: 0; height: 2px;
+  background: rgba(148, 163, 184, 0.4);
 }
 .drive-rails {
-  height: 22px; width: 100%;
-  background: repeating-linear-gradient(90deg, #451a03 0 12px, transparent 12px 28px),
-              linear-gradient(180deg, #64748b 0 4px, transparent 4px 14px, #475569 14px 18px),
-              #94a3b8;
-  border-top: 3px solid #334155;
+  height: 24px; width: 100%;
+  background: repeating-linear-gradient(90deg, #1e293b 0 14px, #475569 14px 28px, #334155 28px 40px),
+              linear-gradient(180deg, #94a3b8 0 4px, transparent 4px 14px, #64748b 14px 18px),
+              #cbd5e1;
+  border-top: 3px solid #0f172a; box-shadow: inset 0 3px 6px rgba(0,0,0,.4);
 }
+
+/* KERETA PEMAIN */
 .drive-train-container {
   display: flex; align-items: flex-end; gap: 3px; position: absolute;
-  bottom: 18px; left: 18%; z-index: 8;
-  transform-origin: bottom center;
+  bottom: 18px; left: 16%; z-index: 10; transform-origin: bottom center;
 }
 .drive-train-container.bouncing {
-  animation: train-chug-bounce .3s infinite alternate ease-in-out;
+  animation: train-chug-bounce .24s infinite alternate ease-in-out;
 }
 @keyframes train-chug-bounce {
   0% { transform: translateY(0); }
-  100% { transform: translateY(-3px); }
+  100% { transform: translateY(-4px); }
 }
 
-/* Headlight beam on train */
+/* SOROT LAMPU DEPAN (VOLUMETRIC HEADLIGHT BEAM) */
 .headlight-cone {
-  position: absolute; right: -160px; bottom: 20px; width: 170px; height: 50px;
-  background: linear-gradient(90deg, rgba(254, 240, 138, 0.85) 0%, rgba(254, 240, 138, 0) 100%);
-  clip-path: polygon(0% 40%, 100% 0%, 100% 100%, 0% 60%);
-  pointer-events: none; display: none; z-index: 7;
+  position: absolute; right: -220px; bottom: 18px; width: 230px; height: 75px;
+  background: linear-gradient(90deg, rgba(254, 240, 138, 0.95) 0%, rgba(254, 240, 138, 0.4) 60%, rgba(254, 240, 138, 0) 100%);
+  clip-path: polygon(0% 45%, 100% 0%, 100% 100%, 0% 55%);
+  pointer-events: none; display: none; z-index: 9;
+  filter: drop-shadow(0 0 15px rgba(254, 240, 138, 0.6));
 }
 .headlight-active .headlight-cone { display: block; }
 
-/* SCENERY OBJECTS IN WORLD */
+/* OBJEK SCENERY DI SEPANJANG JALUR */
 .scenery-item {
   position: absolute; bottom: 0; transition: transform .05s linear;
 }
-/* Station */
+
+/* STASIUN OTENTIK KAI INDONESIA */
 .st-station {
-  width: 220px; height: 130px; display: flex; flex-direction: column;
-  align-items: center; justify-content: flex-end;
+  width: 280px; height: 155px; display: flex; flex-direction: column;
+  align-items: center; justify-content: flex-end; position: relative;
 }
-.st-roof {
-  width: 210px; height: 24px; background: #e11d48; border-radius: 8px 8px 0 0;
-  box-shadow: 0 4px 0 #9f1239;
+.st-roof-canopy {
+  width: 270px; height: 32px; background: linear-gradient(180deg, #e11d48 0%, #be123c 100%);
+  border-radius: 10px 10px 0 0; border: 3px solid #881337;
+  box-shadow: 0 4px 10px rgba(0,0,0,.25); position: relative;
 }
-.st-body {
-  width: 190px; height: 75px; background: #ffffff; border: 4px solid #cbd5e1;
+.st-station-clock {
+  position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+  width: 24px; height: 24px; background: #ffffff; border: 2px solid #0f172a;
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 900;
+}
+.st-building-facade {
+  width: 245px; height: 86px; background: linear-gradient(180deg, #ffffff 0%, #f1f5f9 100%);
+  border: 4px solid #334155; border-radius: 0 0 8px 8px;
   display: flex; flex-direction: column; align-items: center; padding-top: 6px;
   position: relative;
 }
-.st-sign {
+.st-signboard {
   background: #0d47a1; color: #fff; font-weight: 900; font-size: 13px;
-  padding: 2px 14px; border-radius: 6px; border: 2px solid #ffcf3f;
+  padding: 3px 16px; border-radius: 8px; border: 2px solid #facc15;
+  box-shadow: 0 2px 4px rgba(0,0,0,.2);
 }
-.st-flag { position: absolute; top: -20px; right: 10px; font-size: 18px; }
-.st-passengers-waiting { display: flex; gap: 8px; font-size: 26px; margin-top: 8px; }
-
-/* Railway Crossing JPL */
-.st-jpl { width: 120px; height: 130px; position: relative; }
-.jpl-post {
-  position: absolute; bottom: 0; left: 40px; width: 10px; height: 95px;
-  background: repeating-linear-gradient(180deg, #000 0 10px, #fff 10px 20px);
-  border-radius: 4px;
+.st-platform-deck {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  width: 90%; margin-top: auto; padding-bottom: 4px;
 }
-.jpl-cross {
-  position: absolute; top: 15px; left: 24px; width: 42px; height: 42px;
-  font-weight: 900; font-size: 26px; color: #e11d48; line-height: 1; text-align: center;
+.st-master-ppka {
+  font-size: 32px; cursor: pointer; transform-origin: bottom center;
+  animation: ppka-wave 2s infinite ease-in-out;
 }
-.jpl-lights-box {
-  position: absolute; top: 40px; left: 20px; display: flex; gap: 10px;
-  background: #1e293b; padding: 4px 6px; border-radius: 8px;
+@keyframes ppka-wave {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(-12deg); }
 }
-.jpl-bulb {
-  width: 12px; height: 12px; border-radius: 50%; background: #475569;
+.st-waiting-animals {
+  display: flex; gap: 6px; font-size: 26px; cursor: pointer;
 }
-.jpl-active .jpl-bulb.b1 { animation: flash-red 0.6s infinite alternate; }
-.jpl-active .jpl-bulb.b2 { animation: flash-red 0.6s infinite alternate-reverse; }
-@keyframes flash-red {
-  0% { background: #475569; box-shadow: none; }
-  100% { background: #ef4444; box-shadow: 0 0 10px #ef4444; }
+.st-waiting-animals span {
+  display: inline-block; transition: transform .2s ease;
 }
-.jpl-bar {
-  position: absolute; bottom: 25px; left: 45px; width: 80px; height: 8px;
-  background: repeating-linear-gradient(90deg, #ef4444 0 10px, #fff 10px 20px);
-  border-radius: 4px; transform-origin: left center; transition: transform .6s ease;
-  transform: rotate(-75deg);
-}
-.jpl-active .jpl-bar { transform: rotate(0deg); }
-.jpl-cars {
-  position: absolute; bottom: 4px; right: -75px; font-size: 32px; display: flex; gap: 4px;
+.st-waiting-animals span:hover {
+  transform: translateY(-8px) scale(1.2);
 }
 
-/* Bridge */
-.st-bridge {
-  width: 260px; height: 80px; border-top: 6px solid #e11d48;
-  display: flex; justify-content: space-around; align-items: flex-end;
+/* TIANG SINYAL SEMBOYAN & TIANG LISTRIK ALIRAN ATAS (LAA) */
+.st-telegraph-pole {
+  width: 24px; height: 160px; position: relative;
 }
-.bridge-girder {
-  width: 14px; height: 60px; background: #9f1239; border-radius: 4px;
+.pole-wood {
+  width: 8px; height: 140px; background: #475569; border-radius: 4px;
+  position: absolute; bottom: 0; left: 8px;
 }
-.bridge-river {
-  position: absolute; bottom: -15px; left: -20px; right: -20px; height: 40px;
-  background: #38bdf8; border-radius: 20px; opacity: .8;
-}
-
-/* Tunnel */
-.st-tunnel { width: 180px; height: 145px; position: relative; }
-.tunnel-rock {
-  width: 180px; height: 145px; background: #334155; border-radius: 90px 90px 0 0;
-  box-shadow: inset 0 -10px #1e293b;
-}
-.tunnel-hole {
-  position: absolute; bottom: 0; left: 25px; width: 130px; height: 110px;
-  background: #090d16; border-radius: 65px 65px 0 0;
+.pole-crossbar {
+  width: 32px; height: 6px; background: #64748b; border-radius: 3px;
+  position: absolute; top: 22px; left: -4px;
 }
 
-/* Balloon / Star collectible */
+/* HEWAN DI PADANG RUMPUT (INTERAKTIF: BISA DIKLIK!) */
+.st-animal-pasture {
+  position: relative; font-size: 34px; cursor: pointer;
+  transition: transform .15s ease;
+}
+.st-animal-pasture:hover { transform: scale(1.25); }
+.st-animal-pasture.jump { animation: animal-jump .35s ease; }
+@keyframes animal-jump {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-20px) scale(1.2); }
+  100% { transform: translateY(0); }
+}
+
+/* POHON KELAPA & BERINGIN */
+.st-tree-item {
+  position: relative; font-size: 52px; pointer-events: none;
+  filter: drop-shadow(0 4px 6px rgba(0,0,0,.2));
+}
+
+/* KINCIR ANGIN BERPUTAR (WINDMILL) */
+.st-windmill {
+  width: 70px; height: 130px; position: relative; cursor: pointer;
+}
+.windmill-tower {
+  width: 38px; height: 80px; background: #e2e8f0; border: 3px solid #475569;
+  border-radius: 6px 6px 0 0; position: absolute; bottom: 0; left: 16px;
+}
+.windmill-blades {
+  position: absolute; top: 38px; left: 35px; width: 60px; height: 60px;
+  font-size: 42px; line-height: 1; transform-origin: center center;
+  animation: spin-windmill 6s infinite linear;
+}
+@keyframes spin-windmill {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* BINTANG & BALON KOLEKSI */
 .collectible-star {
-  position: absolute; font-size: 30px; cursor: pointer;
+  position: absolute; font-size: 32px; cursor: pointer; z-index: 7;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,.25));
   animation: float-collectible 1.5s infinite ease-in-out alternate;
 }
 @keyframes float-collectible {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(-12px); }
+  0% { transform: translateY(0) scale(1); }
+  100% { transform: translateY(-14px) scale(1.1); }
 }
 
-/* Dark Tunnel Overlay */
-.tunnel-darkness {
-  position: absolute; inset: 0; background: rgba(0,0,0,0.85);
-  pointer-events: none; z-index: 9; transition: opacity .4s ease;
-}
-.tunnel-darkness.hidden { opacity: 0; }
-
-/* Station Arrival Banner */
+/* POPUP STASIUN */
 .station-banner {
-  position: absolute; top: 20px; left: 50%; transform: translateX(-50%);
-  z-index: 12; animation: pop .3s ease;
+  position: absolute; top: 18px; left: 50%; transform: translateX(-50%);
+  z-index: 16; animation: pop .35s ease;
 }
 .station-banner.hidden { display: none; }
 .station-banner-card {
-  background: #ffffff; border: 4px solid #0d47a1; border-radius: 20px;
-  padding: 12px 20px; display: flex; align-items: center; gap: 14px;
-  box-shadow: 0 10px 25px rgba(0,0,0,.25);
+  background: #ffffff; border: 4px solid #0284c7; border-radius: 24px;
+  padding: 12px 24px; display: flex; align-items: center; gap: 16px;
+  box-shadow: 0 12px 30px rgba(0,0,0,.3);
 }
-.st-icon { font-size: 38px; }
-.st-text h3 { font-size: 16px; color: #0d47a1; }
-.st-text p { font-size: 12px; color: #64748b; }
+.st-icon { font-size: 42px; }
+.st-text h3 { font-size: 17px; color: #0d47a1; font-weight: 900; }
+.st-text p { font-size: 13px; color: #475569; font-weight: 700; }
 .board-btn {
-  background: #16a34a; color: #fff; font-weight: 900; font-size: 14px;
-  border: none; border-radius: 14px; padding: 10px 16px; cursor: pointer;
-  box-shadow: 0 4px 0 #14532d; white-space: nowrap;
+  background: linear-gradient(180deg, #22c55e 0%, #16a34a 100%);
+  color: #fff; font-weight: 900; font-size: 15px; border: none;
+  border-radius: 16px; padding: 12px 20px; cursor: pointer;
+  box-shadow: 0 5px 0 #14532d; white-space: nowrap; transition: transform .08s;
 }
-.board-btn:active { transform: translateY(3px); box-shadow: 0 1px 0 #14532d; }
+.board-btn:active { transform: translateY(3px); box-shadow: 0 2px 0 #14532d; }
 
-/* JPL Warning indicator */
-.jpl-indicator {
-  position: absolute; top: 20px; right: 20px; z-index: 12;
-  background: #1e293b; color: #fff; border-radius: 16px; padding: 8px 14px;
-  display: flex; align-items: center; gap: 10px; border: 3px solid #ef4444;
-  box-shadow: 0 6px 16px rgba(239, 68, 68, 0.4);
-}
-.jpl-indicator.hidden { display: none; }
-.jpl-lights { display: flex; gap: 6px; }
-.jpl-light { width: 14px; height: 14px; border-radius: 50%; background: #475569; }
-.jpl-light.l1 { animation: flash-red 0.5s infinite alternate; }
-.jpl-light.l2 { animation: flash-red 0.5s infinite alternate-reverse; }
-.jpl-text { font-size: 12px; font-weight: 900; color: #fca5a5; }
-
-/* DRIVER COCKPIT */
+/* KOKPIT KONTROL MASINIS PREMIUM (STUDIO QUALITY) */
 .driver-cockpit {
-  position: relative; z-index: 11; background: #0f172a;
-  border-top: 5px solid #ffcf3f; padding: 10px 16px 14px;
-  display: flex; align-items: center; justify-content: space-around; gap: 12px;
-  box-shadow: 0 -6px 20px rgba(0,0,0,.35);
+  position: relative; z-index: 20; background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+  border-top: 5px solid #facc15; padding: 10px 18px 14px;
+  display: flex; align-items: center; justify-content: space-around; gap: 14px;
+  box-shadow: 0 -8px 25px rgba(0,0,0,.45);
 }
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   .driver-cockpit { flex-wrap: wrap; padding: 8px; gap: 8px; }
 }
 
+/* SPEEDOMETER DIAL */
+.cockpit-gauge-box {
+  display: flex; align-items: center; gap: 10px;
+  background: #090d16; border: 3px solid #334155; border-radius: 20px;
+  padding: 6px 14px; box-shadow: inset 0 2px 8px rgba(0,0,0,.6);
+}
+.gauge-arc {
+  width: 50px; height: 50px; border-radius: 50%; border: 4px solid #38bdf8;
+  border-bottom-color: transparent; position: relative;
+  display: flex; align-items: center; justify-content: center;
+}
+.gauge-needle {
+  position: absolute; bottom: 21px; left: 21px; width: 4px; height: 20px;
+  background: #ef4444; border-radius: 2px; transform-origin: bottom center;
+  transform: rotate(-110deg); transition: transform .3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.gauge-hub { width: 10px; height: 10px; background: #facc15; border-radius: 50%; z-index: 2; }
+.gauge-readout { display: flex; flex-direction: column; align-items: flex-start; }
+.gauge-number { font-size: 24px; font-weight: 900; color: #38bdf8; font-family: monospace; line-height: 1; }
+.gauge-unit { font-size: 10px; font-weight: 800; color: #94a3b8; }
+
+/* TUAS GAS MASINIS (NOTCH THROTTLE) */
 .cockpit-lever-box {
   display: flex; flex-direction: column; align-items: center; gap: 4px;
-  background: #1e293b; padding: 8px 14px; border-radius: 18px; border: 2px solid #334155;
-  flex: 1; max-width: 280px;
+  background: #090d16; padding: 8px 16px; border-radius: 20px;
+  border: 3px solid #334155; flex: 1; max-width: 320px;
 }
-.cockpit-lever-box label {
+.lever-title-bar {
+  display: flex; align-items: center; justify-content: space-between; width: 100%;
+}
+.lever-title-bar label {
   font-size: 11px; font-weight: 900; color: #38bdf8; letter-spacing: 0.5px;
+}
+.notch-badge {
+  font-size: 10px; font-weight: 900; background: #dc2626; color: #fff;
+  padding: 1px 8px; border-radius: 10px;
 }
 .lever-track { width: 100%; display: flex; flex-direction: column; gap: 4px; }
 #throttle-slider {
-  width: 100%; height: 20px; accent-color: #22c55e; cursor: pointer;
+  width: 100%; height: 22px; accent-color: #22c55e; cursor: pointer;
 }
 .lever-marks {
   display: flex; justify-content: space-between; font-size: 11px; font-weight: 800; color: #94a3b8;
 }
 
-/* Giant Horn Button */
+/* TOMBOL KLAKSON BESAR SEMBOYAN 35 KAI */
 .cockpit-horn-box { flex: 0 0 auto; }
 .giant-horn-btn {
-  background: radial-gradient(circle, #f59e0b 0%, #d97706 70%, #b45309 100%);
-  border: 5px solid #fef3c7; border-radius: 22px; width: 120px; height: 75px;
+  background: radial-gradient(circle, #f59e0b 0%, #d97706 70%, #9a3412 100%);
+  border: 5px solid #fef3c7; border-radius: 24px; width: 135px; height: 80px;
   color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center;
-  cursor: pointer; box-shadow: 0 7px 0 #78350f, 0 10px 18px rgba(245, 158, 11, 0.4);
-  transition: transform .08s;
+  cursor: pointer; box-shadow: 0 8px 0 #78350f, 0 12px 20px rgba(245, 158, 11, 0.4);
+  transition: transform .08s, box-shadow .08s;
 }
-.giant-horn-btn:active { transform: translateY(6px); box-shadow: 0 1px 0 #78350f; }
-.horn-icon { font-size: 26px; line-height: 1; }
-.horn-label { font-size: 13px; font-weight: 900; text-shadow: 0 1px 2px rgba(0,0,0,.4); }
-.giant-horn-btn small { font-size: 9px; opacity: .9; }
+.giant-horn-btn:active { transform: translateY(6px); box-shadow: 0 2px 0 #78350f; }
+.horn-icon { font-size: 28px; line-height: 1; filter: drop-shadow(0 2px 4px rgba(0,0,0,.3)); }
+.horn-label { font-size: 14px; font-weight: 900; text-shadow: 0 2px 3px rgba(0,0,0,.5); }
+.giant-horn-btn small { font-size: 10px; opacity: .9; font-weight: 800; }
 
 .cockpit-actions {
-  display: flex; gap: 6px; flex-wrap: wrap; justify-content: center;
+  display: flex; gap: 8px; flex-wrap: wrap; justify-content: center;
 }
 .cockpit-btn {
-  background: #334155; color: #f8fafc; font-weight: 800; font-size: 12px;
-  border: none; border-radius: 12px; padding: 8px 12px; cursor: pointer;
-  box-shadow: 0 3px 0 #1e293b; display: flex; align-items: center; gap: 4px;
+  background: #334155; color: #f8fafc; font-weight: 800; font-size: 13px;
+  border: none; border-radius: 14px; padding: 10px 14px; cursor: pointer;
+  box-shadow: 0 4px 0 #1e293b; display: flex; align-items: center; gap: 5px;
+  transition: transform .08s;
 }
 .cockpit-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 #1e293b; }
-.light-btn.active { background: #eab308; color: #000; box-shadow: 0 3px 0 #a16207; }
+.light-btn.active { background: #eab308; color: #000; box-shadow: 0 4px 0 #a16207; }
 
 /* ===== TRAIN GRAPHICS (REALISTIC SPRITES & CSS HYBRID) ===== */
 .train-unit {
