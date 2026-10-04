@@ -14,7 +14,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Baloo+2:wght@600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=3.0" />
+  <link rel="stylesheet" href="style.css?v=3.1" />
 </head>
 <body>
   <div id="app">
@@ -337,18 +337,34 @@
           <button class="back-btn" data-back-edu>⬅️ Menu Belajar</button>
           <button class="home-icon-btn" data-back title="Ke Menu Utama">🏠</button>
         </div>
-        <h2>🚃 Susun Gerbong</h2>
-        <div class="score">⭐ <span id="susun-score">0</span></div>
+        <h2>🚃 Susun Rangkaian Kereta KAI</h2>
+        <div class="score">⭐ <span id="susun-score">0</span> / 4</div>
       </div>
-      <p class="hint">Tarik gerbong ke tempat kosong di belakang lokomotif!</p>
-      <div id="susun-track" class="track-area"></div>
-      <div id="susun-yard" class="yard-area"></div>
+      <p class="hint">Tarik gerbong KAI di bawah ke sambungan rel di belakang Lokomotif CC 206!</p>
+      
+      <div class="susun-stage-container">
+        <!-- JALUR REL PERAKITAN -->
+        <div class="susun-track-bed">
+          <div class="susun-rail-steel"></div>
+          <div id="susun-track" class="track-area"></div>
+        </div>
+
+        <!-- AREA DEPO / YARD GERBONG -->
+        <div class="susun-yard-panel">
+          <div class="yard-header-label">🛠️ Pilihan Gerbong KAI:</div>
+          <div id="susun-yard" class="yard-area"></div>
+        </div>
+      </div>
+
       <div id="susun-win" class="win-overlay hidden">
         <div class="win-card">
           <div class="win-emoji">🎉</div>
-          <h2>Hebat Sekali!</h2>
-          <p>Kereta sudah lengkap!</p>
-          <button class="play-again" data-replay="susun">Main Lagi</button>
+          <h2>Hebat Masinis Cilik!</h2>
+          <p>Rangkaian Kereta KAI sudah tersambung utuh dan siap jalan!</p>
+          <div class="win-actions">
+            <button class="play-again" data-replay="susun">Susun Lagi 🔄</button>
+            <button class="play-drive-btn" id="btn-susun-to-drive">Ayo Nyetir di Rel! 🚦</button>
+          </div>
         </div>
       </div>
     </section>
@@ -360,18 +376,28 @@
           <button class="back-btn" data-back-edu>⬅️ Menu Belajar</button>
           <button class="home-icon-btn" data-back title="Ke Menu Utama">🏠</button>
         </div>
-        <h2>⚡ Tangkap Kereta</h2>
-        <div class="score">🎯 <span id="tangkap-score">0</span></div>
+        <h2>⚡ Tangkap Kereta Melaju</h2>
+        <div class="score-group">
+          <span class="score-pill">🎯 Skor: <strong id="tangkap-score">0</strong></span>
+          <span class="score-pill combo-pill" id="tangkap-combo">⚡ Combo: <strong>x0</strong></span>
+        </div>
       </div>
-      <p class="hint">Ketuk kereta yang lewat sebelum pergi!</p>
-      <div id="tangkap-stage" class="stage-area"></div>
-      <div class="timer-bar"><div id="tangkap-timer" class="timer-fill"></div></div>
+      <p class="hint">Sentuh kereta yang melesat di rel sebelum lolos!</p>
+      <div class="tangkap-viewport">
+        <div class="tangkap-skyline"></div>
+        <div class="tangkap-tracks-layer"></div>
+        <div id="tangkap-stage" class="stage-area"></div>
+      </div>
+      <div class="timer-wrapper">
+        <span class="timer-label">⏱️ Waktu:</span>
+        <div class="timer-bar"><div id="tangkap-timer" class="timer-fill"></div></div>
+      </div>
       <div id="tangkap-win" class="win-overlay hidden">
         <div class="win-card">
           <div class="win-emoji">🏆</div>
-          <h2>Wah Pintar!</h2>
-          <p>Kamu menangkap <span id="tangkap-final">0</span> kereta!</p>
-          <button class="play-again" data-replay="tangkap">Main Lagi</button>
+          <h2>Refleks Cepat & Pintar!</h2>
+          <p>Adik berhasil menangkap <strong id="tangkap-final">0</strong> kereta!</p>
+          <button class="play-again" data-replay="tangkap">Main Lagi 🔄</button>
         </div>
       </div>
     </section>
@@ -383,18 +409,23 @@
           <button class="back-btn" data-back-edu>⬅️ Menu Belajar</button>
           <button class="home-icon-btn" data-back title="Ke Menu Utama">🏠</button>
         </div>
-        <h2>🌈 Cocok Warna</h2>
-        <div class="score">⭐ <span id="warna-score">0</span></div>
+        <h2>🌈 Cocok Warna Stasiun</h2>
+        <div class="score">⭐ <span id="warna-score">0</span> / 4</div>
       </div>
-      <p class="hint">Tarik kereta ke stasiun warnanya!</p>
-      <div id="warna-stations" class="stations-area"></div>
-      <div id="warna-yard" class="yard-area"></div>
+      <p class="hint">Parkirkan kereta ke peron stasiun dengan warna yang sama!</p>
+      <div class="warna-gameplay">
+        <div id="warna-stations" class="stations-area"></div>
+        <div class="warna-depo-wrap">
+          <div class="depo-tag">🚂 Kereta yang Harus Masuk Stasiun:</div>
+          <div id="warna-yard" class="yard-area"></div>
+        </div>
+      </div>
       <div id="warna-win" class="win-overlay hidden">
         <div class="win-card">
           <div class="win-emoji">🌟</div>
-          <h2>Warna Pas!</h2>
-          <p>Semua kereta sudah sampai!</p>
-          <button class="play-again" data-replay="warna">Main Lagi</button>
+          <h2>Semua Kereta Tiba di Stasiun!</h2>
+          <p>Hebat, semua penumpang turun di stasiun yang tepat!</p>
+          <button class="play-again" data-replay="warna">Main Lagi 🔄</button>
         </div>
       </div>
     </section>
@@ -416,6 +447,15 @@
         <button id="tab-quiz" class="edu-tab-btn">🎯 Kuis Tebak Kereta</button>
       </div>
 
+      <!-- HARAKAT FILTER BAR (KHUSUS HIJAIYAH) -->
+      <div id="hijaiyah-harakat-bar" class="harakat-bar hidden">
+        <span class="harakat-title">Tanda Baca:</span>
+        <button class="harakat-btn active" data-harakat="asli">Asli (ا ب ت)</button>
+        <button class="harakat-btn" data-harakat="fathah">Fathah ( َـ A )</button>
+        <button class="harakat-btn" data-harakat="kasrah">Kasrah ( ِـ I )</button>
+        <button class="harakat-btn" data-harakat="dammah">Dammah ( ُـ U )</button>
+      </div>
+
       <!-- VIEW 1: KAMUS SUARA LENGKAP (SENTUH & DENGAR SEMUA HURUF / ANGKA) -->
       <div id="cari-dict-view" class="cari-dict-view">
         <p class="dict-hint">👉 <strong>Ketuk gerbong kereta</strong> untuk mendengar suara & pengucapannya!</p>
@@ -427,7 +467,10 @@
       <!-- VIEW 2: KUIS TEBAK KERETA CERDAS -->
       <div id="cari-quiz-view" class="cari-quiz-view hidden">
         <div class="quiz-prompt-card">
-          <div class="quiz-prompt-label">Cari & Ketuk Gerbong Kereta:</div>
+          <div class="quiz-top-row">
+            <span class="quiz-prompt-label">Cari & Ketuk Gerbong Kereta:</span>
+            <span id="quiz-streak-pill" class="streak-pill hidden">🔥 <span id="quiz-streak-count">0</span>x Combo</span>
+          </div>
           <div class="quiz-target-display">
             <span id="cari-target"></span>
             <button id="cari-repeat" class="repeat-btn" title="Dengar suara lagi">🔊 Dengar Lagi</button>
@@ -450,6 +493,6 @@
       </div>
     </section>
   </div>
-  <script src="game.js?v=3.0"></script>
+  <script src="game.js?v=3.1"></script>
 </body>
 </html>

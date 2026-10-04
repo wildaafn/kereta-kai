@@ -784,52 +784,244 @@ body {
 }
 
 /* ===== EDU GRID ===== */
+/* ===== EDU GRID ===== */
 .edu-grid {
-  display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;
-  width: min(520px, 94vw); margin: 12px auto; overflow-y: auto; padding: 4px;
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px;
+  width: min(560px, 94vw); margin: 12px auto; overflow-y: auto; padding: 6px;
 }
 .menu-btn {
-  display: flex; flex-direction: column; align-items: center; gap: 2px;
-  background: #fff; border: 4px solid #ffcf3f; border-radius: 20px; padding: 12px 10px;
-  cursor: pointer; box-shadow: 0 6px 0 #e0a800, 0 10px 14px rgba(0,0,0,.12);
-  transition: transform .08s;
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  background: linear-gradient(180deg, #ffffff 0%, #fffbeb 100%);
+  border: 4px solid #f59e0b; border-radius: 22px; padding: 14px 10px;
+  cursor: pointer; box-shadow: 0 7px 0 #d97706, 0 12px 18px rgba(0,0,0,.12);
+  transition: transform .08s ease, box-shadow .08s ease;
 }
-.menu-btn:active { transform: translateY(4px); box-shadow: 0 2px 0 #e0a800; }
-.menu-btn .emoji { font-size: 34px; }
-.menu-btn .label { font-size: 16px; color: #0d47a1; font-weight: 800; text-align: center; }
-.menu-btn .desc { font-size: 12px; color: #64748b; }
+.menu-btn:hover { transform: translateY(-3px); }
+.menu-btn:active { transform: translateY(4px); box-shadow: 0 2px 0 #d97706; }
+.menu-btn .emoji { font-size: 38px; line-height: 1.1; }
+.menu-btn .label { font-size: 17px; color: #0d47a1; font-weight: 900; text-align: center; }
+.menu-btn .desc { font-size: 12px; color: #64748b; font-weight: 700; }
 
-/* ===== SUSUN GERBONG ===== */
-.track-area { display: flex; align-items: center; gap: 6px; padding: 22px 16px; min-height: 120px; overflow-x: auto; }
-.locomo { flex: 0 0 auto; width: 96px; height: 78px; position: relative; background: linear-gradient(#e23b2e,#b71f15); border-radius: 14px 22px 14px 14px; box-shadow: inset 0 -10px rgba(0,0,0,.2); }
-.locomo .chimney { position: absolute; top: -16px; right: 14px; width: 14px; height: 18px; background: #444; border-radius: 4px 4px 0 0; }
-.locomo .smoke { position: absolute; top: -34px; right: 10px; width: 18px; height: 18px; background: rgba(255,255,255,.8); border-radius: 50%; animation: puff 1.4s ease-out infinite; }
-@keyframes puff { 0%{transform:translateY(0);opacity:.8;} 100%{transform:translateY(-18px);opacity:0;} }
+/* ===== GAME 1: SUSUN GERBONG (STUDIO RAIL YARD) ===== */
+.susun-stage-container {
+  flex: 1; display: flex; flex-direction: column; gap: 12px; padding: 8px 12px 16px;
+  overflow-y: auto; align-items: center; width: 100%; max-width: 900px; margin: 0 auto;
+}
+.susun-track-bed {
+  width: 100%; background: linear-gradient(180deg, #94a3b8 0%, #475569 40%, #334155 100%);
+  border: 4px solid #1e293b; border-radius: 20px; padding: 16px 12px 22px;
+  position: relative; box-shadow: inset 0 6px 14px rgba(0,0,0,.4), 0 8px 16px rgba(0,0,0,.15);
+  overflow-x: auto; -webkit-overflow-scrolling: touch;
+}
+.susun-track-bed::-webkit-scrollbar { height: 8px; }
+.susun-track-bed::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+
+/* Rel Baja & Bantalan Kayu */
+.susun-rail-steel {
+  position: absolute; bottom: 32px; left: 0; right: 0; height: 12px;
+  background: repeating-linear-gradient(90deg, #1e293b 0 12px, #64748b 12px 24px, #475569 24px 34px);
+  border-top: 3px solid #94a3b8; border-bottom: 3px solid #0f172a;
+  box-shadow: 0 4px 6px rgba(0,0,0,.3);
+}
+.susun-track-bed .track-area {
+  display: flex; align-items: flex-end; gap: 10px; min-width: max-content;
+  padding: 10px 8px; position: relative; z-index: 2;
+}
+
+/* Lokomotif Anchor di Jalur Susun */
+.susun-loco-lead {
+  flex: 0 0 160px; height: 95px; position: relative; display: flex;
+  align-items: flex-end; justify-content: center;
+}
+.susun-loco-lead img {
+  width: 160px; height: auto; filter: drop-shadow(0 6px 8px rgba(0,0,0,.35));
+}
+.lead-smoke-gen {
+  position: absolute; top: -14px; right: 30px; width: 14px; height: 14px;
+  background: rgba(255,255,255,.8); border-radius: 50%;
+  animation: susun-puff 1.5s infinite ease-out;
+}
+@keyframes susun-puff {
+  0% { transform: translateY(0) scale(0.6); opacity: 0.9; }
+  100% { transform: translateY(-26px) scale(2); opacity: 0; }
+}
+
+/* Target Slot Gerbong */
 .gerbong-slot {
-  flex: 0 0 auto; width: 84px; height: 84px; border: 4px dashed #9bbcd0;
-  border-radius: 16px; display: flex; align-items: center; justify-content: center;
-  background: rgba(255,255,255,.6);
+  flex: 0 0 135px; height: 92px; border: 3px dashed #38bdf8;
+  border-radius: 16px; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  background: rgba(255,255,255,.18); backdrop-filter: blur(4px);
+  transition: all .2s ease; position: relative;
 }
-.gerbong-slot.filled { border-style: solid; border-color: transparent; background: transparent; }
-.yard-area { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; padding: 18px; align-content: flex-start; flex: 1; }
+.gerbong-slot::after {
+  content: "🔗 Sambung"; position: absolute; font-size: 11px;
+  font-weight: 900; color: #e0f2fe; text-shadow: 1px 1px 2px rgba(0,0,0,.7);
+}
+.gerbong-slot.filled {
+  border-style: solid; border-color: transparent; background: transparent;
+}
+.gerbong-slot.filled::after { display: none; }
+.gerbong-slot.snap-pop {
+  animation: slot-pop .25s ease-out;
+}
+@keyframes slot-pop {
+  0% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
 
-.train { position: relative; width: 84px; height: 72px; border-radius: 14px; box-shadow: inset 0 -10px rgba(0,0,0,.15); cursor: grab; touch-action: none; }
-.train .cabin { position: absolute; top: 8px; left: 10px; width: 22px; height: 20px; background: rgba(255,255,255,.85); border-radius: 5px; }
-.train .win { position: absolute; top: 14px; right: 12px; width: 16px; height: 16px; background: rgba(255,255,255,.85); border-radius: 50%; }
-.train .wheel { position: absolute; bottom: -7px; width: 16px; height: 16px; background: #333; border-radius: 50%; border: 3px solid #ddd; }
-.train .wheel.w1 { left: 14px; } .train .wheel.w2 { right: 14px; }
-.train.dragging { opacity: .85; transform: scale(1.06); cursor: grabbing; }
+/* Panel Depo Gerbong Pilihan */
+.susun-yard-panel {
+  width: 100%; background: #ffffff; border: 4px solid #cbd5e1; border-radius: 20px;
+  padding: 12px 14px; box-shadow: 0 6px 14px rgba(0,0,0,.08);
+}
+.yard-header-label {
+  font-size: 14px; font-weight: 900; color: #0d47a1; margin-bottom: 8px;
+}
+.yard-area {
+  display: flex; flex-wrap: wrap; gap: 12px; justify-content: center;
+  align-content: flex-start;
+}
 
-/* TANGKAP KERETA */
-.stage-area { position: relative; flex: 1; overflow: hidden; background: linear-gradient(#bfe9ff, #eafadb); }
-.mover { position: absolute; top: 50%; transform: translateY(-50%); font-size: 54px; cursor: pointer; will-change: transform; }
-.timer-bar { height: 14px; background: #fff; margin: 0 16px 12px; border-radius: 10px; overflow: hidden; }
-.timer-fill { height: 100%; width: 100%; background: linear-gradient(90deg,#5fd068,#ffd54a); transition: width 1s linear; }
+/* Kartu Gerbong yang Bisa Ditarik */
+.susun-carriage-card {
+  width: 135px; height: 86px; position: relative; cursor: grab;
+  touch-action: none; background: #f8fafc; border: 2px solid #94a3b8;
+  border-radius: 14px; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; padding: 4px;
+  box-shadow: 0 5px 0 #64748b, 0 8px 12px rgba(0,0,0,.1);
+  transition: transform .08s ease;
+}
+.susun-carriage-card img {
+  width: 120px; height: 56px; object-fit: contain; pointer-events: none;
+}
+.susun-carriage-card .card-caption {
+  font-size: 10px; font-weight: 900; color: #1e293b; white-space: nowrap;
+}
+.susun-carriage-card.dragging {
+  opacity: .9; transform: scale(1.12); cursor: grabbing; z-index: 999;
+  box-shadow: 0 14px 28px rgba(0,0,0,.3);
+}
 
-/* COCOK WARNA */
-.stations-area { display: flex; justify-content: space-around; padding: 18px 10px; gap: 8px; flex-wrap: wrap; }
-.station { width: 90px; height: 108px; border-radius: 14px; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding-bottom: 8px; color: #fff; font-weight: bold; font-size: 13px; box-shadow: 0 6px 0 rgba(0,0,0,.2); position: relative; }
-.station .roof { position: absolute; top: -14px; width: 0; height: 0; border-left: 48px solid transparent; border-right: 48px solid transparent; border-bottom: 18px solid rgba(0,0,0,.25); }
+/* Button Play Drive on Win */
+.play-drive-btn {
+  background: #0284c7; color: #fff; border: none; border-radius: 14px; padding: 10px 18px;
+  font-size: 16px; font-weight: 800; cursor: pointer; box-shadow: 0 4px 0 #0369a1;
+}
+.play-drive-btn:active { transform: translateY(3px); box-shadow: 0 1px 0 #0369a1; }
+
+/* ===== GAME 2: TANGKAP KERETA (HIGH POLISH) ===== */
+.score-group {
+  display: flex; align-items: center; gap: 8px;
+}
+.score-pill {
+  background: #ffffff; color: #0d47a1; font-weight: 800; font-size: 13px;
+  padding: 4px 10px; border-radius: 14px; box-shadow: 0 2px 5px rgba(0,0,0,.15);
+}
+.combo-pill {
+  background: #fef08a; color: #b45309; border: 2px solid #facc15;
+}
+.tangkap-viewport {
+  flex: 1; position: relative; overflow: hidden; margin: 6px 12px 10px;
+  border-radius: 24px; border: 4px solid #38bdf8;
+  background: linear-gradient(180deg, #60a5fa 0%, #93c5fd 40%, #bbf7d0 40%, #86efac 100%);
+  box-shadow: inset 0 6px 16px rgba(0,0,0,.2);
+}
+.tangkap-skyline {
+  position: absolute; top: 0; left: 0; right: 0; height: 42%;
+  background: radial-gradient(circle at 85% 25%, #fef08a 0 18px, transparent 20px);
+  pointer-events: none;
+}
+.tangkap-tracks-layer {
+  position: absolute; bottom: 0; left: 0; right: 0; height: 60%;
+  background: repeating-linear-gradient(180deg, transparent 0 44px, #475569 44px 50px, transparent 50px 75px);
+  pointer-events: none; opacity: .45;
+}
+.stage-area {
+  position: absolute; inset: 0; overflow: hidden;
+}
+.tangkap-train-mover {
+  position: absolute; transform: translateY(-50%);
+  cursor: pointer; will-change: transform, left;
+  display: flex; flex-direction: column; align-items: center;
+  transition: transform .08s ease;
+}
+.tangkap-train-mover img {
+  height: 64px; width: auto; object-fit: contain; pointer-events: none;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,.3));
+}
+.tangkap-train-mover .mover-tag {
+  font-size: 10px; font-weight: 900; color: #fff; background: #0f172a;
+  padding: 1px 6px; border-radius: 8px; margin-top: -4px;
+}
+.timer-wrapper {
+  display: flex; align-items: center; gap: 8px; margin: 0 16px 12px;
+}
+.timer-label { font-size: 14px; font-weight: 800; color: #0d47a1; }
+.timer-bar {
+  flex: 1; height: 16px; background: #ffffff; border-radius: 12px;
+  overflow: hidden; border: 2px solid #0d47a1; padding: 2px;
+}
+.timer-fill {
+  height: 100%; width: 100%; border-radius: 8px;
+  background: linear-gradient(90deg, #ef4444 0%, #f59e0b 50%, #22c55e 100%);
+  transition: width 1s linear;
+}
+
+/* ===== GAME 3: COCOK WARNA STASIUN ===== */
+.warna-gameplay {
+  flex: 1; display: flex; flex-direction: column; gap: 14px; padding: 8px 12px 14px;
+  overflow-y: auto; max-width: 900px; margin: 0 auto; width: 100%;
+}
+.stations-area {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
+}
+@media (max-width: 680px) {
+  .stations-area { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+}
+.stasiun-platform-card {
+  height: 140px; border-radius: 18px; display: flex; flex-direction: column;
+  align-items: center; justify-content: space-between; padding: 8px 6px 12px;
+  color: #fff; box-shadow: 0 6px 0 rgba(0,0,0,.22), 0 10px 14px rgba(0,0,0,.15);
+  position: relative; border: 3px solid rgba(255,255,255,.6);
+  transition: transform .12s ease;
+}
+.stasiun-platform-card .st-roof {
+  position: absolute; top: -14px; left: -4px; right: -4px; height: 22px;
+  background: #1e293b; border-radius: 10px; border: 2px solid #f8fafc;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 900; color: #facc15;
+}
+.stasiun-platform-card .st-nameplate {
+  margin-top: 14px; background: rgba(0,0,0,.45); padding: 2px 8px;
+  border-radius: 8px; font-size: 13px; font-weight: 900;
+}
+.stasiun-platform-card .st-dock-slot {
+  width: 95%; height: 60px; border: 2px dashed rgba(255,255,255,.7);
+  border-radius: 12px; display: flex; align-items: center;
+  justify-content: center; background: rgba(0,0,0,.15);
+}
+.stasiun-platform-card .st-dock-slot.filled {
+  border-style: solid; border-color: transparent; background: transparent;
+}
+.warna-depo-wrap {
+  background: #ffffff; border: 4px solid #cbd5e1; border-radius: 20px;
+  padding: 12px 14px; box-shadow: 0 6px 14px rgba(0,0,0,.08);
+}
+.depo-tag { font-size: 14px; font-weight: 900; color: #0d47a1; margin-bottom: 8px; }
+
+/* Mini train to match in Cocok Warna */
+.warna-train-item {
+  width: 120px; height: 58px; position: relative; cursor: grab;
+  touch-action: none; display: flex; align-items: center; justify-content: center;
+  filter: drop-shadow(0 4px 6px rgba(0,0,0,.2)); transition: transform .08s ease;
+}
+.warna-train-item img {
+  width: 100%; height: 100%; object-fit: contain; pointer-events: none;
+}
+.warna-train-item.dragging {
+  opacity: .9; transform: scale(1.15); cursor: grabbing; z-index: 999;
+}
 
 /* HEADER NAV GROUP (BACK + HOME) */
 .header-nav-group { display: flex; align-items: center; gap: 6px; }
@@ -857,6 +1049,23 @@ body {
 }
 .edu-tab-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 #072a63; }
 
+/* HARAKAT SELECTOR BAR */
+.harakat-bar {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 8px 12px; background: #e0f2fe; border-bottom: 2px solid #7dd3fc;
+  overflow-x: auto; flex-wrap: wrap;
+}
+.harakat-bar.hidden { display: none; }
+.harakat-title { font-size: 13px; font-weight: 900; color: #0369a1; }
+.harakat-btn {
+  background: #ffffff; border: 2px solid #0284c7; border-radius: 12px;
+  padding: 4px 12px; font-size: 13px; font-weight: 800; color: #0369a1;
+  cursor: pointer; transition: all .1s ease;
+}
+.harakat-btn.active {
+  background: #0284c7; color: #ffffff; box-shadow: 0 2px 0 #0369a1;
+}
+
 /* VIEW 1: KAMUS SUARA (SENTUH & DENGAR) */
 .cari-dict-view {
   flex: 1; display: flex; flex-direction: column; overflow: hidden; padding: 8px 12px 14px;
@@ -866,48 +1075,49 @@ body {
   margin-bottom: 8px; background: rgba(255,255,255,.7); border-radius: 14px;
 }
 .cari-full-grid {
-  flex: 1; display: grid; grid-template-columns: repeat(auto-fill, minmax(95px, 1fr));
+  flex: 1; display: grid; grid-template-columns: repeat(auto-fill, minmax(105px, 1fr));
   gap: 12px; overflow-y: auto; padding: 10px; align-content: flex-start;
   max-width: 960px; margin: 0 auto; width: 100%;
 }
 @media (min-width: 768px) {
-  .cari-full-grid { grid-template-columns: repeat(auto-fill, minmax(115px, 1fr)); gap: 16px; }
+  .cari-full-grid { grid-template-columns: repeat(auto-fill, minmax(125px, 1fr)); gap: 16px; }
 }
 
-/* Card Gerbong Kamus */
+/* Card Gerbong Kamus Berstandar Toy Wagon */
 .dict-train-card {
-  position: relative; height: 95px; border-radius: 16px;
+  position: relative; height: 110px; border-radius: 18px;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
-  box-shadow: 0 6px 0 rgba(0,0,0,.18), 0 10px 14px rgba(0,0,0,.1);
+  box-shadow: 0 7px 0 rgba(0,0,0,.2), 0 12px 16px rgba(0,0,0,.12);
   cursor: pointer; transition: transform .08s, box-shadow .08s;
-  padding: 6px 4px 14px;
+  padding: 6px 6px 16px; border: 3px solid rgba(255,255,255,.45);
 }
-.dict-train-card:hover { transform: translateY(-3px); }
+.dict-train-card:hover { transform: translateY(-4px); }
 .dict-train-card:active, .dict-train-card.bouncing {
   transform: translateY(4px); box-shadow: 0 2px 0 rgba(0,0,0,.2);
 }
 .dict-train-card .card-main-symbol {
-  font-size: 38px; font-weight: 900; color: #ffffff;
-  text-shadow: 2px 2px 0 rgba(0,0,0,.3); line-height: 1; pointer-events: none;
+  font-size: 40px; font-weight: 900; color: #ffffff;
+  text-shadow: 2px 2px 0 rgba(0,0,0,.35); line-height: 1; pointer-events: none;
 }
 .dict-train-card.is-hijaiyah .card-main-symbol {
-  font-family: "Amiri", "Scheherazade New", "Traditional Arabic", serif;
-  font-size: 46px; line-height: 1.1; margin-top: -6px;
+  font-family: "Amiri", "Scheherazade New", serif;
+  font-size: 50px; line-height: 1.1; margin-top: -6px;
 }
 .dict-train-card .card-sub-label {
   font-size: 12px; font-weight: 800; color: #ffffff;
-  background: rgba(0,0,0,.25); padding: 2px 8px; border-radius: 10px;
-  margin-top: 4px; pointer-events: none; white-space: nowrap;
+  background: rgba(0,0,0,.32); padding: 2px 8px; border-radius: 10px;
+  margin-top: 4px; pointer-events: none; white-space: nowrap; max-width: 95%;
+  overflow: hidden; text-overflow: ellipsis;
 }
 .dict-train-card .card-speaker-icon {
-  position: absolute; top: 6px; right: 8px; font-size: 13px; opacity: .85;
+  position: absolute; top: 6px; right: 8px; font-size: 13px; opacity: .9;
 }
 .dict-train-card .card-wheels {
-  position: absolute; bottom: -6px; width: 80%; display: flex; justify-content: space-between;
+  position: absolute; bottom: -8px; width: 84%; display: flex; justify-content: space-between;
 }
 .dict-train-card .c-wheel {
-  width: 14px; height: 14px; background: #1e293b; border-radius: 50%;
-  border: 3px solid #e2e8f0;
+  width: 16px; height: 16px; background: #0f172a; border-radius: 50%;
+  border: 3px solid #f8fafc; box-shadow: 0 2px 4px rgba(0,0,0,.3);
 }
 
 /* VIEW 2: KUIS TEBAK KERETA */
@@ -918,21 +1128,30 @@ body {
 .cari-quiz-view.hidden, .cari-dict-view.hidden { display: none; }
 
 .quiz-prompt-card {
-  background: #ffffff; border: 4px solid #ffcf3f; border-radius: 20px;
-  padding: 12px 24px; text-align: center; box-shadow: 0 6px 16px rgba(0,0,0,.1);
+  background: #ffffff; border: 4px solid #ffcf3f; border-radius: 22px;
+  padding: 14px 24px; text-align: center; box-shadow: 0 8px 20px rgba(0,0,0,.1);
   display: flex; flex-direction: column; align-items: center; gap: 6px;
-  max-width: 440px; width: 100%;
+  max-width: 480px; width: 100%;
 }
-.quiz-prompt-label { font-size: 15px; font-weight: 800; color: #0d47a1; }
+.quiz-top-row {
+  display: flex; align-items: center; justify-content: space-between; width: 100%;
+}
+.quiz-prompt-label { font-size: 15px; font-weight: 900; color: #0d47a1; }
+.streak-pill {
+  background: #fef08a; color: #b45309; border: 2px solid #f59e0b;
+  font-size: 12px; font-weight: 900; padding: 2px 8px; border-radius: 12px;
+}
+.streak-pill.hidden { display: none; }
+
 .quiz-target-display {
   display: flex; align-items: center; justify-content: center; gap: 14px;
 }
 #cari-target {
-  font-size: 36px; font-weight: 900; color: #d84315;
+  font-size: 38px; font-weight: 900; color: #d84315;
 }
 .is-hijaiyah-quiz #cari-target {
   font-family: "Amiri", "Scheherazade New", serif;
-  font-size: 48px;
+  font-size: 52px;
 }
 .repeat-btn {
   background: #0284c7; color: #fff; font-weight: 800; font-size: 14px;
@@ -943,27 +1162,43 @@ body {
 
 .cari-grid {
   display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;
-  padding: 16px; align-content: center; width: 100%; max-width: 600px;
+  padding: 16px; align-content: center; width: 100%; max-width: 640px;
 }
-.train.big { width: 112px; height: 98px; cursor: pointer; }
-.train.big:active { transform: scale(.95); }
-.train .tlabel {
-  position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center;
-  justify-content: center; font-size: 40px; font-weight: bold; color: #fff;
-  text-shadow: 2px 2px 0 rgba(0,0,0,.25); pointer-events: none;
+.quiz-carriage-option {
+  position: relative; width: 130px; height: 105px; border-radius: 18px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  cursor: pointer; box-shadow: 0 7px 0 rgba(0,0,0,.22), 0 12px 16px rgba(0,0,0,.15);
+  transition: transform .08s, box-shadow .08s; border: 3px solid rgba(255,255,255,.5);
+  padding: 6px;
 }
-.train.is-hijaiyah-train .tlabel {
-  font-family: "Amiri", "Scheherazade New", "Traditional Arabic", serif;
-  font-size: 48px;
+.quiz-carriage-option:hover { transform: translateY(-4px); }
+.quiz-carriage-option:active { transform: translateY(4px); box-shadow: 0 2px 0 rgba(0,0,0,.2); }
+.quiz-carriage-option .opt-symbol {
+  font-size: 44px; font-weight: 900; color: #ffffff;
+  text-shadow: 2px 2px 0 rgba(0,0,0,.35); line-height: 1; pointer-events: none;
 }
-.train .tsub { font-size: 16px; font-weight: 800; font-family: "Baloo 2", sans-serif; }
-.train.shake { animation: shake .4s; }
+.quiz-carriage-option.is-hijaiyah-opt .opt-symbol {
+  font-family: "Amiri", "Scheherazade New", serif;
+  font-size: 54px; line-height: 1.1; margin-top: -6px;
+}
+.quiz-carriage-option .opt-sub {
+  font-size: 13px; font-weight: 800; color: #ffffff; background: rgba(0,0,0,.35);
+  padding: 2px 8px; border-radius: 10px; margin-top: 4px; pointer-events: none;
+}
+.quiz-carriage-option .opt-wheels {
+  position: absolute; bottom: -8px; width: 84%; display: flex; justify-content: space-between;
+}
+.quiz-carriage-option .c-wheel {
+  width: 16px; height: 16px; background: #0f172a; border-radius: 50%;
+  border: 3px solid #f8fafc;
+}
+.quiz-carriage-option.shake { animation: shake .4s; }
 @keyframes shake { 0%,100%{transform:translateX(0);} 20%{transform:translateX(-9px);} 60%{transform:translateX(9px);} 80%{transform:translateX(-5px);} }
 
 /* WIN OVERLAY */
-.win-overlay { position: absolute; inset: 0; background: rgba(0,0,0,.45); display: flex; align-items: center; justify-content: center; z-index: 20; }
+.win-overlay { position: absolute; inset: 0; background: rgba(0,0,0,.5); display: flex; align-items: center; justify-content: center; z-index: 20; backdrop-filter: blur(4px); }
 .win-overlay.hidden { display: none; }
-.win-card { background: #fff; border: 6px solid #ffcf3f; border-radius: 28px; padding: 24px 30px; text-align: center; box-shadow: 0 12px 30px rgba(0,0,0,.3); animation: pop .35s ease; max-width: 400px; width: 90%; }
+.win-card { background: #fff; border: 6px solid #ffcf3f; border-radius: 28px; padding: 24px 30px; text-align: center; box-shadow: 0 12px 30px rgba(0,0,0,.3); animation: pop .35s ease; max-width: 440px; width: 90%; }
 .win-emoji { font-size: 60px; }
 .win-card h2 { color: #0d47a1; font-size: 28px; margin: 6px 0; }
 .win-card p { color: #555; font-size: 17px; margin-bottom: 16px; }
@@ -975,5 +1210,5 @@ body {
 .play-again:active { transform: translateY(3px); box-shadow: 0 1px 0 #15803d; }
 @keyframes pop { 0%{transform:scale(.6);opacity:0;} 100%{transform:scale(1);opacity:1;} }
 
-.float-score { position: absolute; font-size: 28px; font-weight: bold; color: #e8552d; pointer-events: none; animation: floatUp .8s ease-out forwards; z-index: 25; }
+.float-score { position: absolute; font-size: 26px; font-weight: 900; color: #ffeb3b; text-shadow: 2px 2px 0 #000; pointer-events: none; animation: floatUp .8s ease-out forwards; z-index: 25; }
 @keyframes floatUp { from{transform:translateY(0);opacity:1;} to{transform:translateY(-50px);opacity:0;} }

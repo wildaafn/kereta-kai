@@ -898,8 +898,40 @@
   }
   const COLORS = ["#e23b2e", "#2e8be2", "#2eb85c", "#f0a500", "#9b59b6", "#16b3b3"];
 
-  // GAME 1: SUSUN GERBONG
+  // Marimba synth untuk sentuhan kartu edukasi anak
+  const MARIMBA_NOTES = [261.63, 293.66, 329.63, 392.00, 440.00, 523.25, 587.33, 659.25, 783.99, 880.00];
+  function playMarimba(idx) {
+    if (!soundOn) return;
+    initAudio();
+    if (!audioCtx) return;
+    const now = audioCtx.currentTime;
+    const freq = MARIMBA_NOTES[idx % MARIMBA_NOTES.length];
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = "sine";
+    osc.frequency.setValueAtTime(freq, now);
+    gain.gain.setValueAtTime(0.001, now);
+    gain.gain.linearRampToValueAtTime(0.2, now + 0.015);
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.35);
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.start(now);
+    osc.stop(now + 0.4);
+  }
+
+  // ====================================================
+  // GAME 1: SUSUN RANGKAIAN KERETA KAI (STUDIO ASSETS)
+  // ====================================================
   let susunScore = 0;
+  const SUSUN_WAGONS = [
+    { type: "eksekutif", name: "Eksekutif KAI", img: "assets/gerbong_eksekutif.svg" },
+    { type: "panoramic", name: "Panoramic Mewah", img: "assets/gerbong_panoramic.svg" },
+    { type: "makan", name: "Restorasi Kafe (M1)", img: "assets/gerbong_makan.svg" },
+    { type: "pembangkit", name: "Pembangkit Listrik (P)", img: "assets/gerbong_pembangkit.svg" },
+    { type: "kontainer", name: "Kontainer Logistik", img: "assets/gerbong_kontainer.svg" },
+    { type: "tangki", name: "Tangki BBM Pertamina", img: "assets/gerbong_tangki.svg" }
+  ];
+
   function startSusun() {
     show("game-susun");
     susunScore = 0;
@@ -909,52 +941,105 @@
     const yard = document.getElementById("susun-yard");
     track.innerHTML = ""; yard.innerHTML = "";
 
-    const loco = document.createElement("div");
-    loco.className = "locomo";
-    loco.innerHTML = '<div class="chimney"></div><div class="smoke"></div><div class="cabin"></div><div class="wheel w1"></div><div class="wheel w2"></div>';
-    track.appendChild(loco);
+    // 1. Lokomotif CC 206 di ujung kanan rel (posisi depan / penarik)
+    const locoLead = document.createElement("div");
+    locoLead.className = "susun-loco-lead";
+    locoLead.innerHTML = `
+      <img src="assets/cc206.svg" alt="CC 206 KAI" />
+      <div class="lead-smoke-gen"></div>
+    `;
 
-    const count = 4;
-    const chosen = COLORS.slice(0, count);
-    for (let i = 0; i < count; i++) {
+    // 2. Buat 4 slot target untuk gerbong
+    const targetCount = 4;
+    for (let i = 1; i <= targetCount; i++) {
       const slot = document.createElement("div");
       slot.className = "gerbong-slot";
       slot.dataset.drop = "1";
+      slot.dataset.slotIndex = i;
+      slot.setAttribute("title", "Sambungkan gerbong ke-" + i);
       track.appendChild(slot);
     }
-    const shuffled = chosen.slice().sort(() => Math.random() - 0.5);
-    shuffled.forEach(color => {
-      const t = trainEl(color);
-      t.dataset.color = color;
-      makeDraggable(t, (drop, el) => {
+    // Lokomotif di depan gerbong
+    track.appendChild(locoLead);
+
+    // 3. Pilihan gerbong di yard/depo (acak 4 dari koleksi)
+    const shuffledWagons = shuffle([...SUSUN_WAGONS]).slice(0, targetCount);
+    shuffledWagons.forEach(wagon => {
+      const card = document.createElement("div");
+      card.className = "susun-carriage-card";
+      card.dataset.wagonType = wagon.type;
+      card.innerHTML = `
+        <img src="${wagon.img}" alt="${wagon.name}" />
+        <span class="card-caption">${wagon.name}</span>
+      `;
+
+      makeDraggable(card, (drop, el) => {
         if (drop && drop.dataset.drop && !drop.classList.contains("filled")) {
           drop.classList.add("filled");
+          drop.classList.add("snap-pop");
           drop.appendChild(el);
           el.style.position = "static";
           el.style.cursor = "default";
           el.style.pointerEvents = "none";
-          el.style.width = "84px"; el.style.height = "72px";
+          el.style.boxShadow = "none";
+          el.style.border = "none";
+          el.style.background = "transparent";
+
           susunScore++;
           document.getElementById("susun-score").textContent = susunScore;
           sndGood();
-          if (susunScore === count) {
+          beep(440, 0.08, "triangle", 0.2); // metallic couple sound
+          playMarimba(susunScore);
+
+          if (susunScore === targetCount) {
+            playKaiHorn();
             sndWin();
-            setTimeout(() => document.getElementById("susun-win").classList.remove("hidden"), 400);
+            speak("Luar biasa! Rangkaian Kereta KAI sudah tersambung lengkap!");
+            setTimeout(() => {
+              document.getElementById("susun-win").classList.remove("hidden");
+            }, 500);
+          } else {
+            speak(wagon.name + " tersambung!");
           }
         }
       });
-      yard.appendChild(t);
+      yard.appendChild(card);
     });
+
+    speak("Ayo susun rangkaian gerbong di belakang lokomotif CC 206!");
   }
 
-  // GAME 2: TANGKAP KERETA
-  const EMOJIS = ["🚂", "🚃", "🚄", "🚅", "🚆", "🚈"];
-  let tangkapScore = 0, tangkapTimer = null, tangkapSpawn = null, tangkapTimeLeft = 0;
+  // Tombol aksi di Win Screen Susun -> Langsung Nyetir
+  document.getElementById("btn-susun-to-drive").addEventListener("click", () => {
+    document.getElementById("susun-win").classList.add("hidden");
+    startDrive();
+  });
+
+  // ====================================================
+  // GAME 2: TANGKAP KERETA (AUTHENTIC SPRITES & COMBOS)
+  // ====================================================
+  let tangkapScore = 0;
+  let tangkapCombo = 0;
+  let tangkapTimer = null;
+  let tangkapSpawn = null;
+  let tangkapTimeLeft = 0;
+
+  const TANGKAP_TRAINS = [
+    { type: "whoosh", img: "assets/whoosh.svg", name: "Whoosh Cepat! ⚡", speedMultiplier: 1.45, horn: playWhooshHorn },
+    { type: "cc206", img: "assets/cc206.svg", name: "CC 206 KAI! 🚂", speedMultiplier: 1.0, horn: playKaiHorn },
+    { type: "krl", img: "assets/krl.svg", name: "KRL Commuter! 🚃", speedMultiplier: 1.1, horn: playKaiHorn },
+    { type: "uap", img: "assets/uap_b25.svg", name: "Kereta Uap B25! 💨", speedMultiplier: 0.8, horn: playSteamWhistle },
+    { type: "cc201", img: "assets/cc201.svg", name: "CC 201 Klasik! 🚆", speedMultiplier: 1.05, horn: playKaiHorn }
+  ];
+
   function startTangkap() {
     show("game-tangkap");
     tangkapScore = 0;
+    tangkapCombo = 0;
     document.getElementById("tangkap-score").textContent = "0";
+    document.getElementById("tangkap-combo").innerHTML = "⚡ Combo: <strong>x0</strong>";
     document.getElementById("tangkap-win").classList.add("hidden");
+
     const stage = document.getElementById("tangkap-stage");
     stage.innerHTML = "";
     const TOTAL = 30;
@@ -962,40 +1047,68 @@
     const fill = document.getElementById("tangkap-timer");
     fill.style.width = "100%";
 
-    function spawn() {
-      const m = document.createElement("div");
-      m.className = "mover";
-      m.textContent = EMOJIS[Math.floor(Math.random() * EMOJIS.length)];
-      m.style.top = (10 + Math.random() * 60) + "%";
-      m.style.left = "-70px";
-      stage.appendChild(m);
-      const dur = 1800 + Math.random() * 1400;
-      const start = performance.now();
-      const W = stage.clientWidth;
+    function spawnMover() {
+      const trainData = TANGKAP_TRAINS[Math.floor(Math.random() * TANGKAP_TRAINS.length)];
+      const mover = document.createElement("div");
+      mover.className = "tangkap-train-mover";
+      mover.innerHTML = `
+        <img src="${trainData.img}" alt="${trainData.name}" />
+        <span class="mover-tag">${trainData.name}</span>
+      `;
+
+      // Posisi ketinggian rel acak
+      const trackRows = [20, 45, 70];
+      const rowY = trackRows[Math.floor(Math.random() * trackRows.length)];
+      mover.style.top = rowY + "%";
+      mover.style.left = "-180px";
+      stage.appendChild(mover);
+
+      const baseDur = 2400 / trainData.speedMultiplier;
+      const startT = performance.now();
+      const W = stage.clientWidth || 360;
+
       function step(now) {
-        const p = (now - start) / dur;
-        if (p >= 1) { m.remove(); return; }
-        m.style.left = (-70 + p * (W + 90)) + "px";
-        requestAnimationFrame(step);
+        const p = (now - startT) / baseDur;
+        if (p >= 1) {
+          mover.remove();
+          // Reset combo jika terlewat
+          if (tangkapCombo > 0) {
+            tangkapCombo = Math.max(0, tangkapCombo - 1);
+            document.getElementById("tangkap-combo").innerHTML = `⚡ Combo: <strong>x${tangkapCombo}</strong>`;
+          }
+          return;
+        }
+        mover.style.left = (-180 + p * (W + 220)) + "px";
+        if (!mover.dataset.caught) {
+          requestAnimationFrame(step);
+        }
       }
       requestAnimationFrame(step);
-      m.addEventListener("pointerdown", (e) => {
+
+      mover.addEventListener("pointerdown", (e) => {
         e.preventDefault();
-        if (!m.dataset.caught) {
-          m.dataset.caught = "1";
+        if (!mover.dataset.caught) {
+          mover.dataset.caught = "1";
           tangkapScore++;
+          tangkapCombo++;
           document.getElementById("tangkap-score").textContent = tangkapScore;
-          sndTap();
-          floatScore(e.clientX, e.clientY, "🎯");
-          m.style.transform = "translateY(-50%) scale(1.4)";
-          m.style.opacity = "0";
-          setTimeout(() => m.remove(), 150);
+          document.getElementById("tangkap-combo").innerHTML = `⚡ Combo: <strong>x${tangkapCombo}</strong>`;
+
+          trainData.horn();
+          sndGood();
+          playMarimba(tangkapScore);
+
+          floatScore(e.clientX, e.clientY, `⭐ +1 ${trainData.name}`);
+          mover.style.transform = "translateY(-50%) scale(1.3) rotate(6deg)";
+          mover.style.opacity = "0";
+          setTimeout(() => mover.remove(), 180);
         }
       });
     }
+
     clearInterval(tangkapSpawn);
-    tangkapSpawn = setInterval(spawn, 850);
-    spawn();
+    tangkapSpawn = setInterval(spawnMover, 850);
+    spawnMover();
 
     clearInterval(tangkapTimer);
     tangkapTimer = setInterval(() => {
@@ -1003,99 +1116,171 @@
       fill.style.width = (tangkapTimeLeft / TOTAL * 100) + "%";
       if (tangkapTimeLeft <= 0) endTangkap();
     }, 1000);
+
+    speak("Sentuh semua kereta yang lewat sebelum lolos!");
   }
+
   function endTangkap() {
     clearInterval(tangkapSpawn);
     clearInterval(tangkapTimer);
     document.getElementById("tangkap-final").textContent = tangkapScore;
     sndWin();
+    speak("Hore! Kamu berhasil menangkap " + tangkapScore + " kereta!");
     document.getElementById("tangkap-win").classList.remove("hidden");
   }
 
-  // GAME 3: COCOK WARNA
-  const STATIONS = [
-    { name: "Merah", color: "#e23b2e" },
-    { name: "Biru", color: "#2e8be2" },
-    { name: "Hijau", color: "#2eb85c" },
-    { name: "Kuning", color: "#f0a500" }
+  // ====================================================
+  // GAME 3: COCOK WARNA STASIUN (INDONESIAN STATIONS)
+  // ====================================================
+  const COLOR_STATIONS = [
+    { name: "Stasiun Merah", city: "Gambir", color: "#e23b2e", bg: "linear-gradient(180deg, #dc2626, #991b1b)", trainImg: "assets/cc206.svg" },
+    { name: "Stasiun Biru", city: "Bandung", color: "#2563eb", bg: "linear-gradient(180deg, #2563eb, #1e40af)", trainImg: "assets/gerbong_panoramic.svg" },
+    { name: "Stasiun Hijau", city: "Yogyakarta", color: "#16a34a", bg: "linear-gradient(180deg, #16a34a, #166534)", trainImg: "assets/uap_b25.svg" },
+    { name: "Stasiun Kuning", city: "Surabaya", color: "#d97706", bg: "linear-gradient(180deg, #f59e0b, #b45309)", trainImg: "assets/krl.svg" }
   ];
   let warnaScore = 0;
+
   function startWarna() {
     show("game-warna");
     warnaScore = 0;
     document.getElementById("warna-score").textContent = "0";
     document.getElementById("warna-win").classList.add("hidden");
+
     const stationsEl = document.getElementById("warna-stations");
     const yard = document.getElementById("warna-yard");
     stationsEl.innerHTML = ""; yard.innerHTML = "";
 
-    STATIONS.forEach(st => {
-      const s = document.createElement("div");
-      s.className = "station";
-      s.style.background = "linear-gradient(" + st.color + "," + shade(st.color, -25) + ")";
-      s.dataset.drop = "1";
-      s.dataset.color = st.color;
-      s.innerHTML = '<div class="roof"></div>' + st.name;
-      stationsEl.appendChild(s);
+    // 1. Render 4 Stasiun KAI
+    COLOR_STATIONS.forEach(st => {
+      const card = document.createElement("div");
+      card.className = "stasiun-platform-card";
+      card.style.background = st.bg;
+      card.dataset.drop = "1";
+      card.dataset.colorName = st.name;
+
+      card.innerHTML = `
+        <div class="st-roof">🚉 Platform ${st.city}</div>
+        <div class="st-nameplate">${st.name}</div>
+        <div class="st-dock-slot" data-drop="1" data-color-name="${st.name}">
+          <span style="font-size:11px; opacity:.85; font-weight:800;">Parkir Sini 🅿️</span>
+        </div>
+      `;
+      stationsEl.appendChild(card);
     });
 
-    const shuffled = STATIONS.slice().sort(() => Math.random() - 0.5);
-    shuffled.forEach(st => {
-      const t = trainEl(st.color);
-      t.dataset.color = st.color;
-      makeDraggable(t, (drop, el) => {
-        if (drop && drop.dataset.drop && !drop.classList.contains("filled") && drop.dataset.color === el.dataset.color) {
-          drop.classList.add("filled");
-          drop.appendChild(el);
-          el.style.position = "static";
-          el.style.margin = "0";
-          el.style.cursor = "default";
-          el.style.pointerEvents = "none";
-          el.style.width = "40px"; el.style.height = "34px";
-          el.querySelectorAll(".wheel").forEach(w => { w.style.width = "9px"; w.style.height = "9px"; });
-          warnaScore++;
-          document.getElementById("warna-score").textContent = warnaScore;
-          sndGood();
-          if (warnaScore === STATIONS.length) {
-            sndWin();
-            setTimeout(() => document.getElementById("warna-win").classList.remove("hidden"), 400);
+    // 2. Render 4 Kereta yang harus dicocokkan (diacak)
+    const shuffledTrains = shuffle([...COLOR_STATIONS]);
+    shuffledTrains.forEach(st => {
+      const trainItem = document.createElement("div");
+      trainItem.className = "warna-train-item";
+      trainItem.dataset.colorName = st.name;
+      trainItem.innerHTML = `<img src="${st.trainImg}" alt="${st.name}" />`;
+
+      makeDraggable(trainItem, (drop, el) => {
+        if (!drop) return;
+        const targetColor = drop.dataset.colorName || (drop.closest(".stasiun-platform-card") && drop.closest(".stasiun-platform-card").dataset.colorName);
+
+        if (targetColor === el.dataset.colorName) {
+          const dockSlot = drop.classList.contains("st-dock-slot") ? drop : drop.querySelector(".st-dock-slot");
+          if (dockSlot && !dockSlot.classList.contains("filled")) {
+            dockSlot.classList.add("filled");
+            dockSlot.innerHTML = "";
+            dockSlot.appendChild(el);
+            el.style.position = "static";
+            el.style.margin = "0";
+            el.style.cursor = "default";
+            el.style.pointerEvents = "none";
+            el.style.width = "100%";
+            el.style.height = "100%";
+
+            warnaScore++;
+            document.getElementById("warna-score").textContent = warnaScore;
+            sndGood();
+            playStationJingle();
+            playMarimba(warnaScore);
+            speak("Bagus! Kereta tiba di " + st.name + "!");
+
+            if (warnaScore === COLOR_STATIONS.length) {
+              sndWin();
+              speak("Hebat sekali! Semua kereta sudah terparkir rapi di stasiun yang benar!");
+              setTimeout(() => document.getElementById("warna-win").classList.remove("hidden"), 450);
+            }
           }
+        } else {
+          sndWrong();
+          speak("Warna belum cocok, coba cari stasiun yang sama!");
         }
       });
-      yard.appendChild(t);
+
+      yard.appendChild(trainItem);
     });
+
+    speak("Tarik kereta ke peron stasiun yang warnanya cocok!");
   }
 
   // ====================================================
-  // GAME 4: BELAJAR LENGKAP (HIJAIYAH, ANGKA 1-20, ABC A-Z)
-  // DUAL MODE: KAMUS SUARA (SENTUH & DENGAR) + KUIS TEBAK
+  // GAME 4, 5, 6: TAMAN BELAJAR KAI
+  // 28 HIJAIYAH (DENGAN HARAKAT), ANGKA 1-20, ALFABET A-Z
   // ====================================================
+  const HIJAIYAH_DATA = [
+    { char: "ا", name: "Alif", latin: "Alif", phonics: { asli: "Alif", fathah: "A", kasrah: "I", dammah: "U" }, displayHarakat: { asli: "ا", fathah: "اَ", kasrah: "اِ", dammah: "اُ" }, object: "🍎 Apel" },
+    { char: "ب", name: "Ba", latin: "Ba", phonics: { asli: "Ba", fathah: "Ba", kasrah: "Bi", dammah: "Bu" }, displayHarakat: { asli: "ب", fathah: "بَ", kasrah: "بِ", dammah: "بُ" }, object: "🦆 Bebek" },
+    { char: "ت", name: "Ta", latin: "Ta", phonics: { asli: "Ta", fathah: "Ta", kasrah: "Ti", dammah: "Tu" }, displayHarakat: { asli: "ت", fathah: "تَ", kasrah: "تِ", dammah: "تُ" }, object: "👑 Mahkota" },
+    { char: "ث", name: "Tsa", latin: "Tsa", phonics: { asli: "Tsa", fathah: "Tsa", kasrah: "Tsi", dammah: "Tsu" }, displayHarakat: { asli: "ث", fathah: "ثَ", kasrah: "ثِ", dammah: "ثُ" }, object: "🦊 Rubah" },
+    { char: "ج", name: "Jim", latin: "Jim", phonics: { asli: "Jim", fathah: "Ja", kasrah: "Ji", dammah: "Ju" }, displayHarakat: { asli: "ج", fathah: "جَ", kasrah: "جِ", dammah: "جُ" }, object: "🐪 Unta" },
+    { char: "ح", name: "Ha", latin: "Ha", phonics: { asli: "Ha", fathah: "Ha", kasrah: "Hi", dammah: "Hu" }, displayHarakat: { asli: "ح", fathah: "حَ", kasrah: "حِ", dammah: "حُ" }, object: "🐋 Paus" },
+    { char: "خ", name: "Kha", latin: "Kha", phonics: { asli: "Kha", fathah: "Kha", kasrah: "Khi", dammah: "Khu" }, displayHarakat: { asli: "خ", fathah: "خَ", kasrah: "خِ", dammah: "خُ" }, object: "🍞 Roti" },
+    { char: "د", name: "Dal", latin: "Dal", phonics: { asli: "Dal", fathah: "Da", kasrah: "Di", dammah: "Du" }, displayHarakat: { asli: "د", fathah: "دَ", kasrah: "دِ", dammah: "دُ" }, object: "🐓 Ayam" },
+    { char: "ذ", name: "Dzal", latin: "Dzal", phonics: { asli: "Dzal", fathah: "Dza", kasrah: "Dzi", dammah: "Dzu" }, displayHarakat: { asli: "ذ", fathah: "ذَ", kasrah: "ذِ", dammah: "ذُ" }, object: "🐺 Serigala" },
+    { char: "ر", name: "Ra", latin: "Ra", phonics: { asli: "Ra", fathah: "Ro", kasrah: "Ri", dammah: "Ru" }, displayHarakat: { asli: "ر", fathah: "رَ", kasrah: "رِ", dammah: "رُ" }, object: "🦚 Merak" },
+    { char: "ز", name: "Zai", latin: "Zai", phonics: { asli: "Zai", fathah: "Za", kasrah: "Zi", dammah: "Zu" }, displayHarakat: { asli: "ز", fathah: "زَ", kasrah: "زِ", dammah: "زُ" }, object: "🦒 Jerapah" },
+    { char: "س", name: "Sin", latin: "Sin", phonics: { asli: "Sin", fathah: "Sa", kasrah: "Si", dammah: "Su" }, displayHarakat: { asli: "س", fathah: "سَ", kasrah: "سِ", dammah: "سُ" }, object: "🐟 Ikan" },
+    { char: "ش", name: "Syin", latin: "Syin", phonics: { asli: "Syin", fathah: "Sya", kasrah: "Syi", dammah: "Syu" }, displayHarakat: { asli: "ش", fathah: "شَ", kasrah: "شِ", dammah: "شُ" }, object: "☀️ Mentari" },
+    { char: "ص", name: "Shad", latin: "Shad", phonics: { asli: "Shad", fathah: "Sho", kasrah: "Shi", dammah: "Shu" }, displayHarakat: { asli: "ص", fathah: "صَ", kasrah: "صِ", dammah: "صُ" }, object: "🦅 Elang" },
+    { char: "ض", name: "Dhad", latin: "Dhad", phonics: { asli: "Dhad", fathah: "Dho", kasrah: "Dhi", dammah: "Dhu" }, displayHarakat: { asli: "ض", fathah: "ضَ", kasrah: "ضِ", dammah: "ضُ" }, object: "🐸 Katak" },
+    { char: "ط", name: "Tha", latin: "Tha", phonics: { asli: "Tha", fathah: "Tho", kasrah: "Thi", dammah: "Thu" }, displayHarakat: { asli: "ط", fathah: "طَ", kasrah: "طِ", dammah: "طُ" }, object: "✈️ Pesawat" },
+    { char: "ظ", name: "Zha", latin: "Zha", phonics: { asli: "Zha", fathah: "Zho", kasrah: "Zhi", dammah: "Zhu" }, displayHarakat: { asli: "ظ", fathah: "ظَ", kasrah: "ظِ", dammah: "ظُ" }, object: "✉️ Surat" },
+    { char: "ع", name: "'Ain", latin: "'Ain", phonics: { asli: "'Ain", fathah: "'A", kasrah: "'I", dammah: "'U" }, displayHarakat: { asli: "ع", fathah: "عَ", kasrah: "عِ", dammah: "عُ" }, object: "🍇 Anggur" },
+    { char: "غ", name: "Ghain", latin: "Ghain", phonics: { asli: "Ghain", fathah: "Gho", kasrah: "Ghi", dammah: "Ghu" }, displayHarakat: { asli: "غ", fathah: "غَ", kasrah: "غِ", dammah: "غُ" }, object: "☁️ Awan" },
+    { char: "ف", name: "Fa", latin: "Fa", phonics: { asli: "Fa", fathah: "Fa", kasrah: "Fi", dammah: "Fu" }, displayHarakat: { asli: "ف", fathah: "فَ", kasrah: "فِ", dammah: "فُ" }, object: "🐘 Gajah" },
+    { char: "ق", name: "Qaf", latin: "Qaf", phonics: { asli: "Qaf", fathah: "Qo", kasrah: "Qi", dammah: "Qu" }, displayHarakat: { asli: "ق", fathah: "قَ", kasrah: "قِ", dammah: "قُ" }, object: "🌙 Bulan" },
+    { char: "ك", name: "Kaf", latin: "Kaf", phonics: { asli: "Kaf", fathah: "Ka", kasrah: "Ki", dammah: "Ku" }, displayHarakat: { asli: "ك", fathah: "كَ", kasrah: "كِ", dammah: "كُ" }, object: "⚽ Bola" },
+    { char: "ل", name: "Lam", latin: "Lam", phonics: { asli: "Lam", fathah: "La", kasrah: "Li", dammah: "Lu" }, displayHarakat: { asli: "ل", fathah: "لَ", kasrah: "لِ", dammah: "لُ" }, object: "🍋 Lemon" },
+    { char: "م", name: "Mim", latin: "Mim", phonics: { asli: "Mim", fathah: "Ma", kasrah: "Mi", dammah: "Mu" }, displayHarakat: { asli: "م", fathah: "مَ", kasrah: "مِ", dammah: "مُ" }, object: "🍌 Pisang" },
+    { char: "ن", name: "Nun", latin: "Nun", phonics: { asli: "Nun", fathah: "Na", kasrah: "Ni", dammah: "Nu" }, displayHarakat: { asli: "ن", fathah: "نَ", kasrah: "نِ", dammah: "نُ" }, object: "⭐ Bintang" },
+    { char: "و", name: "Waw", latin: "Waw", phonics: { asli: "Waw", fathah: "Wa", kasrah: "Wi", dammah: "Wu" }, displayHarakat: { asli: "و", fathah: "وَ", kasrah: "وِ", dammah: "وُ" }, object: "🌹 Mawar" },
+    { char: "هـ", name: "Ha'", latin: "Ha'", phonics: { asli: "Ha", fathah: "Ha", kasrah: "Hi", dammah: "Hu" }, displayHarakat: { asli: "هـ", fathah: "هَـ", kasrah: "هِـ", dammah: "هُـ" }, object: "🎁 Hadiah" },
+    { char: "ي", name: "Ya", latin: "Ya", phonics: { asli: "Ya", fathah: "Ya", kasrah: "Yi", dammah: "Yu" }, displayHarakat: { asli: "ي", fathah: "يَ", kasrah: "يِ", dammah: "يُ" }, object: "✋ Tangan" }
+  ];
+
+  let currentHarakat = "asli"; // 'asli' | 'fathah' | 'kasrah' | 'dammah'
+
   const CARI = {
     angka: {
-      title: "🔢 Belajar Angka 1 - 20",
+      title: "🔢 Belajar Angka 1 - 20 KAI",
       speechPrefix: "angka",
       rounds: 10,
       items: [
-        { display: "1", sub: "Satu", speak: "angka satu" },
-        { display: "2", sub: "Dua", speak: "angka dua" },
-        { display: "3", sub: "Tiga", speak: "angka tiga" },
-        { display: "4", sub: "Empat", speak: "angka empat" },
-        { display: "5", sub: "Lima", speak: "angka lima" },
-        { display: "6", sub: "Enam", speak: "angka enam" },
-        { display: "7", sub: "Tujuh", speak: "angka tujuh" },
-        { display: "8", sub: "Delapan", speak: "angka delapan" },
-        { display: "9", sub: "Sembilan", speak: "angka sembilan" },
-        { display: "10", sub: "Sepuluh", speak: "angka sepuluh" },
-        { display: "11", sub: "Sebelas", speak: "angka sebelas" },
-        { display: "12", sub: "Dua Belas", speak: "angka dua belas" },
-        { display: "13", sub: "Tiga Belas", speak: "angka tiga belas" },
-        { display: "14", sub: "Empat Belas", speak: "angka empat belas" },
-        { display: "15", sub: "Lima Belas", speak: "angka lima belas" },
-        { display: "16", sub: "Enam Belas", speak: "angka enam belas" },
-        { display: "17", sub: "Tujuh Belas", speak: "angka tujuh belas" },
-        { display: "18", sub: "Delapan Belas", speak: "angka delapan belas" },
-        { display: "19", sub: "Sembilan Belas", speak: "angka sembilan belas" },
-        { display: "20", sub: "Dua Puluh", speak: "angka dua puluh" }
+        { display: "1", sub: "Satu", speak: "angka satu, satu gerbong!", countLabel: "🐾 1" },
+        { display: "2", sub: "Dua", speak: "angka dua, dua gerbong!", countLabel: "🐾 2" },
+        { display: "3", sub: "Tiga", speak: "angka tiga, tiga gerbong!", countLabel: "🐾 3" },
+        { display: "4", sub: "Empat", speak: "angka empat, empat gerbong!", countLabel: "🐾 4" },
+        { display: "5", sub: "Lima", speak: "angka lima, lima gerbong!", countLabel: "🐾 5" },
+        { display: "6", sub: "Enam", speak: "angka enam", countLabel: "🐾 6" },
+        { display: "7", sub: "Tujuh", speak: "angka tujuh", countLabel: "🐾 7" },
+        { display: "8", sub: "Delapan", speak: "angka delapan", countLabel: "🐾 8" },
+        { display: "9", sub: "Sembilan", speak: "angka sembilan", countLabel: "🐾 9" },
+        { display: "10", sub: "Sepuluh", speak: "angka sepuluh", countLabel: "🐾 10" },
+        { display: "11", sub: "Sebelas", speak: "angka sebelas", countLabel: "🐾 11" },
+        { display: "12", sub: "Dua Belas", speak: "angka dua belas", countLabel: "🐾 12" },
+        { display: "13", sub: "Tiga Belas", speak: "angka tiga belas", countLabel: "🐾 13" },
+        { display: "14", sub: "Empat Belas", speak: "angka empat belas", countLabel: "🐾 14" },
+        { display: "15", sub: "Lima Belas", speak: "angka lima belas", countLabel: "🐾 15" },
+        { display: "16", sub: "Enam Belas", speak: "angka enam belas", countLabel: "🐾 16" },
+        { display: "17", sub: "Tujuh Belas", speak: "angka tujuh belas", countLabel: "🐾 17" },
+        { display: "18", sub: "Delapan Belas", speak: "angka delapan belas", countLabel: "🐾 18" },
+        { display: "19", sub: "Sembilan Belas", speak: "angka sembilan belas", countLabel: "🐾 19" },
+        { display: "20", sub: "Dua Puluh", speak: "angka dua puluh", countLabel: "🐾 20" }
       ].map((it, i) => ({ ...it, key: "n_" + i }))
     },
     abc: {
@@ -1103,32 +1288,32 @@
       speechPrefix: "huruf",
       rounds: 10,
       items: [
-        { display: "A", sub: "Apel 🍎", speak: "huruf A, Apel" },
-        { display: "B", sub: "Balon 🎈", speak: "huruf B, Balon" },
-        { display: "C", sub: "Ceri 🍒", speak: "huruf C, Ceri" },
-        { display: "D", sub: "Domba 🐑", speak: "huruf D, Domba" },
-        { display: "E", sub: "Elang 🦅", speak: "huruf E, Elang" },
-        { display: "F", sub: "Flamingo 🦩", speak: "huruf F, Flamingo" },
-        { display: "G", sub: "Gajah 🐘", speak: "huruf G, Gajah" },
-        { display: "H", sub: "Harimau 🐅", speak: "huruf H, Harimau" },
-        { display: "I", sub: "Ikan 🐟", speak: "huruf I, Ikan" },
-        { display: "J", sub: "Jerapah 🦒", speak: "huruf J, Jerapah" },
-        { display: "K", sub: "Kereta 🚂", speak: "huruf K, Kereta Api!" },
-        { display: "L", sub: "Lumba 🐬", speak: "huruf L, Lumba lumba" },
-        { display: "M", sub: "Mobil 🚗", speak: "huruf M, Mobil" },
-        { display: "N", sub: "Nanas 🍍", speak: "huruf N, Nanas" },
-        { display: "O", sub: "Orangutan 🦧", speak: "huruf O, Orangutan" },
-        { display: "P", sub: "Pesawat ✈️", speak: "huruf P, Pesawat" },
-        { display: "Q", sub: "Quran 📖", speak: "huruf Q, Quran" },
-        { display: "R", sub: "Rusa 🦌", speak: "huruf R, Rusa" },
-        { display: "S", sub: "Singa 🦁", speak: "huruf S, Singa" },
-        { display: "T", sub: "Tupai 🐿️", speak: "huruf T, Tupai" },
-        { display: "U", sub: "Unta 🐪", speak: "huruf U, Unta" },
-        { display: "V", sub: "Vas 🏺", speak: "huruf V, Vas bunga" },
-        { display: "W", sub: "Wortel 🥕", speak: "huruf W, Wortel" },
-        { display: "X", sub: "Xilofon 🎼", speak: "huruf X, Xilofon" },
-        { display: "Y", sub: "Yoyo 🪀", speak: "huruf Y, Yoyo" },
-        { display: "Z", sub: "Zebra 🦓", speak: "huruf Z, Zebra" }
+        { display: "Aa", sub: "Apel 🍎", speak: "huruf A, Apel segar!" },
+        { display: "Bb", sub: "Balon 🎈", speak: "huruf B, Balon terbang!" },
+        { display: "Cc", sub: "Ceri 🍒", speak: "huruf C, Buah Ceri manis!" },
+        { display: "Dd", sub: "Domba 🐑", speak: "huruf D, Domba lucu!" },
+        { display: "Ee", sub: "Elang 🦅", speak: "huruf E, Burung Elang gagah!" },
+        { display: "Ff", sub: "Flamingo 🦩", speak: "huruf F, Burung Flamingo merah jambu!" },
+        { display: "Gg", sub: "Gajah 🐘", speak: "huruf G, Gajah belalai panjang!" },
+        { display: "Hh", sub: "Harimau 🐅", speak: "huruf H, Harimau belang!" },
+        { display: "Ii", sub: "Ikan 🐟", speak: "huruf I, Ikan berenang!" },
+        { display: "Jj", sub: "Jerapah 🦒", speak: "huruf J, Jerapah leher tinggi!" },
+        { display: "Kk", sub: "Kereta 🚂", speak: "huruf K, Kereta Api KAI melaju cepat!" },
+        { display: "Ll", sub: "Lumba 🐬", speak: "huruf L, Lumba-lumba melompat!" },
+        { display: "Mm", sub: "Mobil 🚗", speak: "huruf M, Mobil jalan raya!" },
+        { display: "Nn", sub: "Nanas 🍍", speak: "huruf N, Buah Nanas!" },
+        { display: "Oo", sub: "Orangutan 🦧", speak: "huruf O, Orangutan cerdas!" },
+        { display: "Pp", sub: "Pesawat ✈️", speak: "huruf P, Pesawat terbang di awan!" },
+        { display: "Qq", sub: "Quran 📖", speak: "huruf Q, Al Quran mulia!" },
+        { display: "Rr", sub: "Rusa 🦌", speak: "huruf R, Rusa lincah!" },
+        { display: "Ss", sub: "Singa 🦁", speak: "huruf S, Singa raja hutan!" },
+        { display: "Tt", sub: "Tupai 🐿️", speak: "huruf T, Tupai melompat!" },
+        { display: "Uu", sub: "Unta 🐪", speak: "huruf U, Unta padang pasir!" },
+        { display: "Vv", sub: "Vas 🏺", speak: "huruf V, Vas bunga indah!" },
+        { display: "Ww", sub: "Wortel 🥕", speak: "huruf W, Sayur Wortel bergizi!" },
+        { display: "Xx", sub: "Xilofon 🎼", speak: "huruf X, Alat musik Xilofon!" },
+        { display: "Yy", sub: "Yoyo 🪀", speak: "huruf Y, Mainan Yoyo!" },
+        { display: "Zz", sub: "Zebra 🦓", speak: "huruf Z, Kuda Zebra bergaris!" }
       ].map((it, i) => ({ ...it, key: "abc_" + i }))
     },
     hijaiyah: {
@@ -1136,54 +1321,40 @@
       speechPrefix: "huruf",
       rounds: 10,
       isArabic: true,
-      items: [
-        { display: "ا", sub: "Alif", speak: "Alif" },
-        { display: "ب", sub: "Ba", speak: "Ba" },
-        { display: "ت", sub: "Ta", speak: "Ta" },
-        { display: "ث", sub: "Tsa", speak: "Tsa" },
-        { display: "ج", sub: "Jim", speak: "Jim" },
-        { display: "ح", sub: "Ha", speak: "Ha" },
-        { display: "خ", sub: "Kha", speak: "Kha" },
-        { display: "د", sub: "Dal", speak: "Dal" },
-        { display: "ذ", sub: "Dzal", speak: "Dzal" },
-        { display: "ر", sub: "Ra", speak: "Ra" },
-        { display: "ز", sub: "Zai", speak: "Zai" },
-        { display: "س", sub: "Sin", speak: "Sin" },
-        { display: "ش", sub: "Syin", speak: "Syin" },
-        { display: "ص", sub: "Shad", speak: "Shad" },
-        { display: "ض", sub: "Dhad", speak: "Dhad" },
-        { display: "ط", sub: "Tha", speak: "Tha" },
-        { display: "ظ", sub: "Zha", speak: "Zha" },
-        { display: "ع", sub: "'Ain", speak: "Ain" },
-        { display: "غ", sub: "Ghain", speak: "Ghain" },
-        { display: "ف", sub: "Fa", speak: "Fa" },
-        { display: "ق", sub: "Qaf", speak: "Qaf" },
-        { display: "ك", sub: "Kaf", speak: "Kaf" },
-        { display: "ل", sub: "Lam", speak: "Lam" },
-        { display: "م", sub: "Mim", speak: "Mim" },
-        { display: "ن", sub: "Nun", speak: "Nun" },
-        { display: "و", sub: "Waw", speak: "Waw" },
-        { display: "هـ", sub: "Ha'", speak: "Ha" },
-        { display: "ي", sub: "Ya", speak: "Ya" }
-      ].map((it, i) => ({ ...it, key: "hij_" + i }))
+      items: HIJAIYAH_DATA.map((it, i) => ({
+        display: it.displayHarakat.asli,
+        sub: it.latin + " • " + it.object,
+        speak: "huruf " + it.phonics.asli + ", " + it.object,
+        key: "hij_" + i,
+        raw: it
+      }))
     }
   };
 
   let currentCariKey = "hijaiyah";
   let cariMode = "dict"; // 'dict' | 'quiz'
   let cariScore = 0;
+  let cariStreak = 0;
   let cariTarget = null;
 
   function startCari(key) {
     currentCariKey = key;
+    cariStreak = 0;
     show("game-cari");
     document.getElementById("cari-title").textContent = CARI[key].title;
     document.getElementById("cari-win").classList.add("hidden");
 
-    // Default ke mode Kamus Suara (Pencet & Dengar)
+    // Tampilkan / sembunyikan bar Harakat
+    const harakatBar = document.getElementById("hijaiyah-harakat-bar");
+    if (key === "hijaiyah") {
+      harakatBar.classList.remove("hidden");
+    } else {
+      harakatBar.classList.add("hidden");
+    }
+
     setEduTabMode("dict");
     renderDictionaryGrid();
-    speak("Ayo belajar " + (key === "hijaiyah" ? "huruf hijaiyah" : key === "angka" ? "angka" : "huruf alfabet") + "!");
+    speak("Ayo belajar " + (key === "hijaiyah" ? "dua puluh delapan huruf hijaiyah" : key === "angka" ? "angka satu sampai dua puluh" : "huruf alfabet"));
   }
 
   function setEduTabMode(mode) {
@@ -1207,23 +1378,46 @@
     }
   }
 
-  // Tab switcher
+  // Switcher Tab
   document.getElementById("tab-learn").addEventListener("click", () => {
-    initAudio();
-    sndTap();
-    setEduTabMode("dict");
+    initAudio(); sndTap(); setEduTabMode("dict");
   });
   document.getElementById("tab-quiz").addEventListener("click", () => {
-    initAudio();
-    sndTap();
-    setEduTabMode("quiz");
+    initAudio(); sndTap(); setEduTabMode("quiz");
   });
   document.getElementById("btn-back-to-dict").addEventListener("click", () => {
     document.getElementById("cari-win").classList.add("hidden");
     setEduTabMode("dict");
   });
 
-  // Render Kamus Suara Lengkap
+  // Handler Harakat (Asli, Fathah, Kasrah, Dammah)
+  document.querySelectorAll(".harakat-btn").forEach(btn => {
+    btn.addEventListener("click", function () {
+      initAudio();
+      document.querySelectorAll(".harakat-btn").forEach(b => b.classList.remove("active"));
+      this.classList.add("active");
+      currentHarakat = this.dataset.harakat;
+      playMarimba(3);
+
+      // Update items Hijaiyah dengan tanda baca terpilih
+      CARI.hijaiyah.items = HIJAIYAH_DATA.map((it, i) => {
+        const charHarakat = it.displayHarakat[currentHarakat];
+        const phonicSound = it.phonics[currentHarakat];
+        return {
+          display: charHarakat,
+          sub: phonicSound + " • " + it.object,
+          speak: phonicSound + ", " + it.object,
+          key: "hij_" + i,
+          raw: it
+        };
+      });
+
+      renderDictionaryGrid();
+      speak("Tanda baca " + (currentHarakat === "asli" ? "huruf asli" : currentHarakat));
+    });
+  });
+
+  // Render Kamus Suara (Kualitas Studio Toy Wagon)
   function renderDictionaryGrid() {
     const cfg = CARI[currentCariKey];
     const container = document.getElementById("cari-full-grid");
@@ -1233,7 +1427,7 @@
       const card = document.createElement("div");
       const color = COLORS[index % COLORS.length];
       card.className = "dict-train-card" + (cfg.isArabic ? " is-hijaiyah" : "");
-      card.style.background = `linear-gradient(180deg, ${color} 0%, ${shade(color, -22)} 100%)`;
+      card.style.background = `linear-gradient(180deg, ${color} 0%, ${shade(color, -25)} 100%)`;
 
       card.innerHTML = `
         <span class="card-speaker-icon">🔊</span>
@@ -1247,9 +1441,9 @@
       card.addEventListener("pointerdown", (e) => {
         e.preventDefault();
         initAudio();
-        sndGood();
+        playMarimba(index);
         card.classList.add("bouncing");
-        setTimeout(() => card.classList.remove("bouncing"), 300);
+        setTimeout(() => card.classList.remove("bouncing"), 250);
         floatScore(e.clientX, e.clientY, "🌟");
         speak(item.speak);
       });
@@ -1258,10 +1452,12 @@
     });
   }
 
-  // Quiz Mode Logic
+  // Quiz Mode Logic (Dengan Bogie Kereta & Combo Streak)
   function startQuizRound() {
     cariScore = 0;
+    cariStreak = 0;
     document.getElementById("cari-score").textContent = "0";
+    document.getElementById("quiz-streak-pill").classList.add("hidden");
     document.getElementById("cari-win").classList.add("hidden");
     nextQuizQuestion();
   }
@@ -1279,50 +1475,60 @@
     const grid = document.getElementById("cari-grid");
     grid.innerHTML = "";
 
-    picks.forEach(item => {
-      const color = COLORS[Math.floor(Math.random() * COLORS.length)];
-      const t = trainEl(color, false);
-      t.classList.add("big");
-      if (cfg.isArabic) t.classList.add("is-hijaiyah-train");
+    picks.forEach((item, pIdx) => {
+      const color = COLORS[(pIdx * 2 + Math.floor(Math.random() * 3)) % COLORS.length];
+      const opt = document.createElement("div");
+      opt.className = "quiz-carriage-option" + (cfg.isArabic ? " is-hijaiyah-opt" : "");
+      opt.style.background = `linear-gradient(180deg, ${color} 0%, ${shade(color, -25)} 100%)`;
 
-      const lab = document.createElement("div");
-      lab.className = "tlabel";
-      lab.textContent = item.display;
-      if (item.sub) {
-        const s = document.createElement("div");
-        s.className = "tsub";
-        s.textContent = item.sub;
-        lab.appendChild(s);
-      }
-      t.appendChild(lab);
+      opt.innerHTML = `
+        <div class="opt-symbol">${item.display}</div>
+        <div class="opt-sub">${item.sub}</div>
+        <div class="opt-wheels">
+          <div class="c-wheel"></div><div class="c-wheel"></div>
+        </div>
+      `;
 
-      t.addEventListener("pointerdown", (e) => {
+      opt.addEventListener("pointerdown", (e) => {
         e.preventDefault();
         initAudio();
+
         if (item.key === cariTarget.key) {
-          sndGood();
           cariScore++;
+          cariStreak++;
           document.getElementById("cari-score").textContent = cariScore;
-          floatScore(e.clientX, e.clientY, "⭐ Hebat!");
+
+          const streakPill = document.getElementById("quiz-streak-pill");
+          if (cariStreak > 1) {
+            streakPill.classList.remove("hidden");
+            document.getElementById("quiz-streak-count").textContent = cariStreak;
+          }
+
+          sndGood();
+          playMarimba(cariScore);
+          floatScore(e.clientX, e.clientY, `⭐ Hebat! +1`);
 
           if (cariScore >= cfg.rounds) {
             document.getElementById("cari-final").textContent = cariScore;
             sndWin();
+            speak("Masya Allah luar biasa! Adik pintar berhasil menjawab semua soal!");
             setTimeout(() => document.getElementById("cari-win").classList.remove("hidden"), 400);
           } else {
             setTimeout(nextQuizQuestion, 600);
           }
         } else {
+          cariStreak = 0;
+          document.getElementById("quiz-streak-pill").classList.add("hidden");
           sndWrong();
-          t.classList.add("shake");
-          setTimeout(() => t.classList.remove("shake"), 400);
-          speak("Coba lagi, cari " + cariTarget.speak);
+          opt.classList.add("shake");
+          setTimeout(() => opt.classList.remove("shake"), 400);
+          speak("Coba lagi adik cerdas, cari " + cariTarget.speak);
         }
       });
-      grid.appendChild(t);
+
+      grid.appendChild(opt);
     });
 
-    // Ucapkan pertanyaan
     speak("Di mana " + cariTarget.speak + "?");
   }
 
@@ -1342,3 +1548,4 @@
   // Mulai di layar depan
   show("home");
 })();
+
