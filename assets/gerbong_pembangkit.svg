@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 160" width="280" height="160">
+  <defs>
+    <linearGradient id="ssBody" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#f8fafc"/>
+      <stop offset="25%" stop-color="#e2e8f0"/>
+      <stop offset="60%" stop-color="#cbd5e1"/>
+      <stop offset="100%" stop-color="#94a3b8"/>
+    </linearGradient>
+    <linearGradient id="kaiOrange" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#f97316"/>
+      <stop offset="100%" stop-color="#ea580c"/>
+    </linearGradient>
+    <linearGradient id="kaiBlue" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0284c7"/>
+      <stop offset="100%" stop-color="#0369a1"/>
+    </linearGradient>
+    <linearGradient id="wheelGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#475569"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <pattern id="grillePattern" width="4" height="6" patternUnits="userSpaceOnUse">
+      <rect width="4" height="2" fill="#0f172a"/>
+      <rect y="2" width="4" height="4" fill="#334155"/>
+    </pattern>
+  </defs>
+
+  <!-- Left & Right Couplers -->
+  <rect x="2" y="78" width="10" height="32" rx="2" fill="#1e293b" stroke="#0f172a" stroke-width="2"/>
+  <rect x="0" y="92" width="6" height="8" rx="2" fill="#334155"/>
+  <rect x="268" y="78" width="10" height="32" rx="2" fill="#1e293b" stroke="#0f172a" stroke-width="2"/>
+  <rect x="274" y="92" width="6" height="8" rx="2" fill="#334155"/>
+
+  <!-- Main Body -->
+  <rect x="8" y="32" width="264" height="82" rx="8" fill="url(#ssBody)" stroke="#0f172a" stroke-width="3"/>
+  <!-- Corrugation -->
+  <line x1="8" y1="42" x2="272" y2="42" stroke="#ffffff" stroke-width="1.5"/>
+  <line x1="8" y1="46" x2="272" y2="46" stroke="#ffffff" stroke-width="1.5"/>
+  <line x1="8" y1="90" x2="272" y2="90" stroke="#64748b" stroke-width="1"/>
+  <line x1="8" y1="93" x2="272" y2="93" stroke="#64748b" stroke-width="1"/>
+
+  <!-- KAI Stripes -->
+  <rect x="8" y="96" width="264" height="6" fill="url(#kaiOrange)"/>
+  <rect x="8" y="103" width="264" height="6" fill="url(#kaiBlue)"/>
+
+  <!-- GENERATOR SECTION (Left Half: Huge Radiator Grilles) -->
+  <rect x="20" y="44" width="48" height="46" rx="4" fill="url(#grillePattern)" stroke="#0f172a" stroke-width="2"/>
+  <rect x="74" y="44" width="48" height="46" rx="4" fill="url(#grillePattern)" stroke="#0f172a" stroke-width="2"/>
+
+  <!-- Rooftop Diesel Generator Exhaust Chimneys -->
+  <rect x="40" y="18" width="16" height="14" rx="2" fill="#1e293b" stroke="#0f172a" stroke-width="1.5"/>
+  <rect x="86" y="18" width="16" height="14" rx="2" fill="#1e293b" stroke="#0f172a" stroke-width="1.5"/>
+  <circle cx="48" cy="18" r="6" fill="#475569"/>
+  <circle cx="94" cy="18" r="6" fill="#475569"/>
+
+  <!-- Danger High Voltage Symbol -->
+  <g transform="translate(132, 54)">
+    <polygon points="12,0 24,20 0,20" fill="#facc15" stroke="#0f172a" stroke-width="1.5"/>
+    <text x="9" y="17" font-family="Arial, sans-serif" font-weight="900" font-size="12" fill="#dc2626">⚡</text>
+  </g>
+
+  <!-- Crew / Luggage Section (Right Half) -->
+  <!-- Middle Double Sliding Baggage Door -->
+  <rect x="162" y="44" width="34" height="66" rx="3" fill="#cbd5e1" stroke="#0f172a" stroke-width="1.5"/>
+  <line x1="179" y1="44" x2="179" y2="110" stroke="#64748b" stroke-width="1.5"/>
+
+  <!-- Guard / Conductor Window -->
+  <rect x="206" y="48" width="24" height="26" rx="3" fill="#38bdf8" stroke="#0f172a" stroke-width="1.5"/>
+  <line x1="206" y1="61" x2="230" y2="61" stroke="#ffffff" stroke-width="1"/>
+
+  <!-- Right End Door -->
+  <rect x="242" y="44" width="22" height="66" rx="3" fill="#cbd5e1" stroke="#0f172a" stroke-width="1.5"/>
+  <rect x="248" y="50" width="10" height="20" rx="2" fill="#38bdf8"/>
+
+  <!-- Labeling -->
+  <text x="22" y="102" font-family="Arial, sans-serif" font-weight="900" font-size="7" fill="#ffffff">PEMBANGKIT</text>
+  <text x="94" y="102" font-family="monospace" font-weight="bold" font-size="6" fill="#ffffff">380V / 500kVA</text>
+  <text x="180" y="102" font-family="monospace" font-weight="bold" font-size="6" fill="#475569">P 0 18 01</text>
+
+  <!-- Bogies -->
+  <g id="bogiePLeft">
+    <rect x="30" y="118" width="58" height="10" rx="3" fill="#1e293b" stroke="#0f172a" stroke-width="2"/>
+    <circle cx="59" cy="123" r="4" fill="#64748b"/>
+    <circle cx="42" cy="136" r="16" fill="url(#wheelGrad)" stroke="#0f172a" stroke-width="3"/>
+    <circle cx="42" cy="136" r="8" fill="#94a3b8" stroke="#334155" stroke-width="2"/>
+    <circle cx="42" cy="136" r="3" fill="#0f172a"/>
+    <circle cx="76" cy="136" r="16" fill="url(#wheelGrad)" stroke="#0f172a" stroke-width="3"/>
+    <circle cx="76" cy="136" r="8" fill="#94a3b8" stroke="#334155" stroke-width="2"/>
+    <circle cx="76" cy="136" r="3" fill="#0f172a"/>
+  </g>
+  <g id="bogiePRight">
+    <rect x="192" y="118" width="58" height="10" rx="3" fill="#1e293b" stroke="#0f172a" stroke-width="2"/>
+    <circle cx="221" cy="123" r="4" fill="#64748b"/>
+    <circle cx="204" cy="136" r="16" fill="url(#wheelGrad)" stroke="#0f172a" stroke-width="3"/>
+    <circle cx="204" cy="136" r="8" fill="#94a3b8" stroke="#334155" stroke-width="2"/>
+    <circle cx="204" cy="136" r="3" fill="#0f172a"/>
+    <circle cx="238" cy="136" r="16" fill="url(#wheelGrad)" stroke="#0f172a" stroke-width="3"/>
+    <circle cx="238" cy="136" r="8" fill="#94a3b8" stroke="#334155" stroke-width="2"/>
+    <circle cx="238" cy="136" r="3" fill="#0f172a"/>
+  </g>
+</svg>

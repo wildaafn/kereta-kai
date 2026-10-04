@@ -1,0 +1,133 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 160" width="280" height="160">
+  <defs>
+    <!-- Panoramic glass gradient -->
+    <linearGradient id="panoGlass" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#bae6fd"/>
+      <stop offset="30%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#0284c7"/>
+    </linearGradient>
+    <linearGradient id="goldTrim" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#fbbf24"/>
+      <stop offset="50%" stop-color="#fef08a"/>
+      <stop offset="100%" stop-color="#d97706"/>
+    </linearGradient>
+    <linearGradient id="blueBody" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1e3a8a"/>
+      <stop offset="70%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#020617"/>
+    </linearGradient>
+    <linearGradient id="wheelGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#475569"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <!-- Glass sheen reflection -->
+    <linearGradient id="sheen" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.6"/>
+      <stop offset="40%" stop-color="#ffffff" stop-opacity="0.1"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Left & Right Couplers / Gangway Buffers -->
+  <rect x="2" y="78" width="10" height="32" rx="2" fill="#1e293b" stroke="#0f172a" stroke-width="2"/>
+  <rect x="0" y="92" width="6" height="8" rx="2" fill="#334155"/>
+  <rect x="268" y="78" width="10" height="32" rx="2" fill="#1e293b" stroke="#0f172a" stroke-width="2"/>
+  <rect x="274" y="92" width="6" height="8" rx="2" fill="#334155"/>
+
+  <!-- Main Coach Body -->
+  <rect x="8" y="32" width="264" height="82" rx="10" fill="url(#blueBody)" stroke="#0f172a" stroke-width="3"/>
+
+  <!-- Roof Curved Skylight Frame -->
+  <path d="M 14 36 Q 140 20 266 36 L 266 44 L 14 44 Z" fill="#0f172a"/>
+
+  <!-- Luxury Gold Stripe -->
+  <rect x="8" y="94" width="264" height="6" fill="url(#goldTrim)"/>
+  <rect x="8" y="103" width="264" height="3" fill="url(#goldTrim)"/>
+
+  <!-- Large Panoramic Windows (Panoramic KAI Glass) -->
+  <!-- Window 1 (Passenger Panoramic Bay) -->
+  <rect x="22" y="38" width="38" height="48" rx="8" fill="url(#panoGlass)" stroke="#fbbf24" stroke-width="2.5"/>
+  <path d="M 24 40 L 48 40 L 32 84 L 24 84 Z" fill="url(#sheen)"/>
+  <!-- Interior Seat Silhouettes -->
+  <rect x="30" y="62" width="10" height="18" rx="3" fill="#d97706" opacity="0.85"/>
+  <rect x="44" y="62" width="10" height="18" rx="3" fill="#d97706" opacity="0.85"/>
+
+  <!-- Window 2 -->
+  <rect x="68" y="38" width="38" height="48" rx="8" fill="url(#panoGlass)" stroke="#fbbf24" stroke-width="2.5"/>
+  <path d="M 70 40 L 94 40 L 78 84 L 70 84 Z" fill="url(#sheen)"/>
+  <rect x="76" y="62" width="10" height="18" rx="3" fill="#d97706" opacity="0.85"/>
+  <rect x="90" y="62" width="10" height="18" rx="3" fill="#d97706" opacity="0.85"/>
+
+  <!-- Window 3 -->
+  <rect x="114" y="38" width="38" height="48" rx="8" fill="url(#panoGlass)" stroke="#fbbf24" stroke-width="2.5"/>
+  <path d="M 116 40 L 140 40 L 124 84 L 116 84 Z" fill="url(#sheen)"/>
+  <rect x="122" y="62" width="10" height="18" rx="3" fill="#d97706" opacity="0.85"/>
+  <rect x="136" y="62" width="10" height="18" rx="3" fill="#d97706" opacity="0.85"/>
+
+  <!-- Window 4 -->
+  <rect x="160" y="38" width="38" height="48" rx="8" fill="url(#panoGlass)" stroke="#fbbf24" stroke-width="2.5"/>
+  <path d="M 162 40 L 186 40 L 170 84 L 162 84 Z" fill="url(#sheen)"/>
+  <rect x="168" y="62" width="10" height="18" rx="3" fill="#d97706" opacity="0.85"/>
+  <rect x="182" y="62" width="10" height="18" rx="3" fill="#d97706" opacity="0.85"/>
+
+  <!-- Window 5 -->
+  <rect x="206" y="38" width="38" height="48" rx="8" fill="url(#panoGlass)" stroke="#fbbf24" stroke-width="2.5"/>
+  <path d="M 208 40 L 232 40 L 216 84 L 208 84 Z" fill="url(#sheen)"/>
+  <rect x="214" y="62" width="10" height="18" rx="3" fill="#d97706" opacity="0.85"/>
+  <rect x="228" y="62" width="10" height="18" rx="3" fill="#d97706" opacity="0.85"/>
+
+  <!-- Passenger Door at Right End -->
+  <rect x="250" y="44" width="18" height="66" rx="3" fill="#1e293b" stroke="#fbbf24" stroke-width="1.5"/>
+  <rect x="253" y="48" width="12" height="22" rx="2" fill="url(#panoGlass)"/>
+
+  <!-- KAI Logo & Lettering -->
+  <text x="32" y="102" font-family="Arial, sans-serif" font-weight="900" font-size="7" fill="#fbbf24" letter-spacing="1">PANORAMIC</text>
+  <text x="140" y="102" font-family="Arial, sans-serif" font-weight="bold" font-size="6" fill="#f8fafc">KAI WISATA</text>
+  <text x="210" y="102" font-family="Arial, sans-serif" font-weight="bold" font-size="5" fill="#94a3b8">K1 0 22 01</text>
+
+  <!-- AC Units on Roof -->
+  <rect x="60" y="24" width="46" height="8" rx="3" fill="#334155" stroke="#0f172a" stroke-width="1.5"/>
+  <rect x="174" y="24" width="46" height="8" rx="3" fill="#334155" stroke="#0f172a" stroke-width="1.5"/>
+
+  <!-- Underframe Equipment Boxes -->
+  <rect x="94" y="114" width="92" height="14" rx="2" fill="#1e293b" stroke="#0f172a" stroke-width="2"/>
+  <line x1="110" y1="117" x2="110" y2="125" stroke="#475569" stroke-width="2"/>
+  <line x1="125" y1="117" x2="125" y2="125" stroke="#475569" stroke-width="2"/>
+  <line x1="140" y1="117" x2="140" y2="125" stroke="#475569" stroke-width="2"/>
+  <line x1="155" y1="117" x2="155" y2="125" stroke="#475569" stroke-width="2"/>
+  <line x1="170" y1="117" x2="170" y2="125" stroke="#475569" stroke-width="2"/>
+
+  <!-- BOGIE 1 (Left Wheels) -->
+  <g id="bogieLeft">
+    <!-- Bogie Frame -->
+    <rect x="30" y="118" width="58" height="10" rx="3" fill="#1e293b" stroke="#0f172a" stroke-width="2"/>
+    <circle cx="59" cy="123" r="4" fill="#64748b"/>
+    <!-- Springs -->
+    <rect x="42" y="122" width="8" height="6" fill="#f59e0b"/>
+    <rect x="68" y="122" width="8" height="6" fill="#f59e0b"/>
+    <!-- Wheel 1 -->
+    <circle cx="42" cy="136" r="16" fill="url(#wheelGrad)" stroke="#0f172a" stroke-width="3"/>
+    <circle cx="42" cy="136" r="8" fill="#94a3b8" stroke="#334155" stroke-width="2"/>
+    <circle cx="42" cy="136" r="3" fill="#0f172a"/>
+    <!-- Wheel 2 -->
+    <circle cx="76" cy="136" r="16" fill="url(#wheelGrad)" stroke="#0f172a" stroke-width="3"/>
+    <circle cx="76" cy="136" r="8" fill="#94a3b8" stroke="#334155" stroke-width="2"/>
+    <circle cx="76" cy="136" r="3" fill="#0f172a"/>
+  </g>
+
+  <!-- BOGIE 2 (Right Wheels) -->
+  <g id="bogieRight">
+    <rect x="192" y="118" width="58" height="10" rx="3" fill="#1e293b" stroke="#0f172a" stroke-width="2"/>
+    <circle cx="221" cy="123" r="4" fill="#64748b"/>
+    <rect x="204" y="122" width="8" height="6" fill="#f59e0b"/>
+    <rect x="230" y="122" width="8" height="6" fill="#f59e0b"/>
+    <!-- Wheel 3 -->
+    <circle cx="204" cy="136" r="16" fill="url(#wheelGrad)" stroke="#0f172a" stroke-width="3"/>
+    <circle cx="204" cy="136" r="8" fill="#94a3b8" stroke="#334155" stroke-width="2"/>
+    <circle cx="204" cy="136" r="3" fill="#0f172a"/>
+    <!-- Wheel 4 -->
+    <circle cx="238" cy="136" r="16" fill="url(#wheelGrad)" stroke="#0f172a" stroke-width="3"/>
+    <circle cx="238" cy="136" r="8" fill="#94a3b8" stroke="#334155" stroke-width="2"/>
+    <circle cx="238" cy="136" r="3" fill="#0f172a"/>
+  </g>
+</svg>

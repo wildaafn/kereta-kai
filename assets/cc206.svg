@@ -1,0 +1,125 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 160" width="280" height="160">
+  <defs>
+    <linearGradient id="cc206Body" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="65%" stop-color="#f1f5f9"/>
+      <stop offset="100%" stop-color="#cbd5e1"/>
+    </linearGradient>
+    <linearGradient id="kaiOrange" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#f97316"/>
+      <stop offset="100%" stop-color="#ea580c"/>
+    </linearGradient>
+    <linearGradient id="kaiBlue" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0284c7"/>
+      <stop offset="100%" stop-color="#0369a1"/>
+    </linearGradient>
+    <linearGradient id="cabGlass" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#0284c7"/>
+    </linearGradient>
+    <linearGradient id="wheelGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#475569"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Rear Coupler (Left to connect with carriages) -->
+  <rect x="2" y="98" width="10" height="20" rx="2" fill="#1e293b" stroke="#0f172a" stroke-width="2"/>
+  <rect x="0" y="103" width="6" height="8" rx="2" fill="#334155"/>
+
+  <!-- Front Pilot / Cowcatcher (Right) -->
+  <polygon points="266,108 278,124 278,138 266,134" fill="#dc2626" stroke="#991b1b" stroke-width="2"/>
+  <rect x="274" y="112" width="6" height="10" rx="2" fill="#1e293b"/>
+
+  <!-- Main Locomotive Body (CC 206 Double Cab) -->
+  <!-- Long Hood & Main Frame -->
+  <path d="M 12 40 L 46 32 L 234 32 L 268 40 L 268 114 L 12 114 Z" fill="url(#cc206Body)" stroke="#0f172a" stroke-width="3"/>
+
+  <!-- Front Cab Aerodynamic Roof Slope (Right) -->
+  <path d="M 226 32 L 268 44 L 268 114 L 226 114 Z" fill="#e2e8f0" stroke="#0f172a" stroke-width="2"/>
+  <!-- Front Windshield Cab (Right Facing Forward) -->
+  <polygon points="232,44 260,48 260,68 232,68" fill="url(#cabGlass)" stroke="#0f172a" stroke-width="2"/>
+  <line x1="246" y1="46" x2="246" y2="68" stroke="#0f172a" stroke-width="1.5"/>
+  <!-- Front Windshield Wiper -->
+  <line x1="242" y1="64" x2="252" y2="52" stroke="#0f172a" stroke-width="2" stroke-linecap="round"/>
+
+  <!-- Front High-Intensity Headlights (Right) -->
+  <circle cx="264" cy="76" r="4" fill="#fef08a" stroke="#ca8a04" stroke-width="1.5"/>
+  <circle cx="264" cy="76" r="2" fill="#ffffff"/>
+  <!-- Top Marker Light -->
+  <rect x="256" y="36" width="8" height="6" rx="2" fill="#fef08a" stroke="#0f172a" stroke-width="1"/>
+
+  <!-- Rear Cab Windshield (Left) -->
+  <polygon points="44,44 18,48 18,68 44,68" fill="url(#cabGlass)" stroke="#0f172a" stroke-width="2"/>
+  <circle cx="16" cy="76" r="3" fill="#ef4444" stroke="#7f1d1d" stroke-width="1"/>
+
+  <!-- KAI Speed Stripes (Orange & Blue) -->
+  <rect x="12" y="86" width="256" height="7" fill="url(#kaiOrange)"/>
+  <rect x="12" y="93" width="256" height="7" fill="url(#kaiBlue)"/>
+
+  <!-- PT KAI Logo -->
+  <g transform="translate(100, 52)">
+    <text x="0" y="20" font-family="Arial, sans-serif" font-weight="900" font-size="22" fill="#ea580c">K<tspan fill="#0284c7">A</tspan>I</text>
+  </g>
+
+  <!-- Ventilation Grilles & Louvers -->
+  <rect x="52" y="46" width="26" height="34" rx="2" fill="#334155" stroke="#0f172a" stroke-width="1.5"/>
+  <line x1="52" y1="52" x2="78" y2="52" stroke="#64748b" stroke-width="1.5"/>
+  <line x1="52" y1="58" x2="78" y2="58" stroke="#64748b" stroke-width="1.5"/>
+  <line x1="52" y1="64" x2="78" y2="64" stroke="#64748b" stroke-width="1.5"/>
+  <line x1="52" y1="70" x2="78" y2="70" stroke="#64748b" stroke-width="1.5"/>
+
+  <rect x="156" y="46" width="26" height="34" rx="2" fill="#334155" stroke="#0f172a" stroke-width="1.5"/>
+  <line x1="156" y1="52" x2="182" y2="52" stroke="#64748b" stroke-width="1.5"/>
+  <line x1="156" y1="58" x2="182" y2="58" stroke="#64748b" stroke-width="1.5"/>
+  <line x1="156" y1="64" x2="182" y2="64" stroke="#64748b" stroke-width="1.5"/>
+  <line x1="156" y1="70" x2="182" y2="70" stroke="#64748b" stroke-width="1.5"/>
+
+  <!-- Identification Plates -->
+  <rect x="228" y="74" width="30" height="9" rx="2" fill="#1e293b"/>
+  <text x="231" y="81" font-family="monospace" font-weight="900" font-size="5" fill="#facc15">CC 206 13 01</text>
+  <rect x="100" y="78" width="22" height="6" rx="1" fill="#1e293b"/>
+  <text x="104" y="83" font-family="monospace" font-weight="bold" font-size="5" fill="#f8fafc">CC 206</text>
+
+  <!-- Rooftop Dynamic Brake Fans & Exhaust -->
+  <rect x="88" y="24" width="48" height="8" rx="3" fill="#475569" stroke="#0f172a" stroke-width="1.5"/>
+  <circle cx="102" cy="28" r="3" fill="#1e293b"/>
+  <circle cx="122" cy="28" r="3" fill="#1e293b"/>
+  <!-- Horn (Semboyan 35 Trumpet facing RIGHT) -->
+  <path d="M 238 28 L 246 25 L 246 31 Z" fill="#d97706" stroke="#0f172a" stroke-width="1"/>
+
+  <!-- Fuel Tank Underbody -->
+  <rect x="94" y="114" width="92" height="14" rx="4" fill="#1e293b" stroke="#0f172a" stroke-width="2"/>
+
+  <!-- HEAVY 3-AXLE CO-CO BOGIE 1 (Left: 3 Wheels) -->
+  <g id="bogieCoCoLeft">
+    <rect x="18" y="116" width="72" height="10" rx="3" fill="#1e293b" stroke="#0f172a" stroke-width="2"/>
+    <circle cx="28" cy="136" r="15" fill="url(#wheelGrad)" stroke="#0f172a" stroke-width="3"/>
+    <circle cx="28" cy="136" r="7" fill="#94a3b8" stroke="#334155" stroke-width="2"/>
+    <circle cx="28" cy="136" r="3" fill="#0f172a"/>
+
+    <circle cx="54" cy="136" r="15" fill="url(#wheelGrad)" stroke="#0f172a" stroke-width="3"/>
+    <circle cx="54" cy="136" r="7" fill="#94a3b8" stroke="#334155" stroke-width="2"/>
+    <circle cx="54" cy="136" r="3" fill="#0f172a"/>
+
+    <circle cx="80" cy="136" r="15" fill="url(#wheelGrad)" stroke="#0f172a" stroke-width="3"/>
+    <circle cx="80" cy="136" r="7" fill="#94a3b8" stroke="#334155" stroke-width="2"/>
+    <circle cx="80" cy="136" r="3" fill="#0f172a"/>
+  </g>
+
+  <!-- HEAVY 3-AXLE CO-CO BOGIE 2 (Right: 3 Wheels) -->
+  <g id="bogieCoCoRight">
+    <rect x="190" y="116" width="72" height="10" rx="3" fill="#1e293b" stroke="#0f172a" stroke-width="2"/>
+    <circle cx="200" cy="136" r="15" fill="url(#wheelGrad)" stroke="#0f172a" stroke-width="3"/>
+    <circle cx="200" cy="136" r="7" fill="#94a3b8" stroke="#334155" stroke-width="2"/>
+    <circle cx="200" cy="136" r="3" fill="#0f172a"/>
+
+    <circle cx="226" cy="136" r="15" fill="url(#wheelGrad)" stroke="#0f172a" stroke-width="3"/>
+    <circle cx="226" cy="136" r="7" fill="#94a3b8" stroke="#334155" stroke-width="2"/>
+    <circle cx="226" cy="136" r="3" fill="#0f172a"/>
+
+    <circle cx="252" cy="136" r="15" fill="url(#wheelGrad)" stroke="#0f172a" stroke-width="3"/>
+    <circle cx="252" cy="136" r="7" fill="#94a3b8" stroke="#334155" stroke-width="2"/>
+    <circle cx="252" cy="136" r="3" fill="#0f172a"/>
+  </g>
+</svg>

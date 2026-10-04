@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>KAI Game by Wilda - Petualangan Masinis & Edukasi Anak</title>
+  <meta name="description" content="KAI Game by Wilda: Game edukasi anak bertema kereta api Indonesia. Belajar huruf Hijaiyah lengkap, angka, alphabet, bengkel rakit balok, dan simulasi masinis kereta!" />
+  <meta name="theme-color" content="#0d47a1" />
+  <meta property="og:title" content="KAI Game by Wilda - Edukasi & Masinis Cilik" />
+  <meta property="og:description" content="Belajar huruf Hijaiyah lengkap, angka, alphabet, bengkel rakit balok, dan nyetir kereta KAI!" />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚂</text></svg>" />
+  <!-- Font Amiri untuk Kaligrafi Hijaiyah & Baloo 2 untuk Anak -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Baloo+2:wght@600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=3.0" />
+</head>
+<body>
+  <div id="app">
+    <!-- ===== LAYAR DEPAN / MENU UTAMA ===== -->
+    <section id="home" class="screen active">
+      <div class="sky">
+        <div class="cloud c1"></div>
+        <div class="cloud c2"></div>
+        <div class="cloud c3"></div>
+        <div class="sun"></div>
+      </div>
+      <div class="home-content">
+        <div class="free-badge">✨ 100% GRATIS • SEMUA KERETA TERBUKA • KHUSUS ADIK ✨</div>
+        <h1 class="title">🚂 KAI Game by Wilda</h1>
+        <p class="subtitle">Petualangan Masinis & Belajar Ceria Adik!</p>
+
+        <!-- 3 KARTU PETUALANGAN UTAMA -->
+        <div class="main-modes">
+          <!-- MODE 1: NYETIR KERETA DI REL -->
+          <div class="mode-card card-drive" id="btn-goto-drive">
+            <div class="card-badge">Paling Seru! 🌟</div>
+            <div class="card-img-wrap">
+              <img src="assets/whoosh.svg" alt="Whoosh" class="card-train-img" />
+            </div>
+            <div class="card-info">
+              <h3>Nyetir Kereta di Rel</h3>
+              <p>Gas tuas, bunyikan klakson Semboyan 35, lewati stasiun, terowongan & palang pintu!</p>
+            </div>
+            <button class="card-play-btn">Ayo Main! 🚦</button>
+          </div>
+
+          <!-- MODE 2: BENGKEL BALOK KAI -->
+          <div class="mode-card card-bengkel" id="btn-goto-bengkel">
+            <div class="card-badge">🔓 Bebas Pilih</div>
+            <div class="card-img-wrap">
+              <img src="assets/cc206.svg" alt="CC 206 KAI" class="card-train-img" />
+            </div>
+            <div class="card-info">
+              <h3>Bengkel Balok KAI</h3>
+              <p>Pilih CC206, Whoosh, CC201, KRL, atau rakit balok bebas! Pasang gerbong & warna.</p>
+            </div>
+            <button class="card-play-btn">Masuk Bengkel 🛠️</button>
+          </div>
+
+          <!-- MODE 3: TAMAN BELAJAR -->
+          <div class="mode-card card-edu" id="btn-goto-edu">
+            <div class="card-badge">Lengkap 28 Hijaiyah 🎓</div>
+            <div class="card-icon">🧩⭐</div>
+            <div class="card-info">
+              <h3>Taman Belajar KAI</h3>
+              <p>Kamus suara & kuis: Hijaiyah (Alif-Ya), Angka 1-20, Alfabet A-Z, dan game seru!</p>
+            </div>
+            <button class="card-play-btn">Buka Game 🎮</button>
+          </div>
+        </div>
+
+        <button id="sound-toggle" class="sound-btn" title="Suara">🔊</button>
+      </div>
+    </section>
+
+    <!-- ===== LAYAR: BENGKEL BALOK KERETA KAI ===== -->
+    <section id="screen-bengkel" class="screen">
+      <div class="game-header header-bengkel">
+        <button class="back-btn" data-back>⬅️ Rumah</button>
+        <h2>🧱 Bengkel Balok Kereta KAI</h2>
+        <div class="badge-tag">🔓 Semua Terbuka!</div>
+      </div>
+      
+      <!-- AREA PREVIEW KERETA YANG DIRAKIT -->
+      <div class="bengkel-stage">
+        <div class="bengkel-track-line"></div>
+        <div id="bengkel-train-preview" class="bengkel-train-preview">
+          <!-- Render dinamis lokomotif + gerbong -->
+        </div>
+        <div class="bengkel-test-controls">
+          <button id="btn-test-horn" class="mini-btn">🔊 Tes Klakson</button>
+          <button id="btn-test-smoke" class="mini-btn">💨 Tes Asap</button>
+        </div>
+      </div>
+
+      <!-- KONTROL RAKIT & PILIHAN -->
+      <div class="bengkel-options">
+        <!-- 1. PILIH MODEL LOKOMOTIF -->
+        <div class="opt-group">
+          <label>1. Pilih Lokomotif KAI Asli (Semua Gratis & Terbuka!):</label>
+          <div class="opt-chips" id="loco-picker">
+            <button class="chip active" data-loco="cc206">
+              <img src="assets/cc206.svg" class="chip-thumb" alt="CC 206" />
+              <span>CC 206 KAI</span>
+            </button>
+            <button class="chip" data-loco="whoosh">
+              <img src="assets/whoosh.svg" class="chip-thumb" alt="Whoosh" />
+              <span>Whoosh KCIC</span>
+            </button>
+            <button class="chip" data-loco="cc201">
+              <img src="assets/cc201.svg" class="chip-thumb" alt="CC 201" />
+              <span>CC 201 Hidung Miring</span>
+            </button>
+            <button class="chip" data-loco="krl">
+              <img src="assets/krl.svg" class="chip-thumb" alt="KRL" />
+              <span>KRL Commuter</span>
+            </button>
+            <button class="chip" data-loco="uap">
+              <img src="assets/uap_b25.svg" class="chip-thumb" alt="Uap Mak Itam" />
+              <span>Uap B25 Mak Itam</span>
+            </button>
+            <button class="chip" data-loco="balok">
+              <span class="chip-emoji">🧱</span>
+              <span>Rakit Balok Bebas</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- 2. PILIH WARNA KERETA -->
+        <div class="opt-group">
+          <label>2. Pilih Warna Cat Bodi:</label>
+          <div class="color-palette" id="train-color-palette">
+            <button class="color-dot active" data-color="#e23b2e" style="background:#e23b2e;" title="Merah"></button>
+            <button class="color-dot" data-color="#1b6ca8" style="background:#1b6ca8;" title="Biru KAI"></button>
+            <button class="color-dot" data-color="#f0a500" style="background:#f0a500;" title="Oranye KAI"></button>
+            <button class="color-dot" data-color="#2eb85c" style="background:#2eb85c;" title="Hijau"></button>
+            <button class="color-dot" data-color="#8e44ad" style="background:#8e44ad;" title="Ungu"></button>
+            <button class="color-dot" data-color="#f5f5f5" style="background:#f5f5f5; border:2px solid #ccc;" title="Putih KAI"></button>
+            <button class="color-dot" data-color="#2c3e50" style="background:#2c3e50;" title="Hitam Baja"></button>
+          </div>
+        </div>
+
+        <!-- 3. PILIH GERBONG & JUMLAH -->
+        <div class="opt-row">
+          <div class="opt-group flex-1">
+            <label>3. Tipe Gerbong Lengkap (Semua Gratis!):</label>
+            <div class="opt-chips" id="carriage-picker">
+              <button class="chip active" data-carriage="eksekutif">
+                <img src="assets/gerbong_eksekutif.svg" class="chip-thumb" alt="Eksekutif KAI" />
+                <span>Eksekutif KAI</span>
+              </button>
+              <button class="chip" data-carriage="panoramic">
+                <img src="assets/gerbong_panoramic.svg" class="chip-thumb" alt="Panoramic KAI" />
+                <span>Panoramic KAI</span>
+              </button>
+              <button class="chip" data-carriage="kontainer">
+                <img src="assets/gerbong_kontainer.svg" class="chip-thumb" alt="Kontainer Logistik" />
+                <span>Kontainer KAI Logistik</span>
+              </button>
+              <button class="chip" data-carriage="tangki">
+                <img src="assets/gerbong_tangki.svg" class="chip-thumb" alt="Tangki Pertamina" />
+                <span>Tangki BBM Pertamina</span>
+              </button>
+              <button class="chip" data-carriage="makan">
+                <img src="assets/gerbong_makan.svg" class="chip-thumb" alt="Kereta Makan KAI" />
+                <span>Kereta Makan (M1)</span>
+              </button>
+              <button class="chip" data-carriage="pembangkit">
+                <img src="assets/gerbong_pembangkit.svg" class="chip-thumb" alt="Kereta Pembangkit" />
+                <span>Kereta Pembangkit (P)</span>
+              </button>
+            </div>
+          </div>
+          <div class="opt-group">
+            <label>Panjang Gerbong:</label>
+            <div class="qty-stepper">
+              <button id="btn-gerbong-minus" class="step-btn">➖</button>
+              <span id="gerbong-count-label">2 Gerbong</span>
+              <button id="btn-gerbong-plus" class="step-btn">➕</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- TOMBOL LANGSUNG NYETIR -->
+        <button id="btn-start-drive-from-bengkel" class="btn-giant-drive">
+          🚦 AYO BERANGKAT NYETIR KERETA INI! 💨
+        </button>
+      </div>
+    </section>
+
+    <!-- ===== LAYAR: NYETIR KERETA DI REL (PETUALANGAN MASINIS) ===== -->
+    <section id="screen-drive" class="screen">
+      <!-- HEADER DRIVE STATUS -->
+      <div class="drive-header">
+        <button class="back-btn" data-back>⬅️ Rumah</button>
+        <button class="mini-tool-btn" id="btn-open-bengkel-from-drive">🛠️ Ganti Kereta</button>
+        
+        <div class="drive-stats">
+          <div class="stat-pill"><span id="drive-speed-display">0</span> <small>km/h</small></div>
+          <div class="stat-pill" id="drive-station-pill">📍 <span id="drive-next-station">Stasiun Gambir</span></div>
+          <div class="stat-pill" id="drive-passenger-pill">🐾 <span id="drive-passengers-count">0</span> Penumpang</div>
+        </div>
+
+        <div class="drive-env-toggles">
+          <button id="btn-env-time" class="time-btn" title="Ganti Waktu">☀️</button>
+        </div>
+      </div>
+
+      <!-- DUNIA REL DINAMIS (PARALLAX & INTERACTIVE CANVAS) -->
+      <div id="drive-world" class="drive-world time-day">
+        <!-- LANGIT & MATAHARI/BULAN -->
+        <div class="drive-sky">
+          <div class="drive-sun-moon"></div>
+          <div class="drive-clouds">
+            <div class="dcloud dc1"></div>
+            <div class="dcloud dc2"></div>
+            <div class="dcloud dc3"></div>
+          </div>
+          <div class="drive-stars"></div>
+        </div>
+
+        <!-- GUNUNG & ALAM INDONESIA -->
+        <div class="drive-mountains"></div>
+        <div class="drive-hills"></div>
+        <div class="drive-scenery-layer" id="drive-scenery"></div>
+
+        <!-- REL KERETA -->
+        <div class="drive-track-wrapper">
+          <div class="drive-rails"></div>
+          <!-- KERETA PEMAIN -->
+          <div id="drive-train-container" class="drive-train-container">
+            <!-- Lokomotif + Gerbong dinamis -->
+          </div>
+        </div>
+
+        <!-- OVERLAY TEROWONGAN GELAP -->
+        <div id="drive-tunnel-overlay" class="tunnel-darkness hidden"></div>
+
+        <!-- POPUP STASIUN (ANGKUT PENUMPANG) -->
+        <div id="station-arrival-banner" class="station-banner hidden">
+          <div class="station-banner-card">
+            <div class="st-icon">🚉</div>
+            <div class="st-text">
+              <h3 id="station-name-text">Tiba di Stasiun Gambir!</h3>
+              <p>Tekan tombol untuk menaikkan penumpang lucu!</p>
+            </div>
+            <button id="btn-board-passengers" class="board-btn">🐾 Naikkan Penumpang!</button>
+          </div>
+        </div>
+
+        <!-- POPUP PERLINTASAN (JPL) -->
+        <div id="jpl-sign-indicator" class="jpl-indicator hidden">
+          <div class="jpl-lights">
+            <span class="jpl-light red l1"></span>
+            <span class="jpl-light red l2"></span>
+          </div>
+          <div class="jpl-text">PALANG PINTU TURUN! 🚨</div>
+        </div>
+      </div>
+
+      <!-- KOKPIT KONTROL MASINIS -->
+      <div class="driver-cockpit">
+        <!-- TUAS GAS / SPEED LEVER -->
+        <div class="cockpit-lever-box">
+          <label>TUAS GAS MASINIS</label>
+          <div class="lever-track">
+            <input type="range" id="throttle-slider" min="0" max="3" step="1" value="0" />
+            <div class="lever-marks">
+              <span>🛑 Rem</span>
+              <span>🐢 Pelan</span>
+              <span>🚗 Sedang</span>
+              <span>🚀 Cepat</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- TOMBOL KLAKSON BESAR SEMBOYAN 35 KAI -->
+        <div class="cockpit-horn-box">
+          <button id="btn-horn-kai" class="giant-horn-btn">
+            <div class="horn-icon">📢</div>
+            <div class="horn-label">KLAKSON KAI</div>
+            <small>Semboyan 35</small>
+          </button>
+        </div>
+
+        <!-- AKSESORIS LAINNYA -->
+        <div class="cockpit-actions">
+          <button id="btn-toggle-light" class="cockpit-btn light-btn">
+            💡 Lampu Depan
+          </button>
+          <button id="btn-puff-smoke" class="cockpit-btn smoke-btn">
+            💨 Asap Uap
+          </button>
+          <button id="btn-station-chime" class="cockpit-btn chime-btn">
+            🔔 Bel Stasiun
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== LAYAR: TAMAN BELAJAR (SUB-MENU 6 MINI-GAME) ===== -->
+    <section id="screen-edu" class="screen">
+      <div class="game-header">
+        <button class="back-btn" data-back>⬅️ Rumah</button>
+        <h2>🎓 Taman Belajar KAI</h2>
+        <div class="score">⭐ 6 Mini-Game</div>
+      </div>
+      <p class="hint">Pilih permainan seru kesukaan adik!</p>
+      <div class="edu-grid">
+        <button class="menu-btn" data-game="susun">
+          <span class="emoji">🚃</span><span class="label">Susun Gerbong</span><span class="desc">Tarik gerbong rel</span>
+        </button>
+        <button class="menu-btn" data-game="tangkap">
+          <span class="emoji">⚡</span><span class="label">Tangkap Kereta</span><span class="desc">Ketuk sebelum pergi</span>
+        </button>
+        <button class="menu-btn" data-game="warna">
+          <span class="emoji">🌈</span><span class="label">Cocok Warna</span><span class="desc">Masuk ke stasiun</span>
+        </button>
+        <button class="menu-btn" data-game="angka">
+          <span class="emoji">🔢</span><span class="label">Belajar Angka</span><span class="desc">1 2 3 Pintar</span>
+        </button>
+        <button class="menu-btn" data-game="abc">
+          <span class="emoji">🔤</span><span class="label">Huruf ABC</span><span class="desc">A B C Ceria</span>
+        </button>
+        <button class="menu-btn" data-game="hijaiyah">
+          <span class="emoji">🕌</span><span class="label">Huruf Hijaiyah</span><span class="desc">ا ب ت Berkah</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ===== GAME: SUSUN GERBONG ===== -->
+    <section id="game-susun" class="screen">
+      <div class="game-header">
+        <div class="header-nav-group">
+          <button class="back-btn" data-back-edu>⬅️ Menu Belajar</button>
+          <button class="home-icon-btn" data-back title="Ke Menu Utama">🏠</button>
+        </div>
+        <h2>🚃 Susun Gerbong</h2>
+        <div class="score">⭐ <span id="susun-score">0</span></div>
+      </div>
+      <p class="hint">Tarik gerbong ke tempat kosong di belakang lokomotif!</p>
+      <div id="susun-track" class="track-area"></div>
+      <div id="susun-yard" class="yard-area"></div>
+      <div id="susun-win" class="win-overlay hidden">
+        <div class="win-card">
+          <div class="win-emoji">🎉</div>
+          <h2>Hebat Sekali!</h2>
+          <p>Kereta sudah lengkap!</p>
+          <button class="play-again" data-replay="susun">Main Lagi</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== GAME: TANGKAP KERETA ===== -->
+    <section id="game-tangkap" class="screen">
+      <div class="game-header">
+        <div class="header-nav-group">
+          <button class="back-btn" data-back-edu>⬅️ Menu Belajar</button>
+          <button class="home-icon-btn" data-back title="Ke Menu Utama">🏠</button>
+        </div>
+        <h2>⚡ Tangkap Kereta</h2>
+        <div class="score">🎯 <span id="tangkap-score">0</span></div>
+      </div>
+      <p class="hint">Ketuk kereta yang lewat sebelum pergi!</p>
+      <div id="tangkap-stage" class="stage-area"></div>
+      <div class="timer-bar"><div id="tangkap-timer" class="timer-fill"></div></div>
+      <div id="tangkap-win" class="win-overlay hidden">
+        <div class="win-card">
+          <div class="win-emoji">🏆</div>
+          <h2>Wah Pintar!</h2>
+          <p>Kamu menangkap <span id="tangkap-final">0</span> kereta!</p>
+          <button class="play-again" data-replay="tangkap">Main Lagi</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== GAME: COCOK WARNA ===== -->
+    <section id="game-warna" class="screen">
+      <div class="game-header">
+        <div class="header-nav-group">
+          <button class="back-btn" data-back-edu>⬅️ Menu Belajar</button>
+          <button class="home-icon-btn" data-back title="Ke Menu Utama">🏠</button>
+        </div>
+        <h2>🌈 Cocok Warna</h2>
+        <div class="score">⭐ <span id="warna-score">0</span></div>
+      </div>
+      <p class="hint">Tarik kereta ke stasiun warnanya!</p>
+      <div id="warna-stations" class="stations-area"></div>
+      <div id="warna-yard" class="yard-area"></div>
+      <div id="warna-win" class="win-overlay hidden">
+        <div class="win-card">
+          <div class="win-emoji">🌟</div>
+          <h2>Warna Pas!</h2>
+          <p>Semua kereta sudah sampai!</p>
+          <button class="play-again" data-replay="warna">Main Lagi</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== GAME: CARI & BELAJAR FULL (ANGKA / ABC / HIJAIYAH) ===== -->
+    <section id="game-cari" class="screen">
+      <div class="game-header">
+        <div class="header-nav-group">
+          <button class="back-btn" data-back-edu>⬅️ Menu Belajar</button>
+          <button class="home-icon-btn" data-back title="Ke Menu Utama">🏠</button>
+        </div>
+        <h2 id="cari-title">🔢 Belajar Lengkap</h2>
+        <div class="score" id="cari-score-badge">⭐ <span id="cari-score">0</span></div>
+      </div>
+
+      <!-- TABS MODE: KAMUS SUARA VS KUIS TEBAK -->
+      <div class="edu-mode-tabs">
+        <button id="tab-learn" class="edu-tab-btn active">📖 Kamus Suara (Sentuh & Dengar)</button>
+        <button id="tab-quiz" class="edu-tab-btn">🎯 Kuis Tebak Kereta</button>
+      </div>
+
+      <!-- VIEW 1: KAMUS SUARA LENGKAP (SENTUH & DENGAR SEMUA HURUF / ANGKA) -->
+      <div id="cari-dict-view" class="cari-dict-view">
+        <p class="dict-hint">👉 <strong>Ketuk gerbong kereta</strong> untuk mendengar suara & pengucapannya!</p>
+        <div id="cari-full-grid" class="cari-full-grid">
+          <!-- Render dinamis 28 Hijaiyah / 26 Alfabet / 20 Angka -->
+        </div>
+      </div>
+
+      <!-- VIEW 2: KUIS TEBAK KERETA CERDAS -->
+      <div id="cari-quiz-view" class="cari-quiz-view hidden">
+        <div class="quiz-prompt-card">
+          <div class="quiz-prompt-label">Cari & Ketuk Gerbong Kereta:</div>
+          <div class="quiz-target-display">
+            <span id="cari-target"></span>
+            <button id="cari-repeat" class="repeat-btn" title="Dengar suara lagi">🔊 Dengar Lagi</button>
+          </div>
+        </div>
+        <div id="cari-grid" class="cari-grid"></div>
+      </div>
+
+      <!-- OVERLAY MENANG KUIS -->
+      <div id="cari-win" class="win-overlay hidden">
+        <div class="win-card">
+          <div class="win-emoji">🌟</div>
+          <h2>Pintar Sekali!</h2>
+          <p>Adik hebat sudah menjawab <span id="cari-final">0</span> kereta!</p>
+          <div class="win-actions">
+            <button class="play-again" data-replay="cari">Main Lagi 🔄</button>
+            <button id="btn-back-to-dict" class="back-btn">Buka Kamus Suara 📖</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script src="game.js?v=3.0"></script>
+</body>
+</html>

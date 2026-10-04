@@ -1,0 +1,118 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 160" width="280" height="160">
+  <defs>
+    <linearGradient id="ssBodyEkse" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#f8fafc"/>
+      <stop offset="25%" stop-color="#e2e8f0"/>
+      <stop offset="60%" stop-color="#cbd5e1"/>
+      <stop offset="100%" stop-color="#94a3b8"/>
+    </linearGradient>
+    <linearGradient id="kaiOrange" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#f97316"/>
+      <stop offset="100%" stop-color="#ea580c"/>
+    </linearGradient>
+    <linearGradient id="kaiBlue" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0284c7"/>
+      <stop offset="100%" stop-color="#0369a1"/>
+    </linearGradient>
+    <linearGradient id="winTint" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#0284c7"/>
+    </linearGradient>
+    <linearGradient id="wheelGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#475569"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Left & Right Couplers / Gangway Buffers -->
+  <rect x="2" y="78" width="10" height="32" rx="2" fill="#1e293b" stroke="#0f172a" stroke-width="2"/>
+  <rect x="0" y="92" width="6" height="8" rx="2" fill="#334155"/>
+  <rect x="268" y="78" width="10" height="32" rx="2" fill="#1e293b" stroke="#0f172a" stroke-width="2"/>
+  <rect x="274" y="92" width="6" height="8" rx="2" fill="#334155"/>
+
+  <!-- Main Coach Body (Stainless Steel KAI) -->
+  <rect x="8" y="32" width="264" height="82" rx="8" fill="url(#ssBodyEkse)" stroke="#0f172a" stroke-width="3"/>
+
+  <!-- Stainless Steel Corrugated Ribs -->
+  <line x1="8" y1="40" x2="272" y2="40" stroke="#ffffff" stroke-width="1.5"/>
+  <line x1="8" y1="44" x2="272" y2="44" stroke="#ffffff" stroke-width="1.5"/>
+  <line x1="8" y1="88" x2="272" y2="88" stroke="#64748b" stroke-width="1"/>
+  <line x1="8" y1="91" x2="272" y2="91" stroke="#64748b" stroke-width="1"/>
+
+  <!-- KAI Orange & Blue Horizontal Speed Stripes -->
+  <rect x="8" y="95" width="264" height="6" fill="url(#kaiOrange)"/>
+  <rect x="8" y="102" width="264" height="6" fill="url(#kaiBlue)"/>
+
+  <!-- Left Entrance Door -->
+  <rect x="18" y="42" width="22" height="68" rx="3" fill="#cbd5e1" stroke="#0f172a" stroke-width="1.5"/>
+  <rect x="23" y="48" width="12" height="22" rx="2" fill="url(#winTint)"/>
+
+  <!-- Passenger Windows with Warm Curtains -->
+  <!-- Win 1 -->
+  <rect x="48" y="48" width="22" height="28" rx="4" fill="url(#winTint)" stroke="#0f172a" stroke-width="1.5"/>
+  <rect x="48" y="48" width="5" height="28" fill="#d97706" opacity="0.8"/>
+  <rect x="65" y="48" width="5" height="28" fill="#d97706" opacity="0.8"/>
+  <!-- Win 2 -->
+  <rect x="76" y="48" width="22" height="28" rx="4" fill="url(#winTint)" stroke="#0f172a" stroke-width="1.5"/>
+  <rect x="76" y="48" width="5" height="28" fill="#d97706" opacity="0.8"/>
+  <rect x="93" y="48" width="5" height="28" fill="#d97706" opacity="0.8"/>
+  <!-- Win 3 -->
+  <rect x="104" y="48" width="22" height="28" rx="4" fill="url(#winTint)" stroke="#0f172a" stroke-width="1.5"/>
+  <rect x="104" y="48" width="5" height="28" fill="#d97706" opacity="0.8"/>
+  <rect x="121" y="48" width="5" height="28" fill="#d97706" opacity="0.8"/>
+  <!-- Win 4 -->
+  <rect x="132" y="48" width="22" height="28" rx="4" fill="url(#winTint)" stroke="#0f172a" stroke-width="1.5"/>
+  <rect x="132" y="48" width="5" height="28" fill="#d97706" opacity="0.8"/>
+  <rect x="149" y="48" width="5" height="28" fill="#d97706" opacity="0.8"/>
+  <!-- Win 5 -->
+  <rect x="160" y="48" width="22" height="28" rx="4" fill="url(#winTint)" stroke="#0f172a" stroke-width="1.5"/>
+  <rect x="160" y="48" width="5" height="28" fill="#d97706" opacity="0.8"/>
+  <rect x="177" y="48" width="5" height="28" fill="#d97706" opacity="0.8"/>
+  <!-- Win 6 -->
+  <rect x="188" y="48" width="22" height="28" rx="4" fill="url(#winTint)" stroke="#0f172a" stroke-width="1.5"/>
+  <rect x="188" y="48" width="5" height="28" fill="#d97706" opacity="0.8"/>
+  <rect x="205" y="48" width="5" height="28" fill="#d97706" opacity="0.8"/>
+  <!-- Win 7 -->
+  <rect x="216" y="48" width="22" height="28" rx="4" fill="url(#winTint)" stroke="#0f172a" stroke-width="1.5"/>
+  <rect x="216" y="48" width="5" height="28" fill="#d97706" opacity="0.8"/>
+  <rect x="233" y="48" width="5" height="28" fill="#d97706" opacity="0.8"/>
+
+  <!-- Right Entrance Door -->
+  <rect x="244" y="42" width="22" height="68" rx="3" fill="#cbd5e1" stroke="#0f172a" stroke-width="1.5"/>
+  <rect x="249" y="48" width="12" height="22" rx="2" fill="url(#winTint)"/>
+
+  <!-- Text & KAI Identity -->
+  <text x="50" y="84" font-family="Arial, sans-serif" font-weight="900" font-size="7" fill="#ea580c">KAI</text>
+  <text x="68" y="84" font-family="Arial, sans-serif" font-weight="bold" font-size="6" fill="#0d47a1">EKSEKUTIF</text>
+  <text x="140" y="84" font-family="Arial, sans-serif" font-weight="bold" font-size="5" fill="#475569">KERETA API INDONESIA</text>
+  <text x="218" y="84" font-family="monospace" font-weight="bold" font-size="5" fill="#1e293b">K1 0 19 28</text>
+
+  <!-- Roof AC Units -->
+  <rect x="68" y="24" width="48" height="8" rx="3" fill="#475569" stroke="#0f172a" stroke-width="1.5"/>
+  <rect x="164" y="24" width="48" height="8" rx="3" fill="#475569" stroke="#0f172a" stroke-width="1.5"/>
+
+  <!-- Underframe Equipment Boxes -->
+  <rect x="94" y="114" width="92" height="12" rx="2" fill="#1e293b" stroke="#0f172a" stroke-width="1.5"/>
+
+  <!-- Bogies -->
+  <g id="bogieEkseLeft">
+    <rect x="30" y="118" width="58" height="10" rx="3" fill="#1e293b" stroke="#0f172a" stroke-width="2"/>
+    <circle cx="59" cy="123" r="4" fill="#64748b"/>
+    <circle cx="42" cy="136" r="16" fill="url(#wheelGrad)" stroke="#0f172a" stroke-width="3"/>
+    <circle cx="42" cy="136" r="8" fill="#94a3b8" stroke="#334155" stroke-width="2"/>
+    <circle cx="42" cy="136" r="3" fill="#0f172a"/>
+    <circle cx="76" cy="136" r="16" fill="url(#wheelGrad)" stroke="#0f172a" stroke-width="3"/>
+    <circle cx="76" cy="136" r="8" fill="#94a3b8" stroke="#334155" stroke-width="2"/>
+    <circle cx="76" cy="136" r="3" fill="#0f172a"/>
+  </g>
+  <g id="bogieEkseRight">
+    <rect x="192" y="118" width="58" height="10" rx="3" fill="#1e293b" stroke="#0f172a" stroke-width="2"/>
+    <circle cx="221" cy="123" r="4" fill="#64748b"/>
+    <circle cx="204" cy="136" r="16" fill="url(#wheelGrad)" stroke="#0f172a" stroke-width="3"/>
+    <circle cx="204" cy="136" r="8" fill="#94a3b8" stroke="#334155" stroke-width="2"/>
+    <circle cx="204" cy="136" r="3" fill="#0f172a"/>
+    <circle cx="238" cy="136" r="16" fill="url(#wheelGrad)" stroke="#0f172a" stroke-width="3"/>
+    <circle cx="238" cy="136" r="8" fill="#94a3b8" stroke="#334155" stroke-width="2"/>
+    <circle cx="238" cy="136" r="3" fill="#0f172a"/>
+  </g>
+</svg>

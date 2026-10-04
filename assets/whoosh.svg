@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 160" width="280" height="160">
+  <defs>
+    <linearGradient id="whooshRed" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#dc2626"/>
+      <stop offset="60%" stop-color="#b91c1c"/>
+      <stop offset="100%" stop-color="#991b1b"/>
+    </linearGradient>
+    <linearGradient id="whooshSilver" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="50%" stop-color="#f1f5f9"/>
+      <stop offset="100%" stop-color="#cbd5e1"/>
+    </linearGradient>
+    <linearGradient id="cockpitGlass" x1="0%" y1="0%" x2="100%" y2="50%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="50%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0284c7"/>
+    </linearGradient>
+    <linearGradient id="wheelGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#475569"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Rear Gangway Coupler (Left to connect with carriages) -->
+  <rect x="2" y="78" width="10" height="32" rx="2" fill="#1e293b" stroke="#0f172a" stroke-width="2"/>
+  <rect x="0" y="92" width="6" height="8" rx="2" fill="#334155"/>
+
+  <!-- Sleek High-Speed Body with Aerodynamic Nose on the RIGHT -->
+  <path d="M 10 40 L 160 40 Q 230 46 274 98 Q 278 104 274 114 L 10 114 Z" fill="url(#whooshSilver)" stroke="#0f172a" stroke-width="3"/>
+
+  <!-- Red Livery Upper Half & Nose Cone -->
+  <path d="M 10 40 L 160 40 Q 230 46 274 98 L 240 98 Q 210 65 150 62 L 10 62 Z" fill="url(#whooshRed)"/>
+
+  <!-- Aerodynamic Cockpit Windshield (Right Nose) -->
+  <path d="M 215 56 Q 248 64 266 88 L 246 88 Q 232 70 205 68 Z" fill="url(#cockpitGlass)" stroke="#0f172a" stroke-width="2"/>
+
+  <!-- High-Speed Dual Headlights (Gleaming Forward to the Right) -->
+  <polygon points="268,96 274,102 264,104" fill="#fef08a" stroke="#ca8a04" stroke-width="1"/>
+  <circle cx="268" cy="100" r="2.5" fill="#ffffff"/>
+
+  <!-- Lower Red Speed Stripe -->
+  <rect x="10" y="96" width="240" height="6" fill="#dc2626"/>
+
+  <!-- Megamendung Batik Motif Accents -->
+  <g fill="#ffffff" opacity="0.9">
+    <!-- Cloud motif 1 -->
+    <path d="M 40 46 Q 48 42 56 46 Q 64 42 72 46 Q 60 54 40 46 Z"/>
+    <path d="M 80 46 Q 88 42 96 46 Q 104 42 112 46 Q 100 54 80 46 Z"/>
+    <path d="M 120 46 Q 128 42 136 46 Q 144 42 152 46 Q 140 54 120 46 Z"/>
+  </g>
+
+  <!-- Passenger Windows (Dark Tinted Glass) -->
+  <rect x="30" y="70" width="24" height="18" rx="3" fill="#1e293b" stroke="#0f172a" stroke-width="1.5"/>
+  <rect x="62" y="70" width="24" height="18" rx="3" fill="#1e293b" stroke="#0f172a" stroke-width="1.5"/>
+  <rect x="94" y="70" width="24" height="18" rx="3" fill="#1e293b" stroke="#0f172a" stroke-width="1.5"/>
+  <rect x="126" y="70" width="24" height="18" rx="3" fill="#1e293b" stroke="#0f172a" stroke-width="1.5"/>
+
+  <!-- Passenger Door -->
+  <rect x="160" y="64" width="20" height="48" rx="2" fill="#cbd5e1" stroke="#0f172a" stroke-width="1.5"/>
+  <rect x="164" y="70" width="12" height="18" rx="2" fill="#1e293b"/>
+
+  <!-- WHOOSH & KCIC Branding -->
+  <text x="32" y="90" font-family="Arial, sans-serif" font-weight="900" font-size="11" fill="#dc2626" letter-spacing="1">WHOOSH</text>
+  <text x="96" y="90" font-family="Arial, sans-serif" font-weight="bold" font-size="8" fill="#1e3a8a">KCIC</text>
+
+  <!-- Aerodynamic Pantograph on Roof -->
+  <g stroke="#dc2626" stroke-width="2.5" fill="none">
+    <line x1="50" y1="40" x2="62" y2="22"/>
+    <line x1="62" y1="22" x2="78" y2="22"/>
+    <line x1="78" y1="22" x2="68" y2="40"/>
+    <line x1="56" y1="20" x2="84" y2="20" stroke="#0f172a" stroke-width="2"/>
+  </g>
+
+  <!-- Skirt Fairing Covers (Aerodynamic Shrouds over wheels) -->
+  <rect x="10" y="112" width="254" height="10" rx="2" fill="#334155"/>
+
+  <!-- HIGH-SPEED BOGIE 1 (Left) -->
+  <g id="bogieWhooshLeft">
+    <rect x="30" y="118" width="58" height="10" rx="3" fill="#1e293b" stroke="#0f172a" stroke-width="2"/>
+    <circle cx="59" cy="123" r="4" fill="#dc2626"/>
+    <circle cx="42" cy="136" r="16" fill="url(#wheelGrad)" stroke="#0f172a" stroke-width="3"/>
+    <circle cx="42" cy="136" r="8" fill="#94a3b8" stroke="#334155" stroke-width="2"/>
+    <circle cx="42" cy="136" r="3" fill="#0f172a"/>
+    <circle cx="76" cy="136" r="16" fill="url(#wheelGrad)" stroke="#0f172a" stroke-width="3"/>
+    <circle cx="76" cy="136" r="8" fill="#94a3b8" stroke="#334155" stroke-width="2"/>
+    <circle cx="76" cy="136" r="3" fill="#0f172a"/>
+  </g>
+
+  <!-- HIGH-SPEED BOGIE 2 (Right) -->
+  <g id="bogieWhooshRight">
+    <rect x="180" y="118" width="58" height="10" rx="3" fill="#1e293b" stroke="#0f172a" stroke-width="2"/>
+    <circle cx="209" cy="123" r="4" fill="#dc2626"/>
+    <circle cx="192" cy="136" r="16" fill="url(#wheelGrad)" stroke="#0f172a" stroke-width="3"/>
+    <circle cx="192" cy="136" r="8" fill="#94a3b8" stroke="#334155" stroke-width="2"/>
+    <circle cx="192" cy="136" r="3" fill="#0f172a"/>
+    <circle cx="226" cy="136" r="16" fill="url(#wheelGrad)" stroke="#0f172a" stroke-width="3"/>
+    <circle cx="226" cy="136" r="8" fill="#94a3b8" stroke="#334155" stroke-width="2"/>
+    <circle cx="226" cy="136" r="3" fill="#0f172a"/>
+  </g>
+</svg>

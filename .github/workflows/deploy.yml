@@ -1,0 +1,48 @@
+name: CI & Deploy to Tencent EdgeOne
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+
+jobs:
+  validate-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Validate Project Assets & Structure
+        run: |
+          echo "Memeriksa integritas file game..."
+          test -f index.html || exit 1
+          test -f game.js || exit 1
+          test -f style.css || exit 1
+          test -f edgeone.json || exit 1
+          echo "Memeriksa aset lokomotif & gerbong SVG..."
+          test -f assets/cc206.svg || exit 1
+          test -f assets/whoosh.svg || exit 1
+          test -f assets/cc201.svg || exit 1
+          test -f assets/krl.svg || exit 1
+          test -f assets/uap_b25.svg || exit 1
+          test -f assets/gerbong_eksekutif.svg || exit 1
+          test -f assets/gerbong_panoramic.svg || exit 1
+          test -f assets/gerbong_kontainer.svg || exit 1
+          test -f assets/gerbong_tangki.svg || exit 1
+          test -f assets/gerbong_makan.svg || exit 1
+          test -f assets/gerbong_pembangkit.svg || exit 1
+          echo "Semua file lengkap dan siap dideploy ke Tencent EdgeOne!"
+
+      # Jika menggunakan EdgeOne Pages Direct Git Integration:
+      # Tencent EdgeOne Pages akan otomatis mendeteksi push ke branch main ini dan redeploy otomatis.
+      #
+      # Jika menggunakan EdgeOne Webhook / API Token, tambahkan secret TENCENT_EDGEONE_DEPLOY_HOOK:
+      - name: Trigger EdgeOne Deploy Hook (Optional)
+        if: env.TENCENT_EDGEONE_DEPLOY_HOOK != ''
+        env:
+          TENCENT_EDGEONE_DEPLOY_HOOK: ${{ secrets.TENCENT_EDGEONE_DEPLOY_HOOK }}
+        run: |
+          echo "Memicu webhook redeploy Tencent EdgeOne..."
+          curl -X POST "$TENCENT_EDGEONE_DEPLOY_HOOK"

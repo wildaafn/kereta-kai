@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 160" width="280" height="160">
+  <defs>
+    <linearGradient id="cc201Body" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="60%" stop-color="#f8fafc"/>
+      <stop offset="100%" stop-color="#cbd5e1"/>
+    </linearGradient>
+    <linearGradient id="kaiOrange" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#f97316"/>
+      <stop offset="100%" stop-color="#ea580c"/>
+    </linearGradient>
+    <linearGradient id="kaiBlue" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0284c7"/>
+      <stop offset="100%" stop-color="#0369a1"/>
+    </linearGradient>
+    <linearGradient id="cabGlass" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#0284c7"/>
+    </linearGradient>
+    <linearGradient id="wheelGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#475569"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Rear Coupler (Left) -->
+  <rect x="2" y="98" width="10" height="20" rx="2" fill="#1e293b" stroke="#0f172a" stroke-width="2"/>
+  <rect x="0" y="103" width="6" height="8" rx="2" fill="#334155"/>
+
+  <!-- Front Pilot Cowcatcher with Zebra Hazard Stripes (Right) -->
+  <polygon points="266,108 278,124 278,138 266,134" fill="#ea580c" stroke="#9a3412" stroke-width="2"/>
+  <line x1="268" y1="114" x2="276" y2="128" stroke="#facc15" stroke-width="3"/>
+
+  <!-- Walkway Safety Handrails (Yellow / White) -->
+  <line x1="12" y1="84" x2="190" y2="84" stroke="#f59e0b" stroke-width="2"/>
+  <line x1="20" y1="84" x2="20" y2="114" stroke="#f59e0b" stroke-width="2"/>
+  <line x1="70" y1="84" x2="70" y2="114" stroke="#f59e0b" stroke-width="2"/>
+  <line x1="130" y1="84" x2="130" y2="114" stroke="#f59e0b" stroke-width="2"/>
+
+  <!-- Long Engine Hood (Left & Center) -->
+  <rect x="16" y="44" width="176" height="70" rx="3" fill="url(#cc201Body)" stroke="#0f172a" stroke-width="2.5"/>
+
+  <!-- ICONIC SLANT NOSE CAB (Far Right) -->
+  <!-- Cab Box -->
+  <path d="M 192 34 L 244 34 L 268 64 L 268 114 L 192 114 Z" fill="url(#cc201Body)" stroke="#0f172a" stroke-width="3"/>
+
+  <!-- Slanted Front Windshield (Facing Right) -->
+  <polygon points="234,40 258,60 236,60 216,40" fill="url(#cabGlass)" stroke="#0f172a" stroke-width="2"/>
+  <line x1="234" y1="50" x2="242" y2="50" stroke="#0f172a" stroke-width="1.5"/>
+
+  <!-- Front Twin Headlights on Slant Nose -->
+  <circle cx="264" cy="74" r="4.5" fill="#fef08a" stroke="#ca8a04" stroke-width="1.5"/>
+  <circle cx="264" cy="74" r="2.5" fill="#ffffff"/>
+  <circle cx="264" cy="88" r="4.5" fill="#fef08a" stroke="#ca8a04" stroke-width="1.5"/>
+  <circle cx="264" cy="88" r="2.5" fill="#ffffff"/>
+
+  <!-- KAI Orange & Blue Stripes -->
+  <rect x="16" y="90" width="252" height="7" fill="url(#kaiOrange)"/>
+  <rect x="16" y="97" width="252" height="7" fill="url(#kaiBlue)"/>
+
+  <!-- PT KAI Logo -->
+  <g transform="translate(90, 52)">
+    <text x="0" y="20" font-family="Arial, sans-serif" font-weight="900" font-size="20" fill="#ea580c">K<tspan fill="#0284c7">A</tspan>I</text>
+  </g>
+
+  <!-- Engine Radiator Side Louvers -->
+  <rect x="30" y="52" width="40" height="30" rx="2" fill="#334155" stroke="#0f172a" stroke-width="1.5"/>
+  <line x1="30" y1="58" x2="70" y2="58" stroke="#64748b" stroke-width="1.5"/>
+  <line x1="30" y1="64" x2="70" y2="64" stroke="#64748b" stroke-width="1.5"/>
+  <line x1="30" y1="70" x2="70" y2="70" stroke="#64748b" stroke-width="1.5"/>
+
+  <!-- Cab Side Window -->
+  <rect x="198" y="44" width="20" height="18" rx="2" fill="url(#cabGlass)" stroke="#0f172a" stroke-width="1.5"/>
+
+  <!-- Number Plate -->
+  <rect x="200" y="74" width="28" height="9" rx="2" fill="#1e293b"/>
+  <text x="203" y="81" font-family="monospace" font-weight="900" font-size="5" fill="#facc15">CC 201 83 25</text>
+
+  <!-- Dual Horn on Roof -->
+  <path d="M 230 26 L 240 22 L 240 30 Z" fill="#ea580c" stroke="#0f172a" stroke-width="1"/>
+
+  <!-- Underbody Fuel Tank -->
+  <rect x="94" y="114" width="92" height="14" rx="4" fill="#1e293b" stroke="#0f172a" stroke-width="2"/>
+
+  <!-- BOGIE 1 (Left 3 Wheels) -->
+  <g id="bogieCC201Left">
+    <rect x="18" y="116" width="72" height="10" rx="3" fill="#1e293b" stroke="#0f172a" stroke-width="2"/>
+    <circle cx="28" cy="136" r="15" fill="url(#wheelGrad)" stroke="#0f172a" stroke-width="3"/>
+    <circle cx="28" cy="136" r="7" fill="#94a3b8" stroke="#334155" stroke-width="2"/>
+    <circle cx="28" cy="136" r="3" fill="#0f172a"/>
+    <circle cx="54" cy="136" r="15" fill="url(#wheelGrad)" stroke="#0f172a" stroke-width="3"/>
+    <circle cx="54" cy="136" r="7" fill="#94a3b8" stroke="#334155" stroke-width="2"/>
+    <circle cx="54" cy="136" r="3" fill="#0f172a"/>
+    <circle cx="80" cy="136" r="15" fill="url(#wheelGrad)" stroke="#0f172a" stroke-width="3"/>
+    <circle cx="80" cy="136" r="7" fill="#94a3b8" stroke="#334155" stroke-width="2"/>
+    <circle cx="80" cy="136" r="3" fill="#0f172a"/>
+  </g>
+
+  <!-- BOGIE 2 (Right 3 Wheels) -->
+  <g id="bogieCC201Right">
+    <rect x="190" y="116" width="72" height="10" rx="3" fill="#1e293b" stroke="#0f172a" stroke-width="2"/>
+    <circle cx="200" cy="136" r="15" fill="url(#wheelGrad)" stroke="#0f172a" stroke-width="3"/>
+    <circle cx="200" cy="136" r="7" fill="#94a3b8" stroke="#334155" stroke-width="2"/>
+    <circle cx="200" cy="136" r="3" fill="#0f172a"/>
+    <circle cx="226" cy="136" r="15" fill="url(#wheelGrad)" stroke="#0f172a" stroke-width="3"/>
+    <circle cx="226" cy="136" r="7" fill="#94a3b8" stroke="#334155" stroke-width="2"/>
+    <circle cx="226" cy="136" r="3" fill="#0f172a"/>
+    <circle cx="252" cy="136" r="15" fill="url(#wheelGrad)" stroke="#0f172a" stroke-width="3"/>
+    <circle cx="252" cy="136" r="7" fill="#94a3b8" stroke="#334155" stroke-width="2"/>
+    <circle cx="252" cy="136" r="3" fill="#0f172a"/>
+  </g>
+</svg>
